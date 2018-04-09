@@ -19,6 +19,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceRoot}/server/node_modules/jest/bin/jest.js",
+      "cwd": "${workspaceFolder}/server",
       "sourceMaps": true, // if you are using Babel or TS, make this true
       // you can add another arg to pattern-match limit the tests, just as when normally running jest
       "args": ["-i", "--runInBand", "--no-cache"],
