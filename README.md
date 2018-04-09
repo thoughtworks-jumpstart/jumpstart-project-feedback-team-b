@@ -119,3 +119,19 @@ While working on this project, I learnt a lot of useful tips from the following 
 - [megaboilerplate](https://github.com/sahat/megaboilerplate/)
 - [node-express-realworld-example-app](https://github.com/gothinkster/node-express-realworld-example-app)
 - [Running Create React App and Express (CRAE) on Heroku](https://originmaster.com/running-create-react-app-and-express-crae-on-heroku-c39a39fe7851)
+
+
+## Windows User
+1. Upgrade your yarn to latest version follow below steps:
+    1. open Git Bash with as admin
+    2. choco upgrade yarn
+
+2. Yarn install separately for server and client folder:
+    1. cd to server folder and 'yarn install'
+    2. cd to client folder and "yarn install"
+
+3. yarn start in separately for server and client folder:
+    1. yarn start in client folder
+    2. yarn start in server folder
+
+4. test command yarn test-windows.
