@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "NODE_ENV=local nodemon server.js",
-    "test": "set NODE_ENV=test jest",
+    "test": "NODE_ENV=test jest",
     "test:watch": "yarn test --watch",
     "test:coverage": "yarn test --coverage",
     "test-windows": "set NODE_ENV=test&&jest"
