@@ -12,7 +12,8 @@
       "concurrently --kill-others-on-fail \"yarn start:dev:server\" \"yarn start:client\"",
     "start:prod:server": "cd server && yarn start",
     "start:client": "cd client && yarn start",
-    "start:dev:server": "cd server && yarn dev"
+    "start:dev:server": "cd server && yarn dev",
+    "start:db": "mongod --dbpath server/db/data"
   },
   "engines": {
     "node": "^9.9.0",
