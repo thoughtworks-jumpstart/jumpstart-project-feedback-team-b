@@ -1,18 +1,21 @@
 language: node_js
 node_js:
-  - "9"
+- '9'
 cache:
   yarn: true
   directories:
   - node_modules
 script:
-  - yarn test
-  - yarn build
+- yarn test
+- yarn build
 deploy:
   provider: heroku
   app: my-feedback-team-b-staging
   api_key:
     secure: jEDPMuQl6KOVeXkIkCv0ah6jUIn/8ENY4h9hmJfHWZmdbHD3WYS48caG02kJgb85ayzFTnb2SphtJXQL2rAIG2zqY/ClXulGZv+hYg4adf5xsjZmJWdqX5qLC83AVabj0HlVG9Tn8LS6Q6iQcwfVm5xKNammGG8n02zhjDTfjWGR1qzhIGk/LF04s1I5gM7xcpmNQjR/EDdM2u9V4kZUYdGLcUaADUuYkppVmLdWVVKNYrCJukPtm/gkavq/CiW4i8xbfet3fRPL0pkoEGVp+2N6neYu5Jnze5jQdmaHUQ9VVySfGJjhH1hKUVvJioWrncLtkCDJZ0UyTgw3sYQrqMnQptZgFI7+GdA1RwfFbKOv6TvhdX9P+BmrfcNDAYxLYA605JjY9/OjAUMNCwmfDWxenUHrE+L6PIR8T+1VTVgUhJCNWirHOPwFU8e/2fSjAJAG/wikWDwBqMG3mPQN0Uyq7bB/ERNcPilhHKjzWyRjpt4Cg0R6OWobXjUdp1o8RhVW9jWuM+kTnyWTjfYXavHc1ppKl5FJ9kyU/sPumYdm64Nv37GpTcxhcXr4lCxGBtNqRiTBuHwaPomnNpU3uZOiWLGoP8IuJvNEdjtZ5FH52Vjuyo2hhPSbPOW1YZsvTBRN6zFvpPkuv3QXDW72cg4BdnNmPniHXMKFxfPBWgM=
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash 
-  - export PATH="$HOME/.yarn/bin:$PATH"
+- curl -o- -L https://yarnpkg.com/install.sh | bash
+- export PATH="$HOME/.yarn/bin:$PATH"
+notifications:
+  slack:
+    secure: hWiZG5Tofh5Qw/LNkJi2+aIG9acd38dC73byrogZs0OGRVdvgXH93mqnnTLNaG5o7+A7Kz2mgc7gxmwQFuxW/qthF1KSX+PAIR+1Y1RE0fx3fI6dNNVvGpFun8jcXpcDvCYYvXCnYgg4ahW+Xch7sL82dpe8keVhMagU0PuoRvPA3iKIVcmc1ldvWDe+agtQ0cWalsuvOld3OUKYwA/hyFSrMmYddKfAIDZzpu/ozOXqXpzXnxXckyM/NgeHCKgCoChKIx0gwFnM6qCqKcYW102hO3iikibsvfwv3syYUYkPYG10vtEd9QGYbbXXskA6T/0Ireyp1kzZjrWhOPjjX7e8wzd7CC8MM9Pf+pyExb5WQOA46n71i8iwfnf+B9zWCYiW3vpoHkvczuplBPGyxW8TpkEzh0S88GWz3tz3rfss2ZJSBT1c1+KHXkRqDvlV3i3JxqlQWSTNDeL7oCqJbI7G80UDeq47iV1k1UX5Fh4SuDry2tB3crlHI/0vjw3l51tRCKIxqINmHt51DTDDLYWKodilCOrn+xMQsdn/qdJGFSDNNIISSAVScXJFNBE4YAc5hJPlb8/6xCz6mHkHVke/ny3NFsfUqFqR8cZ+rwIn5i0V+3MhN7qk7J7GbeSJiDUOS+0ZXnE9fCCHZ0IvFJ6oqdL54QVvsgyvowkmrE8=
