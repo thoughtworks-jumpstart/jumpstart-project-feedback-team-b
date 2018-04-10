@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - "9"
 cache:
+  yarn: true
   directories:
   - node_modules
 script:
@@ -12,4 +13,6 @@ deploy:
   app: my-feedback-team-b-staging
   api_key:
     secure: jEDPMuQl6KOVeXkIkCv0ah6jUIn/8ENY4h9hmJfHWZmdbHD3WYS48caG02kJgb85ayzFTnb2SphtJXQL2rAIG2zqY/ClXulGZv+hYg4adf5xsjZmJWdqX5qLC83AVabj0HlVG9Tn8LS6Q6iQcwfVm5xKNammGG8n02zhjDTfjWGR1qzhIGk/LF04s1I5gM7xcpmNQjR/EDdM2u9V4kZUYdGLcUaADUuYkppVmLdWVVKNYrCJukPtm/gkavq/CiW4i8xbfet3fRPL0pkoEGVp+2N6neYu5Jnze5jQdmaHUQ9VVySfGJjhH1hKUVvJioWrncLtkCDJZ0UyTgw3sYQrqMnQptZgFI7+GdA1RwfFbKOv6TvhdX9P+BmrfcNDAYxLYA605JjY9/OjAUMNCwmfDWxenUHrE+L6PIR8T+1VTVgUhJCNWirHOPwFU8e/2fSjAJAG/wikWDwBqMG3mPQN0Uyq7bB/ERNcPilhHKjzWyRjpt4Cg0R6OWobXjUdp1o8RhVW9jWuM+kTnyWTjfYXavHc1ppKl5FJ9kyU/sPumYdm64Nv37GpTcxhcXr4lCxGBtNqRiTBuHwaPomnNpU3uZOiWLGoP8IuJvNEdjtZ5FH52Vjuyo2hhPSbPOW1YZsvTBRN6zFvpPkuv3QXDW72cg4BdnNmPniHXMKFxfPBWgM=
-
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash 
+  - export PATH="$HOME/.yarn/bin:$PATH"
