@@ -5,11 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "NODE_ENV=local nodemon server.js",
-    "test": "NODE_ENV=test jest",
+    "dev": "cross-env NODE_ENV=local nodemon server.js",
+    "test": "cross-env NODE_ENV=test jest",
     "test:watch": "yarn test --watch",
-    "test:coverage": "yarn test -- --coverage",
-    "test-windows": "set NODE_ENV=test&&jest"
+    "test:coverage": "yarn test -- --coverage"
   },
   "repository": {},
   "license": "MIT",
@@ -40,6 +39,7 @@
   "devDependencies": {
     "@types/jest": "^22.0.1",
     "@types/mongoose": "^4.7.33",
+    "cross-env": "^5.1.4",
     "eslint": "^4.16.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-jest": "^21.7.0",
