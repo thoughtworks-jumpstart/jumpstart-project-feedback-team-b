@@ -1,5 +1,6 @@
 let User = require("../seedData/fakeData");
-let testDb = require();
+// let testDb = require();
+
 describe("The Signup Page", function() {
   it("succesfully loads sign up page when clicked on the navbar", function() {
     cy.visit("http://localhost:3000");
@@ -12,7 +13,6 @@ describe("The Signup Page", function() {
 });
 
 describe("error messages for signup page", function() {
-  before(function() {});
   beforeEach(function() {
     cy.visit("http://localhost:3000/signup");
   });
