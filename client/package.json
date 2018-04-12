@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
+    "cypress": "^2.1.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.1.1",
@@ -30,6 +31,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^7.1.0",
+    "faker": "^4.1.0",
     "jest": "^22.4.3",
     "jest-enzyme": "^6.0.0",
     "prettier": "^1.11.1",
@@ -40,7 +42,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "react-scripts test --env=jsdom --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:cypress-open": "cypress open",
+    "test:cypress": "cypress run --headed --browser chrome",
+    "test:cypress-headless": "cypress run"
   },
   "jest": {
     "coverageThreshold": {
