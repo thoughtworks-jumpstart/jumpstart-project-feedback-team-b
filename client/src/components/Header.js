@@ -63,12 +63,12 @@ class Header extends React.Component {
       </ul>
     ) : (
       <ul className="nav navbar-nav navbar-right">
-        <li>
+        <li data-cy="login">
           <NavLink to="/login" activeStyle={active}>
             Log in
           </NavLink>
         </li>
-        <li>
+        <li data-cy="signup">
           <NavLink to="/signup" activeStyle={active}>
             Sign up
           </NavLink>
