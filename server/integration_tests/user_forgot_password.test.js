@@ -18,6 +18,21 @@ const sendPasswordReset = async () => {
     .send({ user: { email: email } });
   return response;
 };
+const resetPasswordRequest = async email => {
+  const userFoundByEmail = await User.findOne({ email: email });
+  const userToken = userFoundByEmail.passwordResetToken;
+  const newResetPassword = "123";
+
+  let resetPasswordResponse = await request(app)
+    .post(`/api/user/reset-password/${userToken}`)
+    .send({
+      user: {
+        password: newResetPassword,
+        confirm: newResetPassword
+      }
+    });
+  return resetPasswordResponse;
+};
 describe("Existing user forgot password", () => {
   test("Existing user send a 'password reset' request to server and server should send an email to existing user's email", async () => {
     let response = await sendPasswordReset();
@@ -27,27 +42,18 @@ describe("Existing user forgot password", () => {
       /An email has been sent to tom@example.com with further instructions./
     );
     const email = fixtures.users.tom.email;
-    const userFoundByEmail = await User.findOne({ email: email });
-    const userToken = userFoundByEmail.passwordResetToken;
-    const newResetPassword = "123";
+    const resetPasswordResponse = await resetPasswordRequest(email);
 
-    let resetPasswordResponse = await request(app)
-      .post(`/api/user/reset-password/${userToken}`)
-      .send({
-        user: {
-          password: newResetPassword,
-          confirm: newResetPassword
-        }
-      });
     expect(resetPasswordResponse.statusCode).toBe(200);
     expect(resetPasswordResponse.body.msg).toMatch(
       /Your password has been changed successfully./
     );
-    //     let newPasswordResponse = await request(app)
-    //       .post("/api/users/login")
-    //       .send({ user: { email, password: newResetPassword } });
-    //     // console.log(newPasswordResponse.body);
-    //     expect(newPasswordResponse.statusCode).toBe(200);
+    const newResetPassword = "123";
+    let newPasswordResponse = await request(app)
+      .post("/api/users/login")
+      .send({ user: { email, password: newResetPassword } });
+    // console.log(newPasswordResponse.body);
+    expect(newPasswordResponse.statusCode).toBe(200);
   });
   test("should send 'a status 400 and a message: email address ${toAddress} is not associated with any account'", async () => {
     let fakeEmail = "iamsofake@email.com";
