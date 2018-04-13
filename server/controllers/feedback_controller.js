@@ -28,17 +28,6 @@ async function initiateFeedback(req, res) {
     });
   }
   // should call the mailgun api here to trigger mail send
-  const toAddress = user.email;
-  const fromAddress = systemEmailAddress;
-  const subject = "Your Password for " + applicationName + " has been changed";
-  const text =
-    "Hello,\n\n" +
-    "This is a confirmation that the password for your account " +
-    user.email +
-    " has just been changed.\n";
-  mailer.sendText(fromAddress, toAddress, subject, text);
-
-  res.send({ msg: "Your password has been changed successfully." });
 
   return res.status(200).send({
     msg: `Your feedback to ${req.body.receiver} was sent successfully`
