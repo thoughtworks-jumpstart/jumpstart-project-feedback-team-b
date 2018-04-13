@@ -4,7 +4,7 @@ const fixtureLoader = require("../test_helper/fixtures");
 const fixtures = require("../test_helper/fixtures").fixtures;
 const request = require("supertest");
 const User = require("../models/User");
-
+const timeKeeper = require("timekeeper");
 const mockEmailService = {
   sendText: jest.fn()
 };
@@ -82,7 +82,34 @@ describe("Existing user forgot password", () => {
       });
     expect(resetPasswordResponse.statusCode).toBe(400);
   });
+  test("Existing user tries to reset the password after token has expired", async () => {
+    const email = fixtures.users.tom.email;
+    await sendPasswordReset(email);
 
+    const newResetPassword = "123";
+    const userFoundByEmail = await User.findOne({ email: email });
+    const userToken = userFoundByEmail.passwordResetToken;
+
+    // console.log(Date.now());
+    const oneHrLater = Date.now() + 3600000;
+    timeKeeper.travel(oneHrLater);
+    // console.log(Date.now());
+    let resetPasswordResponse = await request(app)
+      .post("/api/user/reset-password/")
+      .send({
+        user: {
+          password: newResetPassword,
+          confirm: newResetPassword,
+          token: userToken
+        }
+      });
+    expect(resetPasswordResponse.statusCode).toBe(400);
+    expect(resetPasswordResponse.body.msg).toMatch(
+      /Password reset token is invalid or has expired./
+    );
+    timeKeeper.reset();
+    // console.log(Date.now());
+  });
   test("should respond normally when invalid email address is given'", async () => {
     mockEmailService.sendText.mockClear();
     let fakeEmail = "iamsofake@email.com";

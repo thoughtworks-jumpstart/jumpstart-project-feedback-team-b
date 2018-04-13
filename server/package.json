@@ -50,7 +50,8 @@
     "nodemon": "^1.17.3",
     "prettier": "^1.11.1",
     "sinon": "^4.2.1",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "timekeeper": "^2.1.0"
   },
   "jest": {
     "testEnvironment": "node",
