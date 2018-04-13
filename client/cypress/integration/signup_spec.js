@@ -1,20 +1,20 @@
 let User = require("../seedData/fakeData");
-// let testDb = require();
+const URL = Cypress.env("baseUrl");
 
 describe("The Signup Page", function() {
   it("succesfully loads sign up page when clicked on the navbar", function() {
-    cy.visit("http://localhost:3000");
+    cy.visit(URL);
     cy
       .get("[data-cy=signup]")
       .click()
       .url()
-      .should("eq", "http://localhost:3000/signup");
+      .should("eq", URL + "signup");
   });
 });
 
 describe("error messages for signup page", function() {
   beforeEach(function() {
-    cy.visit("http://localhost:3000/signup");
+    cy.visit(URL + "signup");
   });
 
   it("should not be able to submit a form with empty fields", function() {
@@ -80,6 +80,6 @@ describe("error messages for signup page", function() {
       .get("button[type=submit]")
       .click()
       .url()
-      .should("eq", "http://localhost:3000/");
+      .should("eq", URL);
   });
 });

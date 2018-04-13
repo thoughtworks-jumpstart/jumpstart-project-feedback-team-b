@@ -1,19 +1,21 @@
+const URL = Cypress.env("baseUrl");
+
 describe("Home", function() {
   before(function() {
-    cy.visit("http://localhost:3000");
+    cy.visit(URL);
   }),
     it("should redirect to login page ", () => {
       cy
         .get("[data-cy=login]")
         .click()
         .url()
-        .should("eq", "http://localhost:3000/login");
+        .should("eq", URL + "login");
     });
 });
 
 describe("happy and unhappy paths", function() {
   beforeEach(function() {
-    cy.visit("http://localhost:3000/login");
+    cy.visit(URL + "login");
   });
 
   it("should show alert error message when both fields are not filled", function() {
@@ -31,7 +33,7 @@ describe("happy and unhappy paths", function() {
       .get("button[type=submit]")
       .click()
       .url()
-      .should("eq", "http://localhost:3000/");
+      .should("eq", URL);
   });
 
   it("should return an error message if invalid id or password is supplied", () => {
@@ -50,18 +52,18 @@ describe("happy and unhappy paths", function() {
 
 describe("forget password path", function() {
   it("should successfully direct to forgot password when clicked upon at log in page", function() {
-    cy.visit("http://localhost:3000/login");
+    cy.visit(URL + "login");
     cy
       .get('a[href="/forgot"]')
       .click()
       .url()
-      .should("eq", "http://localhost:3000/forgot");
+      .should("eq", URL + "forgot");
   });
 });
 
 describe("Reset", () => {
   beforeEach(function() {
-    cy.visit("http://localhost:3000/forgot");
+    cy.visit(URL + "forgot");
   }),
     it("should return success message that email reset is sent", () => {
       cy
