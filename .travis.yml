@@ -7,7 +7,7 @@ cache:
   - node_modules
   - server/node_modules
   - client/node_modules
-
+  
 jobs:
   include:
     - stage: unit tests
@@ -16,8 +16,8 @@ jobs:
       script: yarn build
     - stage: deploy to staging
       script: skip
-      deploy:
-        provider: &heroku
+      deploy: &heroku
+        provider: heroku
         app: my-feedback-team-b-staging
         api_key:
         secure: kJeZMjCpalowRjzBtGtQKhQGO1rjaL9Gn7jbZBnSiq2dfeq/2aCSKBtfQXmRGopaOQ/3uQju3spF7c3CPclXNkP7HFnEJ5nsuKVFd0xmdZIjnqorcdQCtAX3ogschHkjJkYRr/ffo2INGB9Mrht4UwGqrLJE7YMH6CG9sfCg/mfTMJNBa6cl3hHdVHlPl3hSOSPLF4q1+JKOolsZJt030CJKsw7jvJBA6ZhhLJqjDa3Ot66VxlPLsicXD2QCFTWBnfe59zKr1uHhtEUqqCxwiD2JLCXncrxKvCnHI7lzmL6xhBf6hoSbrn9ri43tbXK9YIKbOcbn/4k7CahsXgHb40cHahCYyQ9Kmta3vTY9ooEJqu66aqf3mykznqDRDlEflT6/chKJOG4NZpBPaHGhCWvzdFxIo3R1kfNCHIyMl1mbyXOZNNdQDkvd+cSPHAUm6YL60Vq/zbUtSj/6qgJEUjsAVrRDctxQgQpOmwv6caeOTwDVKdq6CFRObYmQO9GfW+3ZauvRXEWLpHjwrkLuUxeB0T6aXquoJVFcBhLoju50LGaSkDWkf83sFhNn/3mzErapM/5oyxfXD8VB1B7AC2yFuGyvEIRD6Kcd3cRm5ucZSLTtiNMhtSnslgN+dGpWMjdzKuogB4x/7VyTKyudr1NmChr+iVpvkNNzAUU176I=
