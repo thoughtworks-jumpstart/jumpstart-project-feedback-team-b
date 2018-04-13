@@ -96,17 +96,4 @@ describe("Reset", () => {
           "An email has been sent to " + email + " with further instructions."
         );
     });
-
-  it("should return error message that invalid email was supplied", () => {
-    cy
-      .get("input#email")
-      .type("aaa@outlook.com")
-      .get("button[type=submit]")
-      .click()
-      .get("[data-cy=error]")
-      .should("be.visible")
-      .contains(
-        "The email address aaa@outlook.com is not associated with any account."
-      );
-  });
 });
