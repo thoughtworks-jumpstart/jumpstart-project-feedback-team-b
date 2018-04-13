@@ -18,7 +18,7 @@ router.post("/users/login", login);
 
 router.post("/user/forgot-password", handleAsyncError(sendPasswordResetEmail));
 
-router.post("/user/reset-password/:token", handleAsyncError(resetPassword));
+router.post("/user/reset-password", handleAsyncError(resetPassword));
 
 router.get("/user", jwt.required, handleAsyncError(getCurrentUser));
 

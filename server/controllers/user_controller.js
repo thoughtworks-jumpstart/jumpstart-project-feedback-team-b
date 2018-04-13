@@ -120,8 +120,9 @@ async function sendPasswordResetEmail(req, res) {
 
   const user = await User.findOne({ email: toAddress });
   if (!user) {
-    return res.status(400).send({
-      msg: `The email address ${toAddress} is not associated with any account.`
+    return res.send({
+      msg:
+        "An email has been sent to " + toAddress + " with further instructions."
     });
   }
   user.passwordResetToken = token;
@@ -148,7 +149,7 @@ async function sendPasswordResetEmail(req, res) {
 }
 
 async function resetPassword(req, res) {
-  const user = await User.findOne({ passwordResetToken: req.params.token })
+  const user = await User.findOne({ passwordResetToken: req.body.user.token })
     .where("passwordResetExpires")
     .gt(Date.now())
     .exec();
