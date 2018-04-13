@@ -1,0 +1,16 @@
+.content {
+  text-align: left;
+  overflow: auto;
+}
+
+.init-save-button {
+  font-size: 15px;
+  padding: 3px;
+  text-align: right;
+  padding: 20px 20px 0 0;
+}
+.template-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 0 10px;
+}

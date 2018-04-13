@@ -4,21 +4,32 @@
 }
 
 .info-body {
-  display: grid;
-  grid-template-columns: 1fr 5fr;
+  display: flex;
 }
 
 .info-body-sidebar {
-  border: 1px solid green;
+  padding: 20px 0 0 0;
+  float: left;
+  height: 100%;
+  width: 15%;
+  line-height: 50px;
+
+  /* font-size: 15px; */
+}
+.info-body-sidebar li {
+  border-bottom: 1px solid rgba(194, 194, 194, 0.932);
 }
 
 .info-body-sidebar li {
   display: block;
   padding: 10px 10px 10px 30px;
-  font-size: 1.5em;
 }
 
 .info-body-content {
   padding: 10px;
-  border: 1px solid plum;
+  float: right;
+  width: 80%;
+  margin-left: 2%;
+  margin-right: 3%;
+  overflow: auto;
 }
