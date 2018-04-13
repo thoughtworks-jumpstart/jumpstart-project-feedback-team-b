@@ -22,22 +22,23 @@ async function loginAsTom(password) {
   expect(response.statusCode).toBe(200);
   jwtToken = response.body.token;
 }
+describe("Change password on the current user", () => {
+  it("should have the new password", async () => {
+    await loginAsTom(fixtures.users.tom.password);
 
-test("Change password on the current user", async () => {
-  await loginAsTom(fixtures.users.tom.password);
+    const newPassword = "new-password";
+    const updatedUser = {
+      password: newPassword
+    };
 
-  const newPassword = "new-password";
-  const updatedUser = {
-    password: newPassword
-  };
+    let response = await request(app)
+      .put("/api/user")
+      .send({ user: updatedUser })
+      .set("Authorization", "Bearer " + jwtToken);
 
-  let response = await request(app)
-    .put("/api/user")
-    .send({ user: updatedUser })
-    .set("Authorization", "Bearer " + jwtToken);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.msg).toMatch(/Your password is changed successfully/);
 
-  expect(response.statusCode).toBe(200);
-  expect(response.body.msg).toMatch(/Your password is changed successfully/);
-
-  await loginAsTom(newPassword);
+    await loginAsTom(newPassword);
+  });
 });

@@ -117,13 +117,14 @@ export function resetPassword({
     ];
     messageContext.setErrorMessages(messages);
   } else {
-    return fetch(`/api/user/reset-password/${token}`, {
+    return fetch(`/api/user/reset-password`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         user: {
           password: password,
-          confirm: confirm
+          confirm: confirm,
+          token: token
         }
       })
     }).then(response => {
