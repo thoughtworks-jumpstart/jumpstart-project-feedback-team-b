@@ -7,9 +7,6 @@ cache:
   - node_modules
   - server/node_modules
   - client/node_modules
-script:
-- yarn test
-- yarn build
 
 jobs:
 include:
