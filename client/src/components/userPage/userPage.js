@@ -1,7 +1,8 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import "./userPage.css";
-const userPage = () => {
+import { NavLink, Switch, Route } from "react-router-dom";
+import "./UserPage.css";
+import TemplateForm from "../TemplateForm/TemplateForm";
+const UserPage = () => {
   return (
     <div className="info-body">
       <div className="info-body-sidebar">
@@ -12,17 +13,19 @@ const userPage = () => {
           <NavLink to="#">Pending request </NavLink>
         </li>
         <li>
-          <NavLink to="#">initiate Feedback </NavLink>
+          <NavLink to="/UserPage/home">initiate Feedback </NavLink>
         </li>
         <li>
           <NavLink to="#">Pending feedback</NavLink>
         </li>
       </div>
       <div className="info-body-content">
-        <h1>default content</h1>
+        <Switch>
+          <Route path="/UserPage/home" exact component={TemplateForm} />
+        </Switch>
       </div>
     </div>
   );
 };
 
-export default userPage;
+export default UserPage;

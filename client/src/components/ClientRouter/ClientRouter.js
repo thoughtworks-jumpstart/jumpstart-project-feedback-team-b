@@ -8,7 +8,7 @@ import Forgot from "../Account/Forgot";
 import Reset from "../Account/Reset";
 import { subscribe } from "react-contextual";
 import { Route, Switch, Redirect } from "react-router-dom";
-import userPage from "../userPage/userPage";
+import UserPage from "../UserPage/UserPage";
 
 const isAuthenticated = props => props.jwtToken !== null;
 
@@ -39,10 +39,11 @@ const ClientRouter = () => {
         <PrivateRoute path="/account" component={Profile} />
         <Route path="/forgot" component={Forgot} />
         <Route path="/reset/:token" component={Reset} />
-        <Route path="/userPage" component={userPage} />
+        <Route path="/userPage" component={UserPage} />
         <Route path="*" component={NotFound} />
       </Switch>
     </div>
   );
 };
+
 export default ClientRouter;

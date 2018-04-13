@@ -1,0 +1,24 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+.info-body {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+}
+
+.info-body-sidebar {
+  border: 1px solid green;
+}
+
+.info-body-sidebar li {
+  display: block;
+  padding: 10px 10px 10px 30px;
+  font-size: 1.5em;
+}
+
+.info-body-content {
+  padding: 10px;
+  border: 1px solid plum;
+}
