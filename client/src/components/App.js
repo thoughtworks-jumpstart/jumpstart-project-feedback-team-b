@@ -23,7 +23,7 @@ class App extends React.Component {
         <CookiesProvider>
           <BrowserRouter>
             <div>
-              <div>
+              <div className="body">
                 <Header />
                 <ClientRouter />
               </div>
