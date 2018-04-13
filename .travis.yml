@@ -33,7 +33,7 @@ include:
       script: skip
       deploy: 
         <<: *heroku
-        app: my-feedback-team-b-prod
+        app: my-feedback-team-b
         on:
           branch: deploy-to-prod
 
