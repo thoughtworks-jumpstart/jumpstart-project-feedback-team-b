@@ -27,6 +27,7 @@ async function initiateFeedback(req, res) {
       msg: "There was an error processing your request"
     });
   }
+  // should call the mailgun api here to trigger mail send
 
   return res.status(200).send({
     msg: `Your feedback to ${req.body.receiver} was sent successfully`
