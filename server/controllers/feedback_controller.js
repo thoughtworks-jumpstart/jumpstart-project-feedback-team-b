@@ -1,6 +1,5 @@
 const Feedback = require("../models/Feedback");
 const User = require("../models/User");
-const mailer = require("../utils/email_service");
 
 async function initiateFeedback(req, res) {
   const receiver = await User.findOne({ email: req.body.receiver });
@@ -23,13 +22,6 @@ async function initiateFeedback(req, res) {
 
   try {
     await feedback.save();
-    // should call the mailgun api here to trigger mail send
-    const toAddress = feedback.receiver;
-    const fromAddress = feedback.giver;
-    const subject = "Feedback Request from " + user.name;
-    const text =
-      "Hello,\n\n" + " You have a new feedback request from" + user.name + "\n";
-    mailer.sendText(fromAddress, toAddress, subject, text);
   } catch (error) {
     return res.status(400).send({
       msg: "There was an error processing your request"
