@@ -1,5 +1,4 @@
 import moment from "moment";
-
 export function login({
   email,
   password,
@@ -28,7 +27,7 @@ export function login({
             .add(1, "hour")
             .toDate()
         });
-        history.replace(from);
+        history.push("/userPage");
       });
     } else {
       return response.json().then(json => {
