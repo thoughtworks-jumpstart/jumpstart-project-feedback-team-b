@@ -6,9 +6,9 @@ import Signup from "../Account/Signup";
 import Profile from "../Account/Profile";
 import Forgot from "../Account/Forgot";
 import Reset from "../Account/Reset";
+import UserPage from "../UserPage/UserPage";
 import { subscribe } from "react-contextual";
 import { Route, Switch, Redirect } from "react-router-dom";
-import UserPage from "../UserPage/UserPage";
 
 const isAuthenticated = props => props.jwtToken !== null;
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Switch, Route, Link } from "react-router-dom";
+import { NavLink, Switch, Route } from "react-router-dom";
 import "./UserPage.css";
 import TemplateForm from "../TemplateForm/TemplateForm";
 
