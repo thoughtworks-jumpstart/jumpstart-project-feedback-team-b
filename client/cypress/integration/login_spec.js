@@ -42,7 +42,7 @@ describe("happy and unhappy paths", function() {
     cy.get("[data-cy=error]").should("be.visible");
   });
 
-  it("should successfully logs user in when both fields are filled", function() {
+  it("should successfully log user in when both fields are filled", function() {
     cy
       .get("input#email")
       .type(email)
@@ -52,7 +52,7 @@ describe("happy and unhappy paths", function() {
       .get("button[type=submit]")
       .click()
       .url()
-      .should("eq", URL);
+      .should("eq", URL + "UserPage/Home");
   });
 
   it("should return an error message if invalid id or password is supplied", () => {
