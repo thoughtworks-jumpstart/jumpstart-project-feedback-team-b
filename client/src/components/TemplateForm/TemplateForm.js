@@ -30,7 +30,7 @@ class TemplateForm extends React.Component {
             <textarea className="form-control border border-primary" rows={1} />
             <br />
             <div>
-              <label>What did I do well?</label>
+              <label>You are doing great at...</label>
             </div>
 
             <div className="feedback-form-fields">
@@ -41,7 +41,7 @@ class TemplateForm extends React.Component {
             </div>
             <br />
             <div>
-              <label>What could be better?</label>
+              <label>You could work on/improve...</label>
             </div>
 
             <div className="feedback-form-fields">
@@ -52,7 +52,7 @@ class TemplateForm extends React.Component {
             </div>
             <br />
             <div>
-              <label>Suggestions for improvement</label>
+              <label>Suggestions...</label>
             </div>
             <div className="feedback-form-fields">
               <textarea
