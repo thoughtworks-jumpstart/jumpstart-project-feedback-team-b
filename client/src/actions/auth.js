@@ -27,7 +27,7 @@ export function login({
             .add(1, "hour")
             .toDate()
         });
-        history.push("/UserPage/Home");
+        history.replace(from);
       });
     } else {
       return response.json().then(json => {
