@@ -39,7 +39,7 @@ const ClientRouter = () => {
         <PrivateRoute path="/account" component={Profile} />
         <Route path="/forgot" component={Forgot} />
         <Route path="/reset/:token" component={Reset} />
-        <PrivateRoute path="/UserPage" component={UserPage} />
+        <PrivateRoute path="/mydashboard" component={UserPage} />
         <Route path="*" component={NotFound} />
       </Switch>
     </div>
