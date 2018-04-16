@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink, Switch, Route } from "react-router-dom";
-import "./UserPage.css";
+import "./MyDashboard.css";
 import TemplateForm from "../TemplateForm/TemplateForm";
 
-const UserPage = () => {
+const MyDashboard = () => {
   return (
     <div className="info-body">
       <ul className="info-body-sidebar">
@@ -29,4 +29,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default MyDashboard;

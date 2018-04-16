@@ -6,7 +6,7 @@ import Signup from "../Account/Signup";
 import Profile from "../Account/Profile";
 import Forgot from "../Account/Forgot";
 import Reset from "../Account/Reset";
-import UserPage from "../UserPage/UserPage";
+import MyDashboard from "../MyDashboard/MyDashboard";
 import { subscribe } from "react-contextual";
 import { Route, Switch, Redirect } from "react-router-dom";
 
@@ -39,7 +39,7 @@ const ClientRouter = () => {
         <PrivateRoute path="/account" component={Profile} />
         <Route path="/forgot" component={Forgot} />
         <Route path="/reset/:token" component={Reset} />
-        <PrivateRoute path="/mydashboard" component={UserPage} />
+        <PrivateRoute path="/mydashboard" component={MyDashboard} />
         <Route path="*" component={NotFound} />
       </Switch>
     </div>
