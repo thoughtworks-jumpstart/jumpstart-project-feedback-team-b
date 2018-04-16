@@ -39,8 +39,8 @@ class Header extends React.Component {
       <div>
         <ul className="nav navbar-nav navbar-left">
           <li>
-            <NavLink exact to="/UserPage/Home" activeStyle={active}>
-              Your Dashboard
+            <NavLink exact to="/mydashboard" activeStyle={active}>
+              My Dashboard
             </NavLink>
           </li>
         </ul>
