@@ -1,11 +1,11 @@
 import { shallow } from "enzyme";
 import React from "react";
-import UserPage from "./UserPage";
+import MyDashboard from "./MyDashboard";
 import { NavLink, Switch, Route } from "react-router-dom";
 
-describe("userPage structure Testing", () => {
+describe("mydashboard structure Testing", () => {
   it("should find all structure element", () => {
-    const wrapper = shallow(<UserPage />);
+    const wrapper = shallow(<MyDashboard />);
     expect(wrapper.find("div")).toHaveLength(2);
     expect(wrapper.find("li")).toHaveLength(4);
     expect(wrapper.find(NavLink)).toHaveLength(4);
