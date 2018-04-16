@@ -11,8 +11,8 @@ cache:
 jobs:
   include:
     - stage: Test, Build, and Deploy
-      - script: yarn test
-      - script: yarn build
+      script: yarn test
+      script: yarn build
       deploy: &heroku
         provider: heroku
         app: my-feedback-team-b-staging
