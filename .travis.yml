@@ -35,8 +35,9 @@ jobs:
           branch: deploy-to-prod
 
 before_install:
-- curl -o- -L https://yarnpkg.com/install.sh | bash
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.5.1
 - export PATH="$HOME/.yarn/bin:$PATH"
+
 notifications:
   slack:
     secure: hWiZG5Tofh5Qw/LNkJi2+aIG9acd38dC73byrogZs0OGRVdvgXH93mqnnTLNaG5o7+A7Kz2mgc7gxmwQFuxW/qthF1KSX+PAIR+1Y1RE0fx3fI6dNNVvGpFun8jcXpcDvCYYvXCnYgg4ahW+Xch7sL82dpe8keVhMagU0PuoRvPA3iKIVcmc1ldvWDe+agtQ0cWalsuvOld3OUKYwA/hyFSrMmYddKfAIDZzpu/ozOXqXpzXnxXckyM/NgeHCKgCoChKIx0gwFnM6qCqKcYW102hO3iikibsvfwv3syYUYkPYG10vtEd9QGYbbXXskA6T/0Ireyp1kzZjrWhOPjjX7e8wzd7CC8MM9Pf+pyExb5WQOA46n71i8iwfnf+B9zWCYiW3vpoHkvczuplBPGyxW8TpkEzh0S88GWz3tz3rfss2ZJSBT1c1+KHXkRqDvlV3i3JxqlQWSTNDeL7oCqJbI7G80UDeq47iV1k1UX5Fh4SuDry2tB3crlHI/0vjw3l51tRCKIxqINmHt51DTDDLYWKodilCOrn+xMQsdn/qdJGFSDNNIISSAVScXJFNBE4YAc5hJPlb8/6xCz6mHkHVke/ny3NFsfUqFqR8cZ+rwIn5i0V+3MhN7qk7J7GbeSJiDUOS+0ZXnE9fCCHZ0IvFJ6oqdL54QVvsgyvowkmrE8=
