@@ -14,7 +14,7 @@ const UserPage = () => {
           <NavLink to="#">Pending request </NavLink>
         </li>
         <li>
-          <NavLink to="/UserPage/home">Initiate Feedback </NavLink>
+          <NavLink to="/mydashboard/initiate">Initiate Feedback </NavLink>
         </li>
         <li>
           <NavLink to="#">Pending feedback</NavLink>
@@ -22,7 +22,7 @@ const UserPage = () => {
       </ul>
       <div className="info-body-content">
         <Switch>
-          <Route path="/UserPage/home" exact component={TemplateForm} />
+          <Route path="/mydashboard/initiate" exact component={TemplateForm} />
         </Switch>
       </div>
     </div>
