@@ -15,8 +15,8 @@
     "start:client": "cd client&&yarn start",
     "start:dev:server": "cd server&&yarn dev",
     "start:db": "mongod --dbpath server/db/data",
-    "test:staging:uitests": "cd client&&yarn test:staging:uitests",
-    "test:cypress:headed": "cd client&&yarn test:cypress"
+    "test:cypress": "cd client&&yarn test:cypress",
+    "test:staging:uitests": "cd client&&yarn test:staging:uitests"
   },
   "engines": {
     "node": "^9.9.0",

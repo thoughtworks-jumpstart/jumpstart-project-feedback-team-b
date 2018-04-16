@@ -43,7 +43,6 @@
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject",
-    "test:cypress-open": "cypress open",
     "test:cypress": "cypress run --headed --browser chrome",
     "test:staging:uitests":
       "cypress run --env baseUrl=https://my-feedback-team-b-staging.herokuapp.com/"
