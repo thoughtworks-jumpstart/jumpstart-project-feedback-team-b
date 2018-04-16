@@ -21,7 +21,7 @@ jobs:
     - stage: UI tests
       script:
       - curl -s http://my-feedback-team-b-staging.herokuapp.com > /dev/null
-      - yarn test:cypress
+      - yarn test:staging:uitests
     - stage: build for production
       script: yarn build
     - stage: deploy to production

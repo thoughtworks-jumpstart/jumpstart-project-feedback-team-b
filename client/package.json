@@ -45,7 +45,7 @@
     "eject": "react-scripts eject",
     "test:cypress-open": "cypress open",
     "test:cypress": "cypress run --headed --browser chrome",
-    "test:cypress-headless":
+    "test:staging:uitests":
       "cypress run --env baseUrl=https://my-feedback-team-b-staging.herokuapp.com/"
   },
   "jest": {
