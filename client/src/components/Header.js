@@ -28,7 +28,6 @@ class Header extends React.Component {
 
   render() {
     const active = { borderBottomColor: "#3f51b5" };
-
     const loginNav = this.props.sessionContext.token ? (
       <div>
         <ul className="nav navbar-nav navbar-left">
