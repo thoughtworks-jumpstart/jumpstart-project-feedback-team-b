@@ -28,39 +28,55 @@ class Header extends React.Component {
 
   render() {
     const active = { borderBottomColor: "#3f51b5" };
+    // const leftNav = this.props.sessionContext.token (
+    //   <ul className="nav navbar-nav navbar-left">
+    //   <NavLink exact to="/UserPage" activeStyle={active}>
+    //               Your Dashboard
+    //             </NavLink>
+    //             </ul>
+    // ):()
     const rightNav = this.props.sessionContext.token ? (
-      <ul className="nav navbar-nav navbar-right">
-        <li className="dropdown">
-          <a
-            href="about:blank"
-            data-toggle="dropdown"
-            className="navbar-avatar dropdown-toggle"
-          >
-            <img
-              alt="avatar"
-              src={
-                this.props.sessionContext.user.picture ||
-                this.props.sessionContext.user.gravatar
-              }
-            />{" "}
-            {this.props.sessionContext.user.name ||
-              this.props.sessionContext.user.email ||
-              this.props.sessionContext.user.id}{" "}
-            <i className="caret" />
-          </a>
-          <ul className="dropdown-menu">
-            <li>
-              <Link to="/account">My Account</Link>
-            </li>
-            <li className="divider" />
-            <li>
-              <a href="about:blank" onClick={this.handleLogout.bind(this)}>
-                Logout
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <div>
+        <ul className="nav navbar-nav navbar-left">
+          <li>
+            <NavLink exact to="/UserPage/Home" activeStyle={active}>
+              Your Dashboard
+            </NavLink>
+          </li>
+        </ul>
+        <ul className="nav navbar-nav navbar-right">
+          <li className="dropdown">
+            <a
+              href="about:blank"
+              data-toggle="dropdown"
+              className="navbar-avatar dropdown-toggle"
+            >
+              <img
+                alt="avatar"
+                src={
+                  this.props.sessionContext.user.picture ||
+                  this.props.sessionContext.user.gravatar
+                }
+              />{" "}
+              {this.props.sessionContext.user.name ||
+                this.props.sessionContext.user.email ||
+                this.props.sessionContext.user.id}{" "}
+              <i className="caret" />
+            </a>
+            <ul className="dropdown-menu">
+              <li>
+                <Link to="/account">My Account</Link>
+              </li>
+              <li className="divider" />
+              <li>
+                <a href="about:blank" onClick={this.handleLogout.bind(this)}>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     ) : (
       <ul className="nav navbar-nav navbar-right">
         <li data-cy="login">
