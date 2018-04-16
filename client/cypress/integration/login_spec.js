@@ -52,7 +52,7 @@ describe("happy and unhappy paths", function() {
       .get("button[type=submit]")
       .click()
       .url()
-      .should("eq", URL + "UserPage/Home");
+      .should("eq", URL + "mydashboard");
   });
 
   it("should return an error message if invalid id or password is supplied", () => {
