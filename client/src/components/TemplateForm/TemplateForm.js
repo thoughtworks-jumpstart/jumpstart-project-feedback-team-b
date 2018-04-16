@@ -1,6 +1,16 @@
 import React from "react";
 import "./TemplateForm.css";
+// import { withRouter } from "react-router-dom";
+
 class TemplateForm extends React.Component {
+  // componentDidMount() {
+  //   this.props.router.setRouteLeaveHook(this.props.route, () => {
+  //     if (this.state.unsaved)
+  //       return "You have unsaved information, are you sure you want to leave this page?";
+  //   });
+  //   withRouter(TemplateForm);
+  // }
+
   render() {
     return (
       <div className="content">

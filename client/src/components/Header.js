@@ -35,7 +35,7 @@ class Header extends React.Component {
     //             </NavLink>
     //             </ul>
     // ):()
-    const rightNav = this.props.sessionContext.token ? (
+    const loginNav = this.props.sessionContext.token ? (
       <div>
         <ul className="nav navbar-nav navbar-left">
           <li>
@@ -107,18 +107,11 @@ class Header extends React.Component {
               <span className="icon-bar" />
             </button>
             <NavLink exact to="/" className="navbar-brand">
-              Project name
+              myFeedback
             </NavLink>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
-            <ul className="nav navbar-nav">
-              <li>
-                <NavLink exact to="/" activeStyle={active}>
-                  Home
-                </NavLink>
-              </li>
-            </ul>
-            {rightNav}
+            {loginNav}
           </div>
         </div>
       </nav>
