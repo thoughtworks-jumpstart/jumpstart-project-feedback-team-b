@@ -37,3 +37,5 @@ node_modules
 # database
 server/db/data
 
+# screenshot folder
+client/cypress/screenshots
