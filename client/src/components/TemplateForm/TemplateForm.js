@@ -20,7 +20,7 @@ class TemplateForm extends React.Component {
             <textarea className="form-control border border-primary" rows={1} />
             <br />
             <div>
-              <label>What did i do well?</label>
+              <label>What did I do well?</label>
             </div>
 
             <div className="feedback-form-fields">
