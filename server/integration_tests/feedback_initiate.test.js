@@ -7,6 +7,13 @@ const Feedback = require("../models/Feedback");
 const random = require("../utils/crypto_promise");
 
 const request = require("supertest");
+const mockEmailService = {
+  sendText: jest.fn()
+};
+
+jest.mock("../utils/email_service.js", () => {
+  return mockEmailService;
+});
 const app = require("../app");
 
 beforeAll(testDB.setup);
@@ -102,5 +109,53 @@ describe("Accessing Feedback API with login", () => {
     expect(feedback.giver).toEqual(giver_email);
     expect(feedback.status).toEqual("RECEIVER_UNREAD");
     expect(Array.from(feedback.feedbackItems)).toEqual(feedbackItems);
+  });
+
+  describe("Test if email is sent", () => {
+    beforeAll(loginAsTom);
+    let valid_receiver = "jacky@example.com";
+    let invalid_receiver = "receiver@receiver.com";
+    let feedbackItems = [
+      "Good points",
+      "You can do a lot better",
+      "Lots of room for improvement"
+    ];
+
+    it("should not send out an email to the receiver if receiver email could not be found ", async () => {
+      let feedback_initiate = {
+        receiver: invalid_receiver,
+        feedbackItems: feedbackItems
+      };
+
+      mockEmailService.sendText.mockClear();
+      let response = await request(app)
+        .post("/api/feedback/initiate")
+        .set("Authorization", "Bearer " + jwtToken)
+        .send(feedback_initiate);
+
+      expect(response.statusCode).toBe(400);
+      expect(mockEmailService.sendText).toHaveBeenCalledTimes(0);
+    });
+
+    it("should send out email to the receiver if giver has initiated feedback", async () => {
+      let feedback_initiate = {
+        receiver: valid_receiver,
+        feedbackItems: feedbackItems
+      };
+      mockEmailService.sendText.mockClear();
+      let response = await request(app)
+        .post("/api/feedback/initiate")
+        .set("Authorization", "Bearer " + jwtToken)
+        .send(feedback_initiate);
+      expect(response.statusCode).toBe(200);
+      expect(mockEmailService.sendText).toHaveBeenCalledTimes(1);
+      expect(mockEmailService.sendText.mock.calls[0][1]).toEqual(
+        valid_receiver
+      );
+      const message = response.body.msg;
+      expect(message).toMatch(
+        `Your feedback to jacky (jacky@example.com) was sent successfully`
+      );
+    });
   });
 });
