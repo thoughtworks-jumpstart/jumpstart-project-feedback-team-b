@@ -38,7 +38,7 @@ class Login extends React.Component {
     if (locationState && locationState.from) {
       return locationState.from.pathname;
     } else {
-      return "/";
+      return "/mydashboard";
     }
   }
 
