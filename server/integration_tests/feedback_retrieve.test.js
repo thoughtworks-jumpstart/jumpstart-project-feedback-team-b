@@ -45,7 +45,7 @@ async function createFeedback() {
 
 describe("Retrieving feedback API without login", () => {
   it("should return a 401 unauthorized code", async () => {
-    let feedback = createFeedback();
+    let feedback = await createFeedback();
     let response = await request(app).get(`/api/feedback/${feedback._id}`);
     expect(response.statusCode).toBe(401);
   });
