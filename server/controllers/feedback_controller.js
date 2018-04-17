@@ -69,6 +69,14 @@ async function requestFeedback(req, res) {
     });
   }
 
+  const fromAddress = receiver.email;
+  const toAddress = giver.email;
+  const giverName = giver.name;
+  const receiverName = receiver.name;
+  const subject = "You have a request for feedback from " + receiverName;
+  const text = `Hi ${giverName}, ${receiverName} has requested you to provide some feedback via myFeedback`;
+  mailer.sendText(fromAddress, toAddress, subject, text);
+
   return res.status(200).send({
     msg: `Your request for feedback from ${giver.name} (${
       giver.email

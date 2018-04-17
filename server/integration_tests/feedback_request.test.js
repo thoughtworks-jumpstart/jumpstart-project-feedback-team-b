@@ -4,9 +4,17 @@ const testDB = require("../test_helper/in_memory_mongodb_setup");
 const fixtureLoader = require("../test_helper/fixtures");
 const fixtures = require("../test_helper/fixtures").fixtures;
 const Feedback = require("../models/Feedback");
-const random = require("../utils/crypto_promise");
 
 const request = require("supertest");
+
+const mockEmailService = {
+  sendText: jest.fn()
+};
+
+jest.mock("../utils/email_service.js", () => {
+  return mockEmailService;
+});
+
 const app = require("../app");
 
 beforeAll(testDB.setup);
@@ -93,5 +101,36 @@ describe("Accessing Feedback Request API with login", () => {
     expect(feedback.giver).toEqual(valid_giver);
     expect(feedback.status).toEqual("GIVER_UNREAD");
     expect(Array.from(feedback.feedbackItems)).toEqual(feedbackItems);
+  });
+
+  it("should send out email for valid giver email", async () => {
+    mockEmailService.sendText.mockClear();
+    let feedback_request = {
+      giver: valid_giver
+    };
+    let response = await request(app)
+      .post("/api/feedback/request")
+      .set("Authorization", "Bearer " + jwtToken)
+      .send(feedback_request);
+    expect(response.statusCode).toBe(200);
+    expect(mockEmailService.sendText).toHaveBeenCalledTimes(1);
+    expect(mockEmailService.sendText.mock.calls[0][1]).toEqual(valid_giver);
+    const message = response.body.msg;
+    expect(message).toMatch(
+      `Your request for feedback from jacky (jacky@example.com) was sent successfully`
+    );
+  });
+
+  it("should not send out email for invalid giver email", async () => {
+    mockEmailService.sendText.mockClear();
+    let feedback_request = {
+      giver: invalid_giver
+    };
+    let response = await request(app)
+      .post("/api/feedback/request")
+      .set("Authorization", "Bearer " + jwtToken)
+      .send(feedback_request);
+    expect(response.statusCode).toBe(400);
+    expect(mockEmailService.sendText).toHaveBeenCalledTimes(0);
   });
 });
