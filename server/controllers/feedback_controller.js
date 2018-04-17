@@ -34,7 +34,8 @@ async function initiateFeedback(req, res) {
   const giverName = user.name;
   const receiverName = receiver.name;
   const subject = "You have a feedback from " + giverName;
-  const text = "Hi " + giverName + "has given you some feedback via myFeedback";
+  const text =
+    "Hi " + giverName + " has given you some feedback via myFeedback";
   mailer.sendText(fromAddress, toAddress, subject, text);
 
   return res.status(200).send({
