@@ -105,6 +105,8 @@ describe("Accessing Feedback Request API with login", () => {
 
   it("should send out email for valid giver email", async () => {
     mockEmailService.sendText.mockClear();
+    const success_email_result = Promise.resolve("Successfully sent!");
+    mockEmailService.sendText.mockImplementation(() => success_email_result);
     let feedback_request = {
       giver: valid_giver
     };
@@ -115,6 +117,9 @@ describe("Accessing Feedback Request API with login", () => {
     expect(response.statusCode).toBe(200);
     expect(mockEmailService.sendText).toHaveBeenCalledTimes(1);
     expect(mockEmailService.sendText.mock.calls[0][1]).toEqual(valid_giver);
+    expect(mockEmailService.sendText.mock.calls[0][3]).toEqual(
+      "Hi jacky, tom has requested you to provide some feedback via myFeedback"
+    );
     const message = response.body.msg;
     expect(message).toMatch(
       `Your request for feedback from jacky (jacky@example.com) was sent successfully`
@@ -132,5 +137,28 @@ describe("Accessing Feedback Request API with login", () => {
       .send(feedback_request);
     expect(response.statusCode).toBe(400);
     expect(mockEmailService.sendText).toHaveBeenCalledTimes(0);
+  });
+
+  it("should tell the user if email cannot be sent", async () => {
+    mockEmailService.sendText.mockClear();
+    mockEmailService.sendText.mockImplementation(() =>
+      Promise.reject("Mail not sent")
+    );
+    let feedback_request = {
+      giver: valid_giver
+    };
+
+    let response = await request(app)
+      .post("/api/feedback/request")
+      .set("Authorization", "Bearer " + jwtToken)
+      .send(feedback_request);
+
+    expect(response.statusCode).toBe(200);
+    expect(mockEmailService.sendText).toHaveBeenCalledTimes(1);
+    expect(mockEmailService.sendText.mock.calls[0][1]).toEqual(valid_giver);
+    const message = response.body.msg;
+    expect(message).toMatch(
+      `The email to jacky (jacky@example.com) to request for feedback was not sent. You might want to inform jacky to login to myFeedback to view the request`
+    );
   });
 });

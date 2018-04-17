@@ -74,7 +74,18 @@ async function requestFeedback(req, res) {
   const receiverName = receiver.name;
   const subject = "You have a request for feedback from " + receiverName;
   const text = `Hi ${giverName}, ${receiverName} has requested you to provide some feedback via myFeedback`;
-  mailer.sendText(fromAddress, toAddress, subject, text);
+
+  try {
+    await mailer.sendText(fromAddress, toAddress, subject, text);
+  } catch (error) {
+    return res.status(200).send({
+      msg: `The email to ${giver.name} (${
+        giver.email
+      }) to request for feedback was not sent. You might want to inform ${
+        giver.name
+      } to login to myFeedback to view the request`
+    });
+  }
 
   return res.status(200).send({
     msg: `Your request for feedback from ${giver.name} (${
