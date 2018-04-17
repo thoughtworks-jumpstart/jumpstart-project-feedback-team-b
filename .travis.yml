@@ -11,8 +11,9 @@ cache:
 jobs:
   include:
     - stage: Test, Build, and Deploy
-      script: yarn test
-      script: yarn build
+      script:
+      - yarn test
+      - yarn build
       deploy: &heroku
         provider: heroku
         app: my-feedback-team-b-staging
@@ -22,11 +23,9 @@ jobs:
       script:
       - curl -s http://my-feedback-team-b-staging.herokuapp.com > /dev/null
       - yarn test:staging:uitests
-    - stage: build for production
-      script: yarn build
     - stage: deploy to production
       if: branch = deploy-to-prod
-      script: skip
+      script: yarn build
       deploy:
         <<: *heroku
         app: my-feedback-team-b
