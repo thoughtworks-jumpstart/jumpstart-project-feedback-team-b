@@ -54,11 +54,18 @@ describe("Retrieving feedback API without login", () => {
 describe("Retrieve feedback API with login", () => {
   beforeAll(loginAsTom);
 
-  it("should return 200", async () => {
+  it("should return a happy path if id value is supplied correctly", async () => {
     const savedFeedbackID = (await createFeedback())._id;
     let response = await request(app)
       .get(`/api/feedback/${savedFeedbackID}`)
       .set("Authorization", "Bearer " + jwtToken);
     expect(response.statusCode).toBe(200);
+  });
+
+  it("should return a unhappy path if id value is supplied incorrectly", async () => {
+    let response = await request(app)
+      .get(`/api/feedback/GSDQQD3276530`)
+      .set("Authorization", "Bearer " + jwtToken);
+    expect(response.statusCode).toBe(400);
   });
 });

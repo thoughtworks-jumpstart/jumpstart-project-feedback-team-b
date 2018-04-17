@@ -32,8 +32,14 @@ async function initiateFeedback(req, res) {
     const subject = "You have a feedback from " + giverName;
     const text = `Hi ${giverName} has given you some feedback via myFeedback. \n
        Click on the link below to see your feedback ${savedFeedback_id}`;
-    mailer.sendText(fromAddress, toAddress, subject, text);
-
+    try {
+      await mailer.sendText(fromAddress, toAddress, subject, text);
+    } catch (error) {
+      return res.status(200).send({
+        msg: `The email to ${receiverName} (${toAddress}) to inform him/her of your feedback was not sent. 
+        You might want to inform ${receiverName} to login to myFeedback to view the feedback you have shared with him/her.`
+      });
+    }
     return res.status(200).send({
       msg: `Your feedback to ${receiverName} (${toAddress}) was sent successfully`
     });
@@ -100,11 +106,16 @@ async function retrieveFeedback(req, res) {
   try {
     const feedbackId = req.params.id;
     let feedback = await Feedback.findById(feedbackId);
+    if (!feedback) {
+      return res.status(400).send({
+        msg: "The feedback could not be found in the system."
+      });
+    }
     return res.status(200).send({
       feedback
     });
   } catch (error) {
-    return res.status(500).send({
+    return res.status(400).send({
       msg: "There was an error processing your request"
     });
   }
