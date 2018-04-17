@@ -43,6 +43,40 @@ async function initiateFeedback(req, res) {
   });
 }
 
+async function requestFeedback(req, res) {
+  const giver = await User.findOne({ email: req.body.giver });
+  if (!giver) {
+    return res.status(400).send({
+      msg: "The email address you have entered is not found in the system."
+    });
+  }
+
+  const userId = req.jwt.userid;
+  const receiver = await User.findById(userId);
+
+  let feedback = new Feedback({
+    giver: giver.email,
+    receiver: receiver.email,
+    status: "GIVER_UNREAD",
+    feedbackItems: ["", "", ""]
+  });
+
+  try {
+    await feedback.save();
+  } catch (error) {
+    return res.status(400).send({
+      msg: "There was an error processing your request"
+    });
+  }
+
+  return res.status(200).send({
+    msg: `Your request for feedback from ${giver.name} (${
+      giver.email
+    }) was sent successfully`
+  });
+}
+
 module.exports = {
-  initiateFeedback
+  initiateFeedback,
+  requestFeedback
 };
