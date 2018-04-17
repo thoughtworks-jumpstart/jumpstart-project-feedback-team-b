@@ -96,7 +96,7 @@ async function requestFeedback(req, res) {
   });
 }
 
-async function getFeedback(req, res) {
+async function retrieveFeedback(req, res) {
   try {
     const feedbackId = req.params.id;
     let feedback = await Feedback.findById(feedbackId);
@@ -113,5 +113,5 @@ async function getFeedback(req, res) {
 module.exports = {
   initiateFeedback,
   requestFeedback,
-  getFeedback
+  retrieveFeedback
 };

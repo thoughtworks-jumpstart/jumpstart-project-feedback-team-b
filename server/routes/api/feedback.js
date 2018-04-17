@@ -3,7 +3,7 @@ const handleAsyncError = require("express-async-wrap");
 const {
   initiateFeedback,
   requestFeedback,
-  getFeedback
+  retrieveFeedback
 } = require("../../controllers/feedback_controller");
 
 const jwt = require("../../middlewares/jwt_middleware");
@@ -20,6 +20,6 @@ router.post(
   handleAsyncError(requestFeedback)
 );
 
-router.get("/feedback/:id", jwt.required, handleAsyncError(getFeedback));
+router.get("/feedback/:id", jwt.required, handleAsyncError(retrieveFeedback));
 
 module.exports = router;
