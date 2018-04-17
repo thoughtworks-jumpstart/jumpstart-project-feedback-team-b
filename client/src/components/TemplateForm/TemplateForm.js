@@ -1,25 +1,31 @@
 import React from "react";
+import { Prompt } from "react-router";
 import "./TemplateForm.css";
 // import { withRouter } from "react-router-dom";
 
 class TemplateForm extends React.Component {
-  // componentDidMount() {
-  //   this.props.router.setRouteLeaveHook(this.props.route, () => {
-  //     if (this.state.unsaved)
-  //       return "You have unsaved information, are you sure you want to leave this page?";
-  //   });
-  //   withRouter(TemplateForm);
-  // }
-
+  constructor() {
+    super();
+    this.state = {
+      isSaved: false
+    };
+    this.shareHandler = this.shareHandler.bind(this);
+  }
   render() {
     return (
       <div className="content">
+        <Prompt
+          when={this.props.isSaved}
+          message="Are you sure you want to leave?"
+        />
         <div className="template-header">
           <h3>
             <strong>Initiate Feedback</strong>
           </h3>
           <div className="init-save-button">
-            <button className="btn">Share</button>
+            <button className="btn" onClick={this.shareHandler}>
+              Share
+            </button>
           </div>
         </div>
         <div>
@@ -64,6 +70,11 @@ class TemplateForm extends React.Component {
         </div>
       </div>
     );
+  }
+
+  shareHandler(event) {
+    event.preventDefault();
+    this.setState({ isSaved: true });
   }
 }
 
