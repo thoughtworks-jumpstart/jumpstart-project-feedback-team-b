@@ -22,24 +22,26 @@ async function initiateFeedback(req, res) {
   });
 
   try {
-    await feedback.save();
+    const savedFeedback = await feedback.save();
+    // should call the mailgun api here to trigger mail send
+    const fromAddress = user.email;
+    const toAddress = receiver.email;
+    const giverName = user.name;
+    const receiverName = receiver.name;
+    const savedFeedback_id = savedFeedback._id;
+    const subject = "You have a feedback from " + giverName;
+    const text = `Hi ${giverName} has given you some feedback via myFeedback. \n
+       Click on the link below to see your feedback ${savedFeedback_id}`;
+    mailer.sendText(fromAddress, toAddress, subject, text);
+
+    return res.status(200).send({
+      msg: `Your feedback to ${receiverName} (${toAddress}) was sent successfully`
+    });
   } catch (error) {
     return res.status(400).send({
       msg: "There was an error processing your request"
     });
   }
-  // should call the mailgun api here to trigger mail send
-  const fromAddress = user.email;
-  const toAddress = receiver.email;
-  const giverName = user.name;
-  const receiverName = receiver.name;
-  const subject = "You have a feedback from " + giverName;
-  const text = "Hi " + giverName + "has given you some feedback via myFeedback";
-  mailer.sendText(fromAddress, toAddress, subject, text);
-
-  return res.status(200).send({
-    msg: `Your feedback to ${receiverName} (${toAddress}) was sent successfully`
-  });
 }
 
 async function requestFeedback(req, res) {
@@ -94,7 +96,22 @@ async function requestFeedback(req, res) {
   });
 }
 
+async function getFeedback(req, res) {
+  try {
+    const feedbackId = req.params.id;
+    let feedback = await Feedback.findById(feedbackId);
+    return res.status(200).send({
+      feedback
+    });
+  } catch (error) {
+    return res.status(500).send({
+      msg: "There was an error processing your request"
+    });
+  }
+}
+
 module.exports = {
   initiateFeedback,
-  requestFeedback
+  requestFeedback,
+  getFeedback
 };
