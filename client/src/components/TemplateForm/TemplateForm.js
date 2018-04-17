@@ -56,6 +56,7 @@ class TemplateForm extends React.Component {
             <textarea
               className="form-control border border-primary"
               rows={1}
+              name="email"
               value={this.state.email}
               onChange={this.onChangeHandler.bind(this)}
             />
@@ -68,6 +69,7 @@ class TemplateForm extends React.Component {
               <textarea
                 className="form-control border border-primary"
                 rows={6}
+                name="feedbackItem1"
                 value={this.state.feedbackItem1}
                 onChange={this.onChangeHandler.bind(this)}
               />
@@ -80,6 +82,7 @@ class TemplateForm extends React.Component {
               <textarea
                 className="form-control border border-primary"
                 rows={6}
+                name="feedbackItem2"
                 value={this.state.feedbackItem2}
                 onChange={this.onChangeHandler.bind(this)}
               />
@@ -93,6 +96,7 @@ class TemplateForm extends React.Component {
                 className="form-control border border-primary"
                 rows={6}
                 value={this.state.feedbackItem3}
+                name="feedbackItem3"
                 onChange={this.onChangeHandler.bind(this)}
               />
             </div>
@@ -105,10 +109,7 @@ class TemplateForm extends React.Component {
   onChangeHandler(event) {
     event.preventDefault();
     this.setState({
-      email: event.target.value,
-      feedbackItem1: event.target.value,
-      feedbackItem2: event.target.value,
-      feedbackItem3: event.target.value
+      [event.target.name]: event.target.value
     });
   }
 
@@ -121,7 +122,8 @@ class TemplateForm extends React.Component {
       feedbackItem2: this.state.feedbackItem2,
       feedbackItem3: this.state.feedbackItem3,
       history: this.props.history,
-      messageContext: this.props.messageContext
+      messageContext: this.props.messageContext,
+      sessionContext: this.props.sessionContext
     });
   }
 }
