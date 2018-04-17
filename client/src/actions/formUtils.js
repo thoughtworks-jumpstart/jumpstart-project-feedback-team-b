@@ -2,19 +2,21 @@ export function Share({
   email,
   history,
   messageContext,
+  sessionContext,
   feedbackItem1,
   feedbackItem2,
   feedbackItem3
 }) {
   messageContext.clearMessages();
-  return fetch("/feedback/initiate", {
+  return fetch("/api/feedback/initiate", {
     method: "post",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${sessionContext.token}`
+    },
     body: JSON.stringify({
-      user: {
-        receiver: email,
-        feedbackItems: [feedbackItem1, feedbackItem2, feedbackItem3]
-      }
+      receiver: email,
+      feedbackItems: [feedbackItem1, feedbackItem2, feedbackItem3]
     })
   }).then(response => {
     if (response.ok) {
