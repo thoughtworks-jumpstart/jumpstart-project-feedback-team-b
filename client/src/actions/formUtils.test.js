@@ -16,8 +16,8 @@ describe("Initiate feedback with Share function testing", () => {
     let sessionContext = {
       token: "random token"
     };
-    function push() {}
-    let history = { push };
+    function replace() {}
+    let history = { replace };
 
     let response = await fetchMock.post("/api/feedback/initiate", {
       status: 200,
@@ -39,6 +39,5 @@ describe("Initiate feedback with Share function testing", () => {
 
     expect(clearMessages1).toHaveBeenCalledTimes(1);
     expect(setSuccessMessages11).toHaveBeenCalledTimes(1);
-    expect(response.status).tobe(1);
   });
 });
