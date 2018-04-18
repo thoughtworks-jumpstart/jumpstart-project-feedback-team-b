@@ -6,7 +6,8 @@ export function mapMessageContextToProps(context) {
       messages: context.messages,
       clearMessages: context.actions.clearMessages,
       setSuccessMessages: context.actions.setSuccessMessages,
-      setErrorMessages: context.actions.setErrorMessages
+      setErrorMessages: context.actions.setErrorMessages,
+      setInfoMessages: context.actions.setInfoMessages
     }
   };
 }
@@ -28,7 +29,8 @@ export const messageContextPropType = {
     messages: object.isRequired,
     clearMessages: func.isRequired,
     setSuccessMessages: func.isRequired,
-    setErrorMessages: func.isRequired
+    setErrorMessages: func.isRequired,
+    setInfoMessages: func.isRequired
   }).isRequired
 };
 

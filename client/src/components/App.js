@@ -36,7 +36,8 @@ class App extends React.Component {
       }),
       clearMessages: () => ({ messages: {} }),
       setErrorMessages: errors => ({ messages: { error: errors } }),
-      setSuccessMessages: success => ({ messages: { success: success } })
+      setSuccessMessages: success => ({ messages: { success: success } }),
+      setInfoMessages: info => ({ messages: { info: info } })
     }
   };
 
