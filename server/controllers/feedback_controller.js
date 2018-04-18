@@ -53,7 +53,7 @@ async function initiateFeedback(req, res) {
   try {
     await mailer.sendText(fromAddress, toAddress, subject, text);
   } catch (error) {
-    return res.status(200).send({
+    return res.status(202).send({
       msg: `The email to ${receiverName} (${toAddress}) to inform him/her of your feedback was not sent. 
         You might want to inform ${receiverName} to login to myFeedback to view the feedback you have shared with him/her.`
     });
@@ -99,7 +99,7 @@ async function requestFeedback(req, res) {
   try {
     await mailer.sendText(fromAddress, toAddress, subject, text);
   } catch (error) {
-    return res.status(200).send({
+    return res.status(202).send({
       msg: `The email to ${giver.name} (${
         giver.email
       }) to request for feedback was not sent. You might want to inform ${

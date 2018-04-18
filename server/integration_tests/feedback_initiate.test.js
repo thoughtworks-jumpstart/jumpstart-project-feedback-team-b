@@ -173,7 +173,7 @@ describe("Accessing Feedback API with login", () => {
         .post("/api/feedback/initiate")
         .set("Authorization", "Bearer " + jwtToken)
         .send(feedback_initiate);
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(202);
       expect(mockEmailService.sendText).toHaveBeenCalledTimes(1);
       const message = response.body.msg;
       expect(message).toMatch(

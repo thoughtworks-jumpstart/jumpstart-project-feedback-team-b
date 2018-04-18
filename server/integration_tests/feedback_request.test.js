@@ -153,7 +153,7 @@ describe("Accessing Feedback Request API with login", () => {
       .set("Authorization", "Bearer " + jwtToken)
       .send(feedback_request);
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(202);
     expect(mockEmailService.sendText).toHaveBeenCalledTimes(1);
     expect(mockEmailService.sendText.mock.calls[0][1]).toEqual(valid_giver);
     const message = response.body.msg;
