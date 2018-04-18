@@ -17,6 +17,6 @@ describe("mydashboard structure Testing", () => {
     expect(wrapper.find("li")).toHaveLength(4);
     expect(wrapper.find(NavLink)).toHaveLength(4);
     expect(wrapper.find(Switch)).toHaveLength(1);
-    expect(wrapper.find(Route)).toHaveLength(1);
+    expect(wrapper.find(Route)).toHaveLength(2);
   });
 });
