@@ -39,6 +39,9 @@ const store = {
   actions: {
     saveSession: (jwtToken, user) => ({ jwtToken, user }),
     clearSession: () => ({ jwtToken: null, user: {} }),
+    updateUserProfile: newProfile => state => ({
+      user: Object.assign(state.user, newProfile)
+    }),
     clearMessages: () => ({ messages: {} }),
     setErrorMessages: errors => ({ messages: { error: errors } }),
     setSuccessMessages: success => ({ messages: { success: success } })
