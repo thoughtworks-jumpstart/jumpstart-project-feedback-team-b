@@ -21,6 +21,7 @@ export function Share({
   }).then(response => {
     if (response.ok) {
       return response.json().then(json => {
+        messageContext.setSuccessMessages([json]);
         history.replace("/mydashboard");
       });
     } else {
