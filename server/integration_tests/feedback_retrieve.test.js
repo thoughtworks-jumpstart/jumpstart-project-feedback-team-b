@@ -55,11 +55,21 @@ describe("Retrieve feedback API with login", () => {
   beforeAll(loginAsTom);
 
   it("should return a happy path if id value is supplied correctly", async () => {
-    const savedFeedbackID = (await createFeedback())._id;
+    const savedFeedback = await createFeedback();
+    const savedFeedbackID = savedFeedback._id;
+    const savedFeedbackItems = savedFeedback.feedbackItems;
     let response = await request(app)
       .get(`/api/feedback/${savedFeedbackID}`)
       .set("Authorization", "Bearer " + jwtToken);
     expect(response.statusCode).toBe(200);
+    // to test the feedbackItems length
+    expect(response.body.feedback.feedbackItems).toHaveLength(
+      savedFeedbackItems.length
+    );
+    // To test if the feedbackItems content is the same
+    expect(response.body.feedback.feedbackItems).toEqual(
+      expect.arrayContaining(savedFeedbackItems)
+    );
   });
 
   it("should return a unhappy path if id value is supplied incorrectly", async () => {
@@ -67,5 +77,8 @@ describe("Retrieve feedback API with login", () => {
       .get(`/api/feedback/GSDQQD3276530`)
       .set("Authorization", "Bearer " + jwtToken);
     expect(response.statusCode).toBe(400);
+    expect(response.body).toEqual({
+      msg: "There was an error processing your request"
+    });
   });
 });
