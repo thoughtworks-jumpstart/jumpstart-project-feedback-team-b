@@ -1,4 +1,4 @@
-export function Share({
+export function share({
   email,
   history,
   messageContext,

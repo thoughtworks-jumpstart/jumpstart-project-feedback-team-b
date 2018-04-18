@@ -10,7 +10,7 @@ import {
 } from "../context_helper";
 import { object, instanceOf } from "prop-types";
 import { withCookies, Cookies } from "react-cookie";
-import { Share } from "../../actions/formUtils";
+import { share } from "../../actions/formUtils";
 
 class TemplateForm extends React.Component {
   constructor() {
@@ -116,7 +116,7 @@ class TemplateForm extends React.Component {
   shareHandler(event) {
     event.preventDefault();
     this.setState({ isSaved: true });
-    Share({
+    share({
       email: this.state.email,
       feedbackItem1: this.state.feedbackItem1,
       feedbackItem2: this.state.feedbackItem2,

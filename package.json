@@ -36,11 +36,13 @@
   "devDependencies": {
     "concurrently": "^3.5.1",
     "cross-env": "^5.1.4",
+    "fetch-mock": "^6.3.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.2",
     "prettier": "^1.11.1"
   },
   "lint-staged": {
     "**/*.{js,jsx,json,css}": ["prettier --write", "git add"]
-  }
+  },
+  "dependencies": {}
 }

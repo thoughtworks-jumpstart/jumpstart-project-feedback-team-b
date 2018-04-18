@@ -1,4 +1,4 @@
-import { Share } from "./formUtils";
+import { share } from "./formUtils";
 const fetchMock = require("fetch-mock");
 
 describe("Initiate feedback with Share function testing", () => {
@@ -19,13 +19,13 @@ describe("Initiate feedback with Share function testing", () => {
     function replace() {}
     let history = { replace };
 
-    let response = await fetchMock.post("/api/feedback/initiate", {
+    await fetchMock.post("/api/feedback/initiate", {
       status: 200,
       body: {
-        msg: "Your feedback to was sent successfully"
+        msg: `Your feedback was sent successfully to ${email}`
       }
     });
-    await Share({
+    await share({
       email,
       feedbackItem1,
       feedbackItem2,
@@ -34,9 +34,6 @@ describe("Initiate feedback with Share function testing", () => {
       messageContext,
       history
     });
-    //   .then(() => console.log("hello"))
-    //   .catch(erro => console.log("something wrong"));
-
     expect(clearMessages1).toHaveBeenCalledTimes(1);
     expect(setSuccessMessages11).toHaveBeenCalledTimes(1);
   });
