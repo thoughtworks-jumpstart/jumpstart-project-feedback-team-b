@@ -8,6 +8,7 @@ import {
   messageContextPropType
 } from "../context_helper";
 import { ProviderContext, subscribe } from "react-contextual";
+import Inbox from "../Inbox/Inbox.js";
 
 export class MyDashboard extends React.Component {
   static propTypes = {
@@ -23,7 +24,7 @@ export class MyDashboard extends React.Component {
       <div className="info-body">
         <ul className="info-body-sidebar">
           <li>
-            <NavLink to="#">Incoming request </NavLink>
+            <NavLink to="/mydashboard/inbox">Inbox </NavLink>
           </li>
           <li>
             <NavLink to="#">Pending request </NavLink>
@@ -44,6 +45,7 @@ export class MyDashboard extends React.Component {
               exact
               component={TemplateForm}
             />
+            <Route path="/mydashboard/inbox" exact component={Inbox} />
           </Switch>
         </div>
       </div>

@@ -1,6 +1,15 @@
 const Feedback = require("../models/Feedback");
 const User = require("../models/User");
 const mailer = require("../utils/email_service");
+const { isLocal, frontendPort } = require("../config");
+
+function getHostAndPort(req) {
+  if (isLocal) {
+    return "localhost:" + frontendPort;
+  } else {
+    return req.headers.host;
+  }
+}
 
 async function initiateFeedback(req, res) {
   const receiver = await User.findOne({ email: req.body.receiver });
@@ -37,7 +46,10 @@ async function initiateFeedback(req, res) {
   const receiverName = receiver.name;
   const subject = "You have a feedback from " + giverName;
   const text = `Hi ${giverName} has given you some feedback via myFeedback. \n
-       Click on the link below to see your feedback ${savedFeedback_id}`;
+       Click on the link below to see your feedback. \n
+       http://${getHostAndPort(
+         req
+       )}/mydashboard/inbox/feedback/${savedFeedback_id}\n\n`;
   try {
     await mailer.sendText(fromAddress, toAddress, subject, text);
   } catch (error) {
