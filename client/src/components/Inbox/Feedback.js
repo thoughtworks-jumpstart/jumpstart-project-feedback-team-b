@@ -77,7 +77,6 @@ const Feedback = props => {
     })
     .catch(err => {
       throw Error("Invalid Page");
-      console.log(err);
     });
 };
 
