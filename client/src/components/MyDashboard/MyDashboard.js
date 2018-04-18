@@ -9,6 +9,7 @@ import {
 } from "../context_helper";
 import { ProviderContext, subscribe } from "react-contextual";
 import Inbox from "../Inbox/Inbox.js";
+import RequestFeedbackForm from "../RequestFeedbackForm/RequestFeedbackForm";
 
 export class MyDashboard extends React.Component {
   static propTypes = {
@@ -23,6 +24,9 @@ export class MyDashboard extends React.Component {
     return (
       <div className="info-body">
         <ul className="info-body-sidebar">
+          <li>
+            <NavLink to="/mydashboard/request">Request Feedback </NavLink>
+          </li>
           <li>
             <NavLink to="/mydashboard/inbox">Inbox </NavLink>
           </li>
@@ -46,6 +50,11 @@ export class MyDashboard extends React.Component {
               component={TemplateForm}
             />
             <Route path="/mydashboard/inbox" exact component={Inbox} />
+            <Route
+              exact
+              path="/mydashboard/request"
+              component={RequestFeedbackForm}
+            />
           </Switch>
         </div>
       </div>
