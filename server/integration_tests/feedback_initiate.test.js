@@ -138,11 +138,13 @@ describe("Accessing Feedback API with login", () => {
     });
 
     it("should send out email to the receiver if giver has initiated feedback", async () => {
+      mockEmailService.sendText.mockClear();
+      const success_email_result = Promise.resolve("Successfully sent!");
+      mockEmailService.sendText.mockImplementation(() => success_email_result);
       let feedback_initiate = {
         receiver: valid_receiver,
         feedbackItems: feedbackItems
       };
-      mockEmailService.sendText.mockClear();
       let response = await request(app)
         .post("/api/feedback/initiate")
         .set("Authorization", "Bearer " + jwtToken)
@@ -155,6 +157,28 @@ describe("Accessing Feedback API with login", () => {
       const message = response.body.msg;
       expect(message).toMatch(
         `Your feedback to jacky (jacky@example.com) was sent successfully`
+      );
+    });
+
+    it("should inform giver if email service is down", async () => {
+      mockEmailService.sendText.mockClear();
+      mockEmailService.sendText.mockImplementation(() =>
+        Promise.reject("Mail not sent")
+      );
+      let feedback_initiate = {
+        receiver: valid_receiver,
+        feedbackItems: feedbackItems
+      };
+      let response = await request(app)
+        .post("/api/feedback/initiate")
+        .set("Authorization", "Bearer " + jwtToken)
+        .send(feedback_initiate);
+      expect(response.statusCode).toBe(200);
+      expect(mockEmailService.sendText).toHaveBeenCalledTimes(1);
+      const message = response.body.msg;
+      expect(message).toMatch(
+        `The email to jacky (jacky@example.com) to inform him/her of your feedback was not sent. 
+        You might want to inform jacky to login to myFeedback to view the feedback you have shared with him/her.`
       );
     });
   });

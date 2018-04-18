@@ -21,33 +21,34 @@ async function initiateFeedback(req, res) {
     feedbackItems: req.body.feedbackItems
   });
 
+  let savedFeedback_id;
   try {
     const savedFeedback = await feedback.save();
-    // should call the mailgun api here to trigger mail send
-    const fromAddress = user.email;
-    const toAddress = receiver.email;
-    const giverName = user.name;
-    const receiverName = receiver.name;
-    const savedFeedback_id = savedFeedback._id;
-    const subject = "You have a feedback from " + giverName;
-    const text = `Hi ${giverName} has given you some feedback via myFeedback. \n
-       Click on the link below to see your feedback ${savedFeedback_id}`;
-    try {
-      await mailer.sendText(fromAddress, toAddress, subject, text);
-    } catch (error) {
-      return res.status(200).send({
-        msg: `The email to ${receiverName} (${toAddress}) to inform him/her of your feedback was not sent. 
-        You might want to inform ${receiverName} to login to myFeedback to view the feedback you have shared with him/her.`
-      });
-    }
-    return res.status(200).send({
-      msg: `Your feedback to ${receiverName} (${toAddress}) was sent successfully`
-    });
+    savedFeedback_id = savedFeedback._id;
   } catch (error) {
     return res.status(400).send({
       msg: "There was an error processing your request"
     });
   }
+  // should call the mailgun api here to trigger mail send
+  const fromAddress = user.email;
+  const toAddress = receiver.email;
+  const giverName = user.name;
+  const receiverName = receiver.name;
+  const subject = "You have a feedback from " + giverName;
+  const text = `Hi ${giverName} has given you some feedback via myFeedback. \n
+       Click on the link below to see your feedback ${savedFeedback_id}`;
+  try {
+    await mailer.sendText(fromAddress, toAddress, subject, text);
+  } catch (error) {
+    return res.status(200).send({
+      msg: `The email to ${receiverName} (${toAddress}) to inform him/her of your feedback was not sent. 
+        You might want to inform ${receiverName} to login to myFeedback to view the feedback you have shared with him/her.`
+    });
+  }
+  return res.status(200).send({
+    msg: `Your feedback to ${receiverName} (${toAddress}) was sent successfully`
+  });
 }
 
 async function requestFeedback(req, res) {
