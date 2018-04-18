@@ -1,5 +1,5 @@
 import { share } from "./formUtils";
-const fetchMock = require("fetch-mock");
+import fetchMock from "fetch-mock";
 
 describe("Initiate feedback with Share function testing", () => {
   it("should be called ", async () => {
