@@ -12,8 +12,8 @@ import Inbox from "../Inbox/Inbox.js";
 import RequestFeedbackForm from "../RequestFeedbackForm/RequestFeedbackForm";
 import Feedback from "../Inbox/Feedback";
 export class MyDashboard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       location: "/mydashboard"
     };
