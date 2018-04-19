@@ -10,9 +10,9 @@ import {
 } from "../context_helper";
 import { object, instanceOf } from "prop-types";
 import { withCookies, Cookies } from "react-cookie";
-import { share } from "../../actions/formUtils";
+import * as formUtils from "../../actions/formUtils";
 
-class TemplateForm extends React.Component {
+export class TemplateForm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -121,7 +121,7 @@ class TemplateForm extends React.Component {
       )
     ) {
       this.setState({ isSaved: false });
-      share({
+      formUtils.share({
         email: this.state.email,
         feedbackItem1: this.state.feedbackItem1,
         feedbackItem2: this.state.feedbackItem2,
