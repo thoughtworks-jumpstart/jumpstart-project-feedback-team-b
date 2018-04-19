@@ -1,7 +1,18 @@
 import React from "react";
+import { instanceOf } from "prop-types";
+import { withCookies, Cookies } from "react-cookie";
+import { ProviderContext, subscribe } from "react-contextual";
+import {
+  mapSessionContextToProps,
+  sessionContextPropType
+} from "../context_helper";
 
 class Feedback extends React.Component {
-  // let id = props.match.params.id;
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired,
+    ...sessionContextPropType
+  };
+
   constructor() {
     super();
     this.state = {
@@ -9,10 +20,12 @@ class Feedback extends React.Component {
     };
   }
   fetchCall() {
-    fetch("/api/feedback/5ad70e4916492a09c0b96fa2", {
+    let id = this.props.match.params.id;
+    fetch("/api/feedback/" + id, {
       method: "get",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.props.sessionContext.token}`
       }
     })
       .then(response => {
@@ -40,7 +53,7 @@ class Feedback extends React.Component {
         </div>
         <form>
           <div>
-            <label htmlFor="email">Receiver's email address:</label>
+            <label htmlFor="email">Giver's email address:</label>
           </div>
           <textarea
             className="form-control border border-primary"
@@ -94,5 +107,12 @@ class Feedback extends React.Component {
     );
   }
 }
+const mapContextToProps = context => {
+  return {
+    ...mapSessionContextToProps(context)
+  };
+};
 
-export default Feedback;
+export default subscribe(ProviderContext, mapContextToProps)(
+  withCookies(Feedback)
+);
