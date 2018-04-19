@@ -1,5 +1,5 @@
 import React from "react";
-import { instanceOf } from "prop-types";
+import { object, instanceOf } from "prop-types";
 import { withCookies, Cookies } from "react-cookie";
 import { ProviderContext, subscribe } from "react-contextual";
 import {
@@ -8,20 +8,23 @@ import {
 } from "../context_helper";
 
 class Feedback extends React.Component {
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired,
-    ...sessionContextPropType
-  };
-
   constructor() {
     super();
     this.state = {
       feedback: { feedbackItems: [] }
     };
+    this.fetchCall = this.fetchCall.bind(this);
+    this.notFetchedData = true;
   }
+  static propTypes = {
+    history: object.isRequired,
+    cookies: instanceOf(Cookies).isRequired,
+    ...sessionContextPropType
+  };
+
   fetchCall() {
     let id = this.props.match.params.id;
-    fetch("/api/feedback/" + id, {
+    return fetch("/api/feedback/" + id, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -39,8 +42,11 @@ class Feedback extends React.Component {
         throw new Error(error);
       });
   }
-  async componentDidMount() {
-    await this.fetchCall();
+  componentWillUpdate() {
+    if (this.notFetchedData && this.props.sessionContext.token !== null) {
+      this.notFetchedData = false;
+      this.fetchCall();
+    }
   }
 
   render() {

@@ -1,12 +1,7 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import Feedback from "./Feedback";
 
-const Inbox = () => (
-  <div>
-    <Feedback />
-    <Route path="/mydashboard/inbox/feedback/:id" exact component={Feedback} />
-  </div>
-);
+const Inbox = () => <Feedback />;
 
 export default Inbox;
