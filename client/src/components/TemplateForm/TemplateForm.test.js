@@ -1,6 +1,5 @@
 import { shallow } from "enzyme";
 import React from "react";
-import { NavLink, Switch, Route } from "react-router-dom";
 import { TemplateForm } from "../TemplateForm/TemplateForm";
 import { Cookies } from "react-cookie";
 import * as formUtils from "../../actions/formUtils";
