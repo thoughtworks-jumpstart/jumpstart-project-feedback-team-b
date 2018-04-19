@@ -38,7 +38,7 @@ class Header extends React.Component {
           </li>
         </ul>
         <ul className="nav navbar-nav navbar-right">
-          <li className="dropdown">
+          <li className="dropdown" data-cy="profile">
             <a
               href="about:blank"
               data-toggle="dropdown"

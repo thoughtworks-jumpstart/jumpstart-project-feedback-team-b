@@ -101,7 +101,7 @@ class Login extends React.Component {
         </div>
         <p className="text-center">
           Don't have an account?{" "}
-          <Link to="/signup">
+          <Link to="/signup" data-cy="sign-up">
             <strong>Sign up</strong>
           </Link>
         </p>

@@ -111,6 +111,7 @@ class Profile extends React.Component {
                 </label>
                 <div className="col-sm-7">
                   <input
+                    data-cy="profile-name"
                     type="text"
                     name="name"
                     id="name"
@@ -134,7 +135,11 @@ class Profile extends React.Component {
               </div>
               <div className="form-group">
                 <div className="col-sm-offset-3 col-sm-4">
-                  <button type="submit" className="btn btn-success">
+                  <button
+                    type="submit"
+                    className="btn btn-success"
+                    data-cy="update-profile"
+                  >
                     Update Profile
                   </button>
                 </div>
