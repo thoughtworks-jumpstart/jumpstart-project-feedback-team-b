@@ -1,4 +1,4 @@
-let User = require("../seedData/fakeData");
+let { User } = require("../seedData/fakeData");
 const URL = Cypress.env("baseUrl");
 
 describe("Private Route to redirect to login page when user not logged in and updating of profile page userid", function() {

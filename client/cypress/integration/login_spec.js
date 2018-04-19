@@ -1,8 +1,5 @@
 const URL = Cypress.env("baseUrl");
-const User = require("../seedData/fakeData");
-let email = null;
-let password = null;
-let username = null;
+const { User } = require("../seedData/fakeData");
 
 describe("Home", function() {
   before(function() {
@@ -19,17 +16,14 @@ describe("Home", function() {
 
 describe("happy and unhappy paths", function() {
   before(function() {
-    username = User.name;
-    email = User.email;
-    password = User.password;
     cy.visit(URL + "signup");
     cy
       .get("input#name")
-      .type(username)
+      .type(User.name)
       .get("input#email")
-      .type(email)
+      .type(User.email)
       .get("input#password")
-      .type(password)
+      .type(User.password)
       .get("button[type=submit]")
       .click();
   });
@@ -45,9 +39,9 @@ describe("happy and unhappy paths", function() {
   it("should successfully log user in when both fields are filled", function() {
     cy
       .get("input#email")
-      .type(email)
+      .type(User.email)
       .get("input#password")
-      .type(password);
+      .type(User.password);
     cy
       .get("button[type=submit]")
       .click()
@@ -87,13 +81,15 @@ describe("Reset", () => {
     it("should return success message that email reset is sent", () => {
       cy
         .get("input#email")
-        .type(email)
+        .type(User.email)
         .get("button[type=submit]")
         .click()
         .get("[data-cy=success]")
         .should("be.visible")
         .contains(
-          "An email has been sent to " + email + " with further instructions."
+          "An email has been sent to " +
+            User.email +
+            " with further instructions."
         );
     });
 });

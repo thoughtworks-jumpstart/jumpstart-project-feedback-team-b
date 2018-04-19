@@ -6,4 +6,10 @@ const User = {
   password: faker.random.words()
 };
 
-module.exports = User;
+const ExistingUser = {
+  name: faker.name.findName(),
+  email: faker.internet.email(),
+  password: faker.random.words()
+};
+
+module.exports = { User, ExistingUser };

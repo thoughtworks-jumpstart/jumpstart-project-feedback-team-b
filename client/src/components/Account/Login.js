@@ -93,7 +93,11 @@ class Login extends React.Component {
                   <strong>Forgot your password?</strong>
                 </Link>
               </div>
-              <button type="submit" className="btn btn-success">
+              <button
+                type="submit"
+                className="btn btn-success"
+                data-cy="login-submit"
+              >
                 Log in
               </button>
             </form>

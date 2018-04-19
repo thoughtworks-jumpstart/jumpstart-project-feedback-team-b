@@ -97,7 +97,11 @@ class Signup extends React.Component {
                   <Link to="/">Terms of Service</Link>.
                 </small>
               </div>
-              <button type="submit" className="btn btn-success">
+              <button
+                type="submit"
+                className="btn btn-success"
+                data-cy="signUp-submit"
+              >
                 Create an account
               </button>
             </form>

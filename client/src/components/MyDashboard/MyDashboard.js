@@ -25,8 +25,14 @@ export class MyDashboard extends React.Component {
       <div className="info-body">
         <ul className="info-body-sidebar">
           <li>
-            <NavLink to="/mydashboard/request">Request Feedback </NavLink>
+            <NavLink
+              data-cy="qa-requestfeedback-link"
+              to="/mydashboard/request"
+            >
+              Request Feedback
+            </NavLink>
           </li>
+
           <li>
             <NavLink to="/mydashboard/inbox">Inbox </NavLink>
           </li>

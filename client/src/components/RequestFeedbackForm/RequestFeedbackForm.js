@@ -41,7 +41,11 @@ class RequestFeedbackForm extends React.Component {
             <strong>Request Feedback</strong>
           </h3>
           <div className="init-save-button">
-            <button className="btn" onClick={this.submitHandler}>
+            <button
+              className="btn"
+              data-cy="requestFeedback-submit"
+              onClick={this.submitHandler}
+            >
               Send
             </button>
           </div>
@@ -52,12 +56,12 @@ class RequestFeedbackForm extends React.Component {
               <label htmlFor="email">Add email address:</label>
             </div>
             <textarea
+              data-cy="RequestFeedbackForm_emailInput"
               className="form-control border border-primary"
               rows={1}
               name="email"
               value={this.state.email}
               onChange={this.onChangeHandler.bind(this)}
-              disabled={this.props.disabled}
             />
             <br />
             <hr className="hr-text" data-content="Preview of feedback form" />
@@ -166,3 +170,5 @@ const mapContextToProps = context => {
 export default subscribe(ProviderContext, mapContextToProps)(
   withCookies(RequestFeedbackForm)
 );
+
+export { RequestFeedbackForm };

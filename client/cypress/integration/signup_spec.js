@@ -1,4 +1,4 @@
-let User = require("../seedData/fakeData");
+let { User } = require("../seedData/fakeData");
 const URL = Cypress.env("baseUrl");
 
 describe("The Signup Page", function() {
