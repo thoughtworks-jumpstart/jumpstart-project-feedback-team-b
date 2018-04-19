@@ -16,7 +16,7 @@ class TemplateForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      isSaved: false,
+      isSaved: true,
       email: "",
       feedbackItem1: "",
       feedbackItem2: "",
@@ -35,7 +35,7 @@ class TemplateForm extends React.Component {
     return (
       <div className="content">
         <Prompt
-          when={this.props.isSaved}
+          when={this.state.isSaved}
           message="Are you sure you want to leave?"
         />
         <div className="template-header">
@@ -115,16 +115,22 @@ class TemplateForm extends React.Component {
 
   shareHandler(event) {
     event.preventDefault();
-    this.setState({ isSaved: true });
-    share({
-      email: this.state.email,
-      feedbackItem1: this.state.feedbackItem1,
-      feedbackItem2: this.state.feedbackItem2,
-      feedbackItem3: this.state.feedbackItem3,
-      history: this.props.history,
-      messageContext: this.props.messageContext,
-      sessionContext: this.props.sessionContext
-    });
+    if (
+      window.confirm(
+        `you sure you want to send feedback to ${this.state.email}?`
+      )
+    ) {
+      this.setState({ isSaved: false });
+      share({
+        email: this.state.email,
+        feedbackItem1: this.state.feedbackItem1,
+        feedbackItem2: this.state.feedbackItem2,
+        feedbackItem3: this.state.feedbackItem3,
+        history: this.props.history,
+        messageContext: this.props.messageContext,
+        sessionContext: this.props.sessionContext
+      });
+    }
   }
 }
 

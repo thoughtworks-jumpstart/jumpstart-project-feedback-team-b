@@ -12,6 +12,12 @@ import Inbox from "../Inbox/Inbox.js";
 import RequestFeedbackForm from "../RequestFeedbackForm/RequestFeedbackForm";
 
 export class MyDashboard extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      location: "/mydashboard"
+    };
+  }
   static propTypes = {
     ...messageContextPropType
   };
@@ -21,6 +27,8 @@ export class MyDashboard extends React.Component {
   }
 
   render() {
+    const checkForSuccessMsg =
+      this.state.location === this.props.location.pathname;
     return (
       <div className="info-body">
         <ul className="info-body-sidebar">
@@ -47,8 +55,9 @@ export class MyDashboard extends React.Component {
           </li>
         </ul>
         <div className="info-body-content">
-          <Messages messages={this.props.messageContext.messages} />
-
+          {checkForSuccessMsg && (
+            <Messages messages={this.props.messageContext.messages} />
+          )}
           <Switch>
             <Route
               path="/mydashboard/initiate"
