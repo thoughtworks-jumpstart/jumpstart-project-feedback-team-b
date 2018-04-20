@@ -51,7 +51,7 @@ export class TemplateForm extends React.Component {
         <div>
           <form>
             <div>
-              <label htmlFor="email">Receiver's email address:</label>
+              <label>Receiver's email address:</label>
             </div>
             <textarea
               className="form-control border border-primary"

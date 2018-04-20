@@ -29,9 +29,18 @@ describe("mydashboard renders different feedback components", function() {
     cy
       .get("#qa-templateform")
       .find("form")
-      .contains("Receiver's email address:")
-      .contains("You are doing great at...")
-      .contains("You could work on/improve...")
+      .contains("Receiver's email address:");
+    cy
+      .get("#qa-templateform")
+      .find("form")
+      .contains("You are doing great at...");
+    cy
+      .get("#qa-templateform")
+      .find("form")
+      .contains("You could work on/improve...");
+    cy
+      .get("#qa-templateform")
+      .find("form")
       .contains("Suggestions...");
   });
 
@@ -46,9 +55,18 @@ describe("mydashboard renders different feedback components", function() {
     cy
       .get("[data-cy=qa-requestfb]")
       .find("form")
-      .contains("Add email address")
-      .contains("You are doing great at...")
-      .contains("You could work on/improve...")
+      .contains("Add email address");
+    cy
+      .get("[data-cy=qa-requestfb]")
+      .find("form")
+      .contains("You are doing great at...");
+    cy
+      .get("[data-cy=qa-requestfb]")
+      .find("form")
+      .contains("You could work on/improve...");
+    cy
+      .get("[data-cy=qa-requestfb]")
+      .find("form")
       .contains("Suggestions...");
   });
 });

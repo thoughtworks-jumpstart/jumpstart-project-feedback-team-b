@@ -40,7 +40,7 @@ class RequestFeedbackForm extends React.Component {
           <h3>
             <strong>Request Feedback</strong>
           </h3>
-          <div className="init-save-button" data-cy="qa-requestfb">
+          <div className="init-save-button">
             <button
               className="btn"
               data-cy="requestFeedback-submit"
@@ -50,7 +50,7 @@ class RequestFeedbackForm extends React.Component {
             </button>
           </div>
         </div>
-        <div>
+        <div data-cy="qa-requestfb">
           <form>
             <div>
               <label htmlFor="email">Add email address:</label>
