@@ -7,7 +7,7 @@ import {
   sessionContextPropType
 } from "../context_helper";
 
-class Feedback extends React.Component {
+export class Feedback extends React.Component {
   constructor() {
     super();
     this.state = {
