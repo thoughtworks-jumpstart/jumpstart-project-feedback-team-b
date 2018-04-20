@@ -2,6 +2,7 @@ import React from "react";
 import { object, instanceOf } from "prop-types";
 import { withCookies, Cookies } from "react-cookie";
 import { ProviderContext, subscribe } from "react-contextual";
+import Loading from "react-loading-animation";
 import {
   mapSessionContextToProps,
   sessionContextPropType
@@ -11,7 +12,11 @@ export class Feedback extends React.Component {
   constructor() {
     super();
     this.state = {
-      feedback: { feedbackItems: [] }
+      feedback: {
+        feedbackItems: [],
+        giver: undefined
+      },
+      responseStatus: false
     };
     this.fetchCall = this.fetchCall.bind(this);
     this.notFetchedData = true;
@@ -30,17 +35,16 @@ export class Feedback extends React.Component {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.props.sessionContext.token}`
       }
-    })
-      .then(response => {
+    }).then(response => {
+      if (response.ok) {
         response.json().then(json => {
           this.setState({
-            feedback: json.feedback
+            feedback: json.feedback,
+            responseStatus: true
           });
         });
-      })
-      .catch(error => {
-        throw new Error(error);
-      });
+      }
+    });
   }
   componentWillUpdate() {
     if (this.notFetchedData && this.props.sessionContext.token !== null) {
@@ -50,67 +54,79 @@ export class Feedback extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <div className="template-header">
-          <h3>
-            <strong>Feedback</strong>
-          </h3>
-        </div>
-        <form>
+    if (this.state.feedback.giver === undefined) {
+      return <Loading />;
+    } else {
+      if (this.state.responseStatus === true) {
+        return (
           <div>
-            <label htmlFor="email">Giver's email address:</label>
-          </div>
-          <textarea
-            className="form-control border border-primary"
-            rows={1}
-            name="email"
-            value={this.state.feedback.giver}
-            disabled
-          />
-          <br />
-          <div>
-            <label>You are doing great at...</label>
-          </div>
+            <div className="template-header">
+              <h3>
+                <strong>Feedback</strong>
+              </h3>
+            </div>
+            <form>
+              <div>
+                <label htmlFor="email">Giver's email address:</label>
+              </div>
+              <textarea
+                className="form-control border border-primary"
+                rows={1}
+                name="email"
+                value={this.state.feedback.giver}
+                disabled
+              />
+              <br />
+              <div>
+                <label>You are doing great at...</label>
+              </div>
 
-          <div className="feedback-form-fields">
-            <textarea
-              className="form-control border border-primary"
-              rows={6}
-              name="feedbackItem1"
-              value={this.state.feedback.feedbackItems[0]}
-              disabled
-            />
+              <div className="feedback-form-fields">
+                <textarea
+                  className="form-control border border-primary"
+                  rows={6}
+                  name="feedbackItem1"
+                  value={this.state.feedback.feedbackItems[0]}
+                  disabled
+                />
+              </div>
+              <br />
+              <div>
+                <label>You could work on/improve...</label>
+              </div>
+              <div className="feedback-form-fields">
+                <textarea
+                  className="form-control border border-primary"
+                  rows={6}
+                  name="feedbackItem2"
+                  value={this.state.feedback.feedbackItems[1]}
+                  disabled
+                />
+              </div>
+              <br />
+              <div>
+                <label>Suggestions...</label>
+              </div>
+              <div className="feedback-form-fields">
+                <textarea
+                  className="form-control border border-primary"
+                  rows={6}
+                  value={this.state.feedback.feedbackItems[2]}
+                  name="feedbackItem3"
+                  disabled
+                />
+              </div>
+            </form>
           </div>
-          <br />
+        );
+      } else {
+        return (
           <div>
-            <label>You could work on/improve...</label>
+            <h1>Feedback not found!</h1>
           </div>
-          <div className="feedback-form-fields">
-            <textarea
-              className="form-control border border-primary"
-              rows={6}
-              name="feedbackItem2"
-              value={this.state.feedback.feedbackItems[1]}
-              disabled
-            />
-          </div>
-          <br />
-          <div>
-            <label>Suggestions...</label>
-          </div>
-          <div className="feedback-form-fields">
-            <textarea
-              className="form-control border border-primary"
-              rows={6}
-              value={this.state.feedback.feedbackItems[2]}
-              name="feedbackItem3"
-              disabled
-            />
-          </div>
-        </form>
-      </div>
-    );
+        );
+      }
+    }
   }
 }
 const mapContextToProps = context => {

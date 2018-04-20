@@ -3,7 +3,7 @@ import { Feedback } from "./Feedback";
 import { shallow } from "enzyme";
 import React from "react";
 
-describe("Fetch Feedback", () => {
+describe("Fetch Feedback", async () => {
   it("should update the state after calling fetch api to retrieve Feedback from database", async () => {
     await fetchMock.get("/api/feedback/123", {
       status: 200,
@@ -20,6 +20,7 @@ describe("Fetch Feedback", () => {
         }
       }
     });
+
     let match = {
       params: {
         id: 123
