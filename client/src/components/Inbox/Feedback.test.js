@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import React from "react";
 
 describe("Fetch Feedback", () => {
-  it("Retrieve feedback should be called and return 200", async () => {
+  it("should update the state after calling fetch api to retrieve Feedback from database", async () => {
     await fetchMock.get("/api/feedback/123", {
       status: 200,
       body: {
