@@ -31,7 +31,9 @@ describe("RequestFeedbackForm test", () => {
       </MemoryRouter>
     );
 
-    expect(wrapper.find("[data-cy=RequestFeedbackForm_emailInput]")).toHaveLength(1);
+    expect(
+      wrapper.find("[data-cy=RequestFeedbackForm_emailInput]")
+    ).toHaveLength(1);
     expect(wrapper.find("div.init-save-button .btn")).toHaveLength(1);
   });
 

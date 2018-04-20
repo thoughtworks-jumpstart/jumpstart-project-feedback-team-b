@@ -1,7 +1,11 @@
-import { shallow } from "enzyme";
+import { render } from "enzyme";
 import React from "react";
+import { MemoryRouter } from "react-router-dom";
 import { MyDashboard } from "./MyDashboard";
-import { NavLink, Switch, Route } from "react-router-dom";
+
+jest.mock("../TemplateForm/TemplateForm.js", () => {
+  return () => () => `<div id="qa-templateroute"></div>`;
+});
 
 describe("mydashboard structure Testing", () => {
   it("should find all structure element", () => {
@@ -12,12 +16,24 @@ describe("mydashboard structure Testing", () => {
       setInfoMessages: jest.fn(),
       setErrorMessages: jest.fn()
     };
+    let sessionContext = {
+      token: null,
+      user: {},
+      saveSession: () => {},
+      clearSession: () => {},
+      updateUserProfile: () => {}
+    };
 
-    const wrapper = shallow(<MyDashboard messageContext={messageContext} />);
-    expect(wrapper.find("div")).toHaveLength(2);
-    expect(wrapper.find("li")).toHaveLength(5);
-    expect(wrapper.find(NavLink)).toHaveLength(5);
-    expect(wrapper.find(Switch)).toHaveLength(1);
-    expect(wrapper.find(Route)).toHaveLength(3);
+    const wrapper = render(
+      <MemoryRouter initialEntries={["/mydashboard/initiate"]}>
+        <MyDashboard
+          messageContext={messageContext}
+          location={{ pathname: "/mydashboard" }}
+          sessionContext={sessionContext}
+        />
+      </MemoryRouter>
+    );
+
+    expect(wrapper.find(".qa-link")).toHaveLength(5);
   });
 });

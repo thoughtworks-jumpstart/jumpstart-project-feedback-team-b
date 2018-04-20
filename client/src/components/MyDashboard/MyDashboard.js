@@ -12,8 +12,8 @@ import Inbox from "../Inbox/Inbox.js";
 import RequestFeedbackForm from "../RequestFeedbackForm/RequestFeedbackForm";
 import Feedback from "../Inbox/Feedback";
 export class MyDashboard extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       location: "/mydashboard"
     };
@@ -34,6 +34,7 @@ export class MyDashboard extends React.Component {
         <ul className="info-body-sidebar">
           <li>
             <NavLink
+              className="qa-link"
               data-cy="qa-requestfeedback-link"
               to="/mydashboard/request"
             >
@@ -42,16 +43,24 @@ export class MyDashboard extends React.Component {
           </li>
 
           <li>
-            <NavLink to="/mydashboard/inbox">Inbox </NavLink>
+            <NavLink className="qa-link" to="/mydashboard/inbox">
+              Inbox{" "}
+            </NavLink>
           </li>
           <li>
-            <NavLink to="#">Pending request </NavLink>
+            <NavLink className="qa-link" to="#">
+              Pending request{" "}
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/mydashboard/initiate">Initiate Feedback </NavLink>
+            <NavLink className="qa-link" to="/mydashboard/initiate">
+              Initiate Feedback{" "}
+            </NavLink>
           </li>
           <li>
-            <NavLink to="#">Pending feedback</NavLink>
+            <NavLink className="qa-link" to="#">
+              Pending feedback
+            </NavLink>
           </li>
         </ul>
         <div className="info-body-content">
@@ -65,6 +74,7 @@ export class MyDashboard extends React.Component {
               component={Feedback}
             />
             <Route
+              className="qa-route"
               path="/mydashboard/initiate"
               exact
               component={TemplateForm}

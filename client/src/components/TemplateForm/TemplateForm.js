@@ -33,7 +33,7 @@ export class TemplateForm extends React.Component {
 
   render() {
     return (
-      <div className="content">
+      <div id="qa-templateform" className="content">
         <Prompt
           when={this.state.isSaved}
           message="Are you sure you want to leave?"

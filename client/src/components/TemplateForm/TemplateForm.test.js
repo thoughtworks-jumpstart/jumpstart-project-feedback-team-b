@@ -17,6 +17,8 @@ describe("TemplateForm functional tests", () => {
         setInfoMessages: () => {}
       },
       sessionContext: {
+        token: null,
+        user: {},
         saveSession: () => {},
         clearSession: () => {},
         updateUserProfile: () => {}
