@@ -11,15 +11,21 @@ import {
 import { object, instanceOf } from "prop-types";
 import { withCookies, Cookies } from "react-cookie";
 import Messages from "../Messages";
+import FeedbackTemplate from "../FeedbackTemplate/FeedbackTemplate";
+import { getTemplateLabels } from "../../actions/formUtils";
 
 class RequestFeedbackForm extends React.Component {
   constructor() {
     super();
+    const feedbackLabels = getTemplateLabels();
     this.state = {
-      isChanged: false,
-      email: ""
+      isSaved: false,
+      email: "",
+      feedbackLabels: feedbackLabels,
+      feedbackValues: new Array(feedbackLabels.length).fill("")
     };
     this.submitHandler = this.submitHandler.bind(this);
+    this.submitRequest = this.submitRequest.bind(this);
   }
   static propTypes = {
     history: object.isRequired,
@@ -27,7 +33,9 @@ class RequestFeedbackForm extends React.Component {
     ...messageContextPropType,
     ...sessionContextPropType
   };
-
+  componentWillUnmount() {
+    this.props.messageContext.clearMessages();
+  }
   render() {
     return (
       <div className="content">
@@ -38,7 +46,8 @@ class RequestFeedbackForm extends React.Component {
           </h3>
           <div className="init-save-button">
             <button
-              className="btn"
+              id="submit_button"
+              className="btn qa-request-submit-btn"
               data-cy="requestFeedback-submit"
               onClick={this.submitHandler}
             >
@@ -61,48 +70,12 @@ class RequestFeedbackForm extends React.Component {
             />
             <br />
             <hr className="hr-text" data-content="Preview of feedback form" />
-            <div>
-              <label>You are doing great at...</label>
-            </div>
-
-            <div className="feedback-form-fields">
-              <textarea
-                className="form-control border border-primary"
-                rows={6}
-                name="feedbackItem1"
-                value={this.state.feedbackItem1}
-                onChange={this.onChangeHandler.bind(this)}
-                disabled={true}
-              />
-            </div>
-            <br />
-            <div>
-              <label>You could work on/improve...</label>
-            </div>
-            <div className="feedback-form-fields">
-              <textarea
-                className="form-control border border-primary"
-                rows={6}
-                name="feedbackItem2"
-                value={this.state.feedbackItem2}
-                onChange={this.onChangeHandler.bind(this)}
-                disabled={true}
-              />
-            </div>
-            <br />
-            <div>
-              <label>Suggestions...</label>
-            </div>
-            <div className="feedback-form-fields">
-              <textarea
-                className="form-control border border-primary"
-                rows={6}
-                value={this.state.feedbackItem3}
-                name="feedbackItem3"
-                onChange={this.onChangeHandler.bind(this)}
-                disabled={true}
-              />
-            </div>
+            <FeedbackTemplate
+              labels={this.state.feedbackLabels}
+              feedbackValues={this.state.feedbackValues}
+              // onChangeHandler={this.onFeedbackChangeHandler.bind(this)}
+              disabled={true}
+            />
           </form>
         </div>
         <Prompt
@@ -118,6 +91,15 @@ class RequestFeedbackForm extends React.Component {
     this.setState({
       isChanged: true,
       [event.target.name]: event.target.value
+    });
+  }
+
+  onFeedbackChangeHandler(idx, event) {
+    event.preventDefault();
+    let feedbackValues = this.state.feedbackValues;
+    feedbackValues[idx] = event.target.value;
+    this.setState({
+      feedbackValues: feedbackValues
     });
   }
 
