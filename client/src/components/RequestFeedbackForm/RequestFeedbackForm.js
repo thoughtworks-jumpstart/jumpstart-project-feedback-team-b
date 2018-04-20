@@ -40,7 +40,7 @@ class RequestFeedbackForm extends React.Component {
           <h3>
             <strong>Request Feedback</strong>
           </h3>
-          <div className="init-save-button">
+          <div className="init-save-button" data-cy="qa-requestfb">
             <button
               className="btn"
               data-cy="requestFeedback-submit"

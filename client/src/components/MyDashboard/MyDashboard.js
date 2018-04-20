@@ -8,7 +8,7 @@ import {
   messageContextPropType
 } from "../context_helper";
 import { ProviderContext, subscribe } from "react-contextual";
-import Inbox from "../Inbox/Inbox.js";
+
 import RequestFeedbackForm from "../RequestFeedbackForm/RequestFeedbackForm";
 import Feedback from "../Inbox/Feedback";
 export class MyDashboard extends React.Component {
@@ -79,7 +79,6 @@ export class MyDashboard extends React.Component {
               exact
               component={TemplateForm}
             />
-            <Route path="/mydashboard/inbox" exact component={Inbox} />
             <Route
               exact
               path="/mydashboard/request"
