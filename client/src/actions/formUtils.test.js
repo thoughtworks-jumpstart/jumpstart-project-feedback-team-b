@@ -1,4 +1,4 @@
-import { share } from "./formUtils";
+import { share, getTemplateLabels } from "./formUtils";
 import fetchMock from "fetch-mock";
 
 describe("Initiate feedback with Share function testing", () => {
@@ -36,5 +36,11 @@ describe("Initiate feedback with Share function testing", () => {
     });
     expect(clearMessages1).toHaveBeenCalledTimes(1);
     expect(setSuccessMessages11).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("getTemplateLables", () => {
+  it("getTempalteLabels should return an array.length of 3", () => {
+    expect(getTemplateLabels()).toHaveLength(3);
   });
 });
