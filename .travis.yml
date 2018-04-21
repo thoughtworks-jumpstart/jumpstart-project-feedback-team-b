@@ -11,6 +11,10 @@ cache:
 jobs:
   include:
     - stage: Test, Build, and Deploy
+      branches:
+        only:
+        - master
+        - deploy-to-prod
       script:
       - yarn test
       - yarn build
