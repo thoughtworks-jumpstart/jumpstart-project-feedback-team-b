@@ -32,3 +32,11 @@ export function share({
     }
   });
 }
+
+export function getTemplateLabels() {
+  return [
+    "You are doing great at...",
+    "You could work on/improve...",
+    "Suggestions..."
+  ];
+}
