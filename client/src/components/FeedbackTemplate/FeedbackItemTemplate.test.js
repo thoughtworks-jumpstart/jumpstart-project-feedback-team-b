@@ -4,7 +4,7 @@ import FeedbackItemTemplate from "./FeedbackItemTemplate";
 
 describe("FeedbackItemTemplate", () => {
   const sampleLabel = "";
-  const sampleFeedbackValue = "";
+  const sampleFeedbackValue = "Hello";
   it("should render FeedbackItemTemplate properly", () => {
     const wrapper = shallow(
       <FeedbackItemTemplate
@@ -12,6 +12,7 @@ describe("FeedbackItemTemplate", () => {
         feedbackValue={sampleFeedbackValue}
       />
     );
+    expect(wrapper.find("textarea").props().value).toEqual(sampleFeedbackValue);
     expect(wrapper.find("label")).toHaveLength(1);
     expect(wrapper.find("textarea")).toHaveLength(1);
   });
@@ -31,7 +32,7 @@ describe("FeedbackItemTemplate", () => {
       .props()
       .onChange(event);
 
-    // expect(wrapper.state().feedbackValue).toEqual(event.target.value);
+    // expect(wrapper.props().feedbackValue).toEqual(event.target.value);
     expect(mockOnChangeHandler).toHaveBeenCalledTimes(1);
   });
 });
