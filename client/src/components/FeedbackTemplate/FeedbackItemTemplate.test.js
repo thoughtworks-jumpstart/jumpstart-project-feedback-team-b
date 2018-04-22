@@ -12,9 +12,10 @@ describe("FeedbackItemTemplate", () => {
         feedbackValue={sampleFeedbackValue}
       />
     );
-    expect(wrapper.find("textarea").props().value).toEqual(sampleFeedbackValue);
     expect(wrapper.find("label")).toHaveLength(1);
+    expect(wrapper.find("label").props().children).toEqual(sampleLabel);
     expect(wrapper.find("textarea")).toHaveLength(1);
+    expect(wrapper.find("textarea").props().value).toEqual(sampleFeedbackValue);
   });
   it("onChangehandler should be invoked when there is a change in the text field", () => {
     const mockOnChangeHandler = jest.fn();
@@ -32,7 +33,7 @@ describe("FeedbackItemTemplate", () => {
       .props()
       .onChange(event);
 
-    // expect(wrapper.props().feedbackValue).toEqual(event.target.value);
+    // expect(wrapper.find("textarea").props().feedbackValue).toEqual(event.target.value);
     expect(mockOnChangeHandler).toHaveBeenCalledTimes(1);
   });
 });
