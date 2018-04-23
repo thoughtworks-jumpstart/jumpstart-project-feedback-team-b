@@ -27,19 +27,19 @@ describe("mydashboard renders different feedback components", function() {
       .type(userpassword);
     cy.get("[data-cy=login-submit]").click();
     cy
-      .get("#qa-templateform")
+      .get("#qa-initiateform")
       .find("form")
       .contains("Receiver's email address:");
     cy
-      .get("#qa-templateform")
+      .get("#qa-initiateform")
       .find("form")
       .contains("You are doing great at...");
     cy
-      .get("#qa-templateform")
+      .get("#qa-initiateform")
       .find("form")
       .contains("You could work on/improve...");
     cy
-      .get("#qa-templateform")
+      .get("#qa-initiateform")
       .find("form")
       .contains("Suggestions...");
   });

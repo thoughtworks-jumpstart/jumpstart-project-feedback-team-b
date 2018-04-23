@@ -50,7 +50,7 @@ class InitiateFeedbackForm extends React.Component {
             </button>
           </div>
         </div>
-        <div>
+        <div id="qa-initiateform">
           <form>
             <div>
               <label htmlFor="email">Receiver's email address:</label>
