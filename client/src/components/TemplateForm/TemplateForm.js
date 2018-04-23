@@ -118,9 +118,10 @@ export class TemplateForm extends React.Component {
     if (
       window.confirm(
         `Are you sure you want to send feedback to ${this.state.email}?
-        \nDo you have permission from the receiver to initiate the feedbac?`
+        \nDo you have permission from the receiver to initiate the feedback?`
       )
     ) {
+      this.setState({ isChanged: false });
       formUtils.share({
         email: this.state.email,
         feedbackItem1: this.state.feedbackItem1,
