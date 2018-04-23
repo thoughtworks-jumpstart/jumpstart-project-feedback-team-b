@@ -81,8 +81,10 @@ async function requestFeedback(req, res) {
     feedbackItems: ["", "", ""]
   });
 
+  let savedRequestedFeedback_id;
   try {
-    await feedback.save();
+    const savedRequestedFeedback = await feedback.save();
+    savedRequestedFeedback_id = savedRequestedFeedback._id;
   } catch (error) {
     return res.status(400).send({
       msg: "There was an error processing your request"
@@ -134,8 +136,58 @@ async function retrieveFeedback(req, res) {
   }
 }
 
+async function updateFeedback(req, res) {
+  const feedbackId = req.params.id;
+  const receiver = await User.findOne({ email: req.body.receiver });
+
+  const userId = req.jwt.userid;
+  const user = await User.findById(userId);
+
+  let updateFeedback = new Feedback({
+    giver: user.email,
+    receiver: receiver.email,
+    status: "RECEIVER_UNREAD",
+    feedbackItems: req.body.feedbackItems
+  });
+
+  let savedFeedback_id;
+  try {
+    const savedFeedback = await Feedback.findByIdAndUpdate(
+      feedbackId,
+      updateFeedback
+    );
+    savedFeedback_id = savedFeedback._id;
+  } catch (error) {
+    return res.status(400).send({
+      msg: "There was an error processing your request"
+    });
+  }
+  // should call the mailgun api here to trigger mail send
+  const fromAddress = user.email;
+  const toAddress = receiver.email;
+  const giverName = user.name;
+  const receiverName = receiver.name;
+  const subject = "You have a feedback from " + giverName;
+  const text = `Hi ${giverName} has given you some feedback via myFeedback. \n
+       Click on the link below to see your feedback. \n
+       http://${getHostAndPort(
+         req
+       )}/mydashboard/inbox/feedback/${savedFeedback_id}\n\n`;
+  try {
+    await mailer.sendText(fromAddress, toAddress, subject, text);
+  } catch (error) {
+    return res.status(202).send({
+      msg: `The email to ${receiverName} (${toAddress}) to inform him/her of your feedback was not sent. 
+        You might want to inform ${receiverName} to login to myFeedback to view the feedback you have shared with him/her.`
+    });
+  }
+  return res.status(200).send({
+    msg: `Your feedback to ${receiverName} (${toAddress}) was sent successfully`
+  });
+}
 module.exports = {
   initiateFeedback,
   requestFeedback,
-  retrieveFeedback
+  retrieveFeedback,
+  updateFeedback
 };
