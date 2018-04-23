@@ -3,8 +3,8 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { MyDashboard } from "./MyDashboard";
 
-jest.mock("../TemplateForm/TemplateForm.js", () => {
-  return () => () => `<div id="qa-templateroute"></div>`;
+jest.mock("../InitiateFeedbackForm/InitiateFeedbackForm.js", () => {
+  return () => () => `<div id="qa-initiateroute"></div>`;
 });
 
 describe("mydashboard structure Testing", () => {

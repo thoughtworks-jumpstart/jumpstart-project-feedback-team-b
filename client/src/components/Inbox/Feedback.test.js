@@ -1,6 +1,7 @@
 import fetchMock from "fetch-mock";
 import { Feedback } from "./Feedback";
 import { shallow } from "enzyme";
+import { Cookies } from "react-cookie";
 import React from "react";
 
 describe("Fetch Feedback", async () => {
@@ -26,11 +27,21 @@ describe("Fetch Feedback", async () => {
         id: 123
       }
     };
+    let cookies = new Cookies();
     let sessionContext = {
-      token: "token"
+      token: "token",
+      user: {},
+      saveSession: () => {},
+      clearSession: () => {},
+      updateUserProfile: () => {}
     };
     const wrapper = shallow(
-      <Feedback match={match} sessionContext={sessionContext} />
+      <Feedback
+        match={match}
+        sessionContext={sessionContext}
+        history={{}}
+        cookies={cookies}
+      />
     );
     const inst = wrapper.instance();
     await inst.fetchCall();
