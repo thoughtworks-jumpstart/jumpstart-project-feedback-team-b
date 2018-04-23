@@ -16,7 +16,7 @@ class RequestFeedbackForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      isSaved: false,
+      isChanged: false,
       email: ""
     };
     this.submitHandler = this.submitHandler.bind(this);
@@ -32,10 +32,6 @@ class RequestFeedbackForm extends React.Component {
     return (
       <div className="content">
         <Messages messages={this.props.messageContext.messages} />
-        <Prompt
-          when={this.props.isSaved}
-          message="Are you sure you want to leave?"
-        />
         <div className="template-header">
           <h3>
             <strong>Request Feedback</strong>
@@ -109,6 +105,10 @@ class RequestFeedbackForm extends React.Component {
             </div>
           </form>
         </div>
+        <Prompt
+          when={this.state.isChanged}
+          message="Are you sure you want to leave?"
+        />
       </div>
     );
   }
@@ -116,13 +116,13 @@ class RequestFeedbackForm extends React.Component {
   onChangeHandler(event) {
     event.preventDefault();
     this.setState({
+      isChanged: true,
       [event.target.name]: event.target.value
     });
   }
 
   submitHandler(event) {
     event.preventDefault();
-    this.setState({ isSaved: true });
     this.submitRequest({
       email: this.state.email
     });

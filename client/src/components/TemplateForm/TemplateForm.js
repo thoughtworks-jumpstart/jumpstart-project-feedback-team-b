@@ -16,7 +16,7 @@ export class TemplateForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      isSaved: true,
+      isChanged: false,
       email: "",
       feedbackItem1: "",
       feedbackItem2: "",
@@ -30,14 +30,9 @@ export class TemplateForm extends React.Component {
     ...messageContextPropType,
     ...sessionContextPropType
   };
-
   render() {
     return (
       <div id="qa-templateform" className="content">
-        <Prompt
-          when={this.state.isSaved}
-          message="Are you sure you want to leave?"
-        />
         <div className="template-header">
           <h3>
             <strong>Initiate Feedback</strong>
@@ -102,6 +97,10 @@ export class TemplateForm extends React.Component {
             </div>
           </form>
         </div>
+        <Prompt
+          when={this.state.isChanged}
+          message="Are you sure you want to leave?"
+        />
       </div>
     );
   }
@@ -109,6 +108,7 @@ export class TemplateForm extends React.Component {
   onChangeHandler(event) {
     event.preventDefault();
     this.setState({
+      isChanged: true,
       [event.target.name]: event.target.value
     });
   }
@@ -117,10 +117,10 @@ export class TemplateForm extends React.Component {
     event.preventDefault();
     if (
       window.confirm(
-        `you sure you want to send feedback to ${this.state.email}?`
+        `Are you sure you want to send feedback to ${this.state.email}?
+        \nDo you have permission from the receiver to initiate the feedbac?`
       )
     ) {
-      this.setState({ isSaved: false });
       formUtils.share({
         email: this.state.email,
         feedbackItem1: this.state.feedbackItem1,
