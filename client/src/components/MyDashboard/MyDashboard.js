@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, Switch, Route } from "react-router-dom";
 import "./MyDashboard.css";
-import TemplateForm from "../TemplateForm/TemplateForm";
+import InitiateFeedbackForm from "../InitiateFeedbackForm/InitiateFeedbackForm";
 import Messages from "../Messages";
 import {
   mapMessageContextToProps,
@@ -77,7 +77,7 @@ export class MyDashboard extends React.Component {
               className="qa-route"
               path="/mydashboard/initiate"
               exact
-              component={TemplateForm}
+              component={InitiateFeedbackForm}
             />
             <Route
               exact
