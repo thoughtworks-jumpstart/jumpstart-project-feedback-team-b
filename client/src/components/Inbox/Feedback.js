@@ -1,6 +1,5 @@
 import React from "react";
-import { object, instanceOf } from "prop-types";
-import { withCookies, Cookies } from "react-cookie";
+import { withCookies } from "react-cookie";
 import { ProviderContext, subscribe } from "react-contextual";
 import Loading from "react-loading-animation";
 import {
@@ -22,8 +21,6 @@ export class Feedback extends React.Component {
     this.notFetchedData = true;
   }
   static propTypes = {
-    history: object.isRequired,
-    cookies: instanceOf(Cookies).isRequired,
     ...sessionContextPropType
   };
 
@@ -56,76 +53,74 @@ export class Feedback extends React.Component {
   render() {
     if (this.state.feedback.giver === undefined) {
       return <Loading />;
+    } else if (this.state.responseStatus === false) {
+      return (
+        <div>
+          <h1>Feedback not found!</h1>
+        </div>
+      );
     } else {
-      if (this.state.responseStatus === true) {
-        return (
-          <div>
-            <div className="template-header">
-              <h3>
-                <strong>Feedback</strong>
-              </h3>
+      return (
+        <div>
+          <div className="template-header">
+            <h3>
+              <strong>Feedback</strong>
+            </h3>
+          </div>
+          <form>
+            <div>
+              <label htmlFor="email">Giver's email address:</label>
             </div>
-            <form>
-              <div>
-                <label htmlFor="email">Giver's email address:</label>
-              </div>
+            <textarea
+              className="form-control border border-primary"
+              rows={1}
+              name="email"
+              value={this.state.feedback.giver}
+              disabled
+            />
+            <br />
+            <div>
+              <label>You are doing great at...</label>
+            </div>
+
+            <div className="feedback-form-fields">
               <textarea
                 className="form-control border border-primary"
-                rows={1}
-                name="email"
-                value={this.state.feedback.giver}
+                rows={6}
+                name="feedbackItem1"
+                value={this.state.feedback.feedbackItems[0]}
                 disabled
               />
-              <br />
-              <div>
-                <label>You are doing great at...</label>
-              </div>
-
-              <div className="feedback-form-fields">
-                <textarea
-                  className="form-control border border-primary"
-                  rows={6}
-                  name="feedbackItem1"
-                  value={this.state.feedback.feedbackItems[0]}
-                  disabled
-                />
-              </div>
-              <br />
-              <div>
-                <label>You could work on/improve...</label>
-              </div>
-              <div className="feedback-form-fields">
-                <textarea
-                  className="form-control border border-primary"
-                  rows={6}
-                  name="feedbackItem2"
-                  value={this.state.feedback.feedbackItems[1]}
-                  disabled
-                />
-              </div>
-              <br />
-              <div>
-                <label>Suggestions...</label>
-              </div>
-              <div className="feedback-form-fields">
-                <textarea
-                  className="form-control border border-primary"
-                  rows={6}
-                  value={this.state.feedback.feedbackItems[2]}
-                  name="feedbackItem3"
-                  disabled
-                />
-              </div>
-            </form>
-          </div>
-        );
-      } else {
-        return (
-          <div>
-            <h1>Feedback not found!</h1>
-          </div>
-        );
-      }
+            </div>
+            <br />
+            <div>
+              <label>You could work on/improve...</label>
+            </div>
+            <div className="feedback-form-fields">
+              <textarea
+                className="form-control border border-primary"
+                rows={6}
+                name="feedbackItem2"
+                value={this.state.feedback.feedbackItems[1]}
+                disabled
+              />
+            </div>
+            <br />
+            <div>
+              <label>Suggestions...</label>
+            </div>
+            <div className="feedback-form-fields">
+              <textarea
+                className="form-control border border-primary"
+                rows={6}
+                value={this.state.feedback.feedbackItems[2]}
+                name="feedbackItem3"
+                disabled
+              />
+            </div>
+          </form>
+        </div>
+      );
     }
   }
 }
