@@ -10,6 +10,7 @@ import { ProviderContext, subscribe } from "react-contextual";
 
 import RequestFeedbackForm from "../RequestFeedbackForm/RequestFeedbackForm";
 import Feedback from "../Inbox/Feedback";
+import UpdateFeedback from "../PendingRequest/UpdateFeedback";
 export class MyDashboard extends React.Component {
   constructor() {
     super();
@@ -77,6 +78,11 @@ export class MyDashboard extends React.Component {
               exact
               path="/mydashboard/request"
               component={RequestFeedbackForm}
+            />
+            <Route
+              exact
+              path="/mydashboard/pendingrequest/feedback/:id"
+              component={UpdateFeedback}
             />
           </Switch>
         </div>
