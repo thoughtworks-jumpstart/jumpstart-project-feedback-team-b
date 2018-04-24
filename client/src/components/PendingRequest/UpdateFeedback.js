@@ -1,11 +1,15 @@
 import React, { Component } from "react";
+import { Prompt } from "react-router";
 import { instanceOf } from "prop-types";
 import { withCookies, Cookies } from "react-cookie";
 import { ProviderContext, subscribe } from "react-contextual";
 import FeedbackTemplate from "../FeedbackTemplate/FeedbackTemplate";
 import { getTemplateLabels } from "../../actions/formUtils";
+import Messages from "../Messages";
 import {
+  mapMessageContextToProps,
   mapSessionContextToProps,
+  messageContextPropType,
   sessionContextPropType
 } from "../context_helper";
 
@@ -28,6 +32,7 @@ class UpdateFeedback extends Component {
 
   static propTypes = {
     cookies: instanceOf(Cookies).isRequired,
+    ...messageContextPropType,
     ...sessionContextPropType
   };
 
@@ -44,8 +49,7 @@ class UpdateFeedback extends Component {
         response.json().then(json => {
           this.setState({
             receiver: json.feedback.receiver,
-            responseStatus: true,
-            isChanged: false
+            responseStatus: true
           });
         });
       }
@@ -61,6 +65,7 @@ class UpdateFeedback extends Component {
   render() {
     return (
       <div className="content">
+        <Messages messages={this.props.messageContext.messages} />
         <Prompt
           when={this.state.isChanged}
           message="Are you sure you want to leave?"
@@ -86,7 +91,7 @@ class UpdateFeedback extends Component {
               rows={1}
               name="email"
               value={this.state.email}
-              onChange={event => this.onChangeHandler(event)}
+              disabled={true}
             />
             <FeedbackTemplate
               labels={this.state.feedbackLabels}
@@ -103,7 +108,8 @@ class UpdateFeedback extends Component {
   onChangeHandler(event) {
     event.preventDefault();
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      isChanged: true
     });
   }
 
@@ -116,12 +122,27 @@ class UpdateFeedback extends Component {
     });
   }
 
-  sendHandler(event) {}
+  sendHandler(event) {
+    event.preventDefault();
+    if (
+      window.confirm(
+        `Are you sure you want to send feedback to ${this.state.email}?
+        \nDo you have permission to initiate the feedback?`
+      )
+    ) {
+      this.setState({ isChanged: false });
+      this.submitFeedback({
+        receiver: this.state.receiver,
+        feedbackItems: this.state.feedbackValues
+      });
+    }
+  }
 }
 
 const mapContextToProps = context => {
   return {
-    ...mapSessionContextToProps(context)
+    ...mapSessionContextToProps(context),
+    ...mapMessageContextToProps(context)
   };
 };
 
