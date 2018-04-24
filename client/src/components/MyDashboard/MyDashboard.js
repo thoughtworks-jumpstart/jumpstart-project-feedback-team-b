@@ -2,7 +2,6 @@ import React from "react";
 import { NavLink, Switch, Route } from "react-router-dom";
 import "./MyDashboard.css";
 import InitiateFeedbackForm from "../InitiateFeedbackForm/InitiateFeedbackForm";
-import Messages from "../Messages";
 import {
   mapMessageContextToProps,
   messageContextPropType
@@ -27,8 +26,6 @@ export class MyDashboard extends React.Component {
   }
 
   render() {
-    const checkForSuccessMsg =
-      this.state.location === this.props.location.pathname;
     return (
       <div className="info-body">
         <ul className="info-body-sidebar">
@@ -64,9 +61,6 @@ export class MyDashboard extends React.Component {
           </li>
         </ul>
         <div className="info-body-content">
-          {checkForSuccessMsg && (
-            <Messages messages={this.props.messageContext.messages} />
-          )}
           <Switch>
             <Route
               path="/mydashboard/inbox/feedback/:id"

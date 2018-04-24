@@ -19,7 +19,7 @@ class RequestFeedbackForm extends React.Component {
     super();
     const feedbackLabels = getTemplateLabels();
     this.state = {
-      isSaved: false,
+      isChanged: false,
       email: "",
       feedbackLabels: feedbackLabels,
       feedbackValues: new Array(feedbackLabels.length).fill("")

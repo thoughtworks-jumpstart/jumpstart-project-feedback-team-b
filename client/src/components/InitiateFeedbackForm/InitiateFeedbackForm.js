@@ -8,17 +8,18 @@ import {
   messageContextPropType,
   sessionContextPropType
 } from "../context_helper";
-import { object, instanceOf } from "prop-types";
+import { instanceOf } from "prop-types";
 import { withCookies, Cookies } from "react-cookie";
 import FeedbackTemplate from "../FeedbackTemplate/FeedbackTemplate";
 import { getTemplateLabels } from "../../actions/formUtils";
+import Messages from "../Messages";
 
 class InitiateFeedbackForm extends React.Component {
   constructor() {
     super();
     const feedbackLabels = getTemplateLabels();
     this.state = {
-      isSaved: false,
+      isChanged: false,
       email: "",
       feedbackLabels: feedbackLabels,
       feedbackValues: new Array(feedbackLabels.length).fill("")
@@ -27,17 +28,20 @@ class InitiateFeedbackForm extends React.Component {
     this.onChangeHandler = this.onChangeHandler.bind(this);
   }
   static propTypes = {
-    history: object.isRequired,
     cookies: instanceOf(Cookies).isRequired,
     ...messageContextPropType,
     ...sessionContextPropType
   };
+  componentWillUnmount() {
+    this.props.messageContext.clearMessages();
+  }
 
   render() {
     return (
       <div className="content">
+        <Messages messages={this.props.messageContext.messages} />
         <Prompt
-          when={this.props.isSaved}
+          when={this.state.isChanged}
           message="Are you sure you want to leave?"
         />
         <div className="template-header">
@@ -78,7 +82,8 @@ class InitiateFeedbackForm extends React.Component {
   onChangeHandler(event) {
     event.preventDefault();
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      isChanged: true
     });
   }
 
@@ -93,17 +98,23 @@ class InitiateFeedbackForm extends React.Component {
 
   shareHandler(event) {
     event.preventDefault();
-    this.setState({ isSaved: true });
-    this.submitFeedback({
-      email: this.state.email,
-      feedbackItems: this.state.feedbackValues
-    });
+    if (
+      window.confirm(
+        `Are you sure you want to send feedback to ${this.state.email}?
+        \nDo you have permission to initiate the feedback?`
+      )
+    ) {
+      this.setState({ isChanged: false });
+      this.submitFeedback({
+        email: this.state.email,
+        feedbackItems: this.state.feedbackValues
+      });
+    }
   }
 
   submitFeedback({ email, feedbackItems }) {
     const messageContext = this.props.messageContext;
     const sessionContext = this.props.sessionContext;
-    const history = this.props.history;
     messageContext.clearMessages();
     return fetch("/api/feedback/initiate", {
       method: "post",
@@ -118,8 +129,11 @@ class InitiateFeedbackForm extends React.Component {
     }).then(response => {
       if (response.ok) {
         return response.json().then(json => {
-          messageContext.setSuccessMessages([json]);
-          history.replace("/mydashboard");
+          if (response.status === 200) {
+            messageContext.setSuccessMessages([json]);
+          } else {
+            messageContext.setInfoMessages([json]);
+          }
         });
       } else {
         return response.json().then(json => {
