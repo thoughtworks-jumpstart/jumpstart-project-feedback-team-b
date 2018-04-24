@@ -9,7 +9,7 @@ import {
 import { ProviderContext, subscribe } from "react-contextual";
 
 import RequestFeedbackForm from "../RequestFeedbackForm/RequestFeedbackForm";
-import Feedback from "../Inbox/Feedback";
+import ShowFeedback from "../Inbox/ShowFeedback";
 import UpdateFeedback from "../PendingRequest/UpdateFeedback";
 export class MyDashboard extends React.Component {
   constructor() {
@@ -66,7 +66,7 @@ export class MyDashboard extends React.Component {
             <Route
               path="/mydashboard/inbox/feedback/:id"
               exact
-              component={Feedback}
+              component={ShowFeedback}
             />
             <Route
               className="qa-route"

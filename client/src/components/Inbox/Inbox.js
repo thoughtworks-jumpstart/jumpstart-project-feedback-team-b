@@ -1,2 +1,2 @@
 import React from "react";
-import Feedback from "./Feedback";
+import ShowFeedback from "./ShowFeedback";
