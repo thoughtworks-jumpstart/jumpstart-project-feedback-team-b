@@ -4,6 +4,7 @@ import { Cookies } from "react-cookie";
 import { shallow } from "enzyme";
 import React from "react";
 import Loading from "react-loading-animation";
+import FeedbackTemplate from "../FeedbackTemplate/FeedbackTemplate";
 
 describe("Fetch Feedback", async () => {
   let sessionContext = {
@@ -58,27 +59,28 @@ describe("Fetch Feedback", async () => {
     );
     const inst = wrapper.instance();
     await inst.fetchCall();
-    expect(inst.state.feedback.status).toEqual("RECEIVER_UNREAD");
-    expect(inst.state.feedback.feedbackItems).toHaveLength(3);
-    expect(inst.state.feedback.giver).toEqual("giver");
-    expect(inst.state.feedback.feedbackItems).toEqual(["abc", "cba", "dgf"]);
+
+    expect(inst.state.feedbackValues).toHaveLength(3);
+    expect(inst.state.giver).toEqual("giver");
+    expect(inst.state.feedbackValues).toEqual(["abc", "cba", "dgf"]);
     wrapper.update();
-    expect(wrapper.find("label")).toHaveLength(4);
-    expect(wrapper.find("textarea")).toHaveLength(4);
+    expect(wrapper.find("label")).toHaveLength(1);
+    expect(wrapper.find("textarea")).toHaveLength(1);
+    expect(wrapper.find(FeedbackTemplate)).toHaveLength(1);
   });
 
   it("should render loading if giver is not defined", () => {
     const wrapper = shallow(
       <Feedback sessionContext={sessionContext} match={match} />
     );
-    wrapper.setState({ feedback: { giver: undefined } });
+    wrapper.setState({ giver: null });
     expect(wrapper.find(Loading)).toHaveLength(1);
   });
   it("should render 'Feedback not found' if response status is not okay", () => {
     const wrapper = shallow(
       <Feedback sessionContext={sessionContext} match={match} />
     );
-    wrapper.setState({ feedback: { giver: "someone@somewhere.com" } });
+    wrapper.setState({ giver: "someone@somewhere.com" });
     wrapper.setState({ responseStatus: false });
     expect(wrapper.find("h1.feedbackNotFound")).toHaveLength(1);
   });

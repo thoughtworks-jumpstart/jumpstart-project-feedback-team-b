@@ -6,15 +6,17 @@ import {
   mapSessionContextToProps,
   sessionContextPropType
 } from "../context_helper";
+import FeedbackTemplate from "../FeedbackTemplate/FeedbackTemplate";
+import { getTemplateLabels } from "../../actions/formUtils";
 
 export class Feedback extends React.Component {
   constructor() {
     super();
+    const feedbackLabels = getTemplateLabels();
     this.state = {
-      feedback: {
-        feedbackItems: [],
-        giver: undefined
-      },
+      feedbackValues: new Array(feedbackLabels.length).fill(""),
+      feedbackLabels: feedbackLabels,
+      giver: null,
       responseStatus: false
     };
     this.fetchCall = this.fetchCall.bind(this);
@@ -36,7 +38,8 @@ export class Feedback extends React.Component {
       if (response.ok) {
         response.json().then(json => {
           this.setState({
-            feedback: json.feedback,
+            feedbackValues: json.feedback.feedbackItems,
+            giver: json.feedback.giver,
             responseStatus: true
           });
         });
@@ -51,7 +54,7 @@ export class Feedback extends React.Component {
   }
 
   render() {
-    if (this.state.feedback.giver === undefined) {
+    if (this.state.giver === null) {
       return <Loading />;
     } else if (this.state.responseStatus === false) {
       return (
@@ -75,49 +78,14 @@ export class Feedback extends React.Component {
               className="form-control border border-primary"
               rows={1}
               name="email"
-              value={this.state.feedback.giver}
+              value={this.state.giver}
               disabled
             />
-            <br />
-            <div>
-              <label>You are doing great at...</label>
-            </div>
-
-            <div className="feedback-form-fields">
-              <textarea
-                className="form-control border border-primary"
-                rows={6}
-                name="feedbackItem1"
-                value={this.state.feedback.feedbackItems[0]}
-                disabled
-              />
-            </div>
-            <br />
-            <div>
-              <label>You could work on/improve...</label>
-            </div>
-            <div className="feedback-form-fields">
-              <textarea
-                className="form-control border border-primary"
-                rows={6}
-                name="feedbackItem2"
-                value={this.state.feedback.feedbackItems[1]}
-                disabled
-              />
-            </div>
-            <br />
-            <div>
-              <label>Suggestions...</label>
-            </div>
-            <div className="feedback-form-fields">
-              <textarea
-                className="form-control border border-primary"
-                rows={6}
-                value={this.state.feedback.feedbackItems[2]}
-                name="feedbackItem3"
-                disabled
-              />
-            </div>
+            <FeedbackTemplate
+              labels={this.state.feedbackLabels}
+              feedbackValues={this.state.feedbackValues}
+              disabled={true}
+            />
           </form>
         </div>
       );
