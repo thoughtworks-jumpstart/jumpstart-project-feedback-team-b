@@ -1,8 +1,9 @@
 import fetchMock from "fetch-mock";
 import { Feedback } from "./Feedback";
 import { Cookies } from "react-cookie";
-import { render, shallow } from "enzyme";
+import { shallow } from "enzyme";
 import React from "react";
+import Loading from "react-loading-animation";
 
 describe("Fetch Feedback", async () => {
   let sessionContext = {
@@ -11,13 +12,14 @@ describe("Fetch Feedback", async () => {
     clearSession: () => {},
     updateUserProfile: () => {}
   };
+
   let match = {
     params: {
       id: 123
     }
   };
   it("should update the state after calling fetch api to retrieve Feedback from database", async () => {
-    await fetchMock.get("/api/feedback/123", {
+    fetchMock.get("/api/feedback/123", {
       status: 200,
       body: {
         feedback: {
@@ -60,13 +62,24 @@ describe("Fetch Feedback", async () => {
     expect(inst.state.feedback.feedbackItems).toHaveLength(3);
     expect(inst.state.feedback.giver).toEqual("giver");
     expect(inst.state.feedback.feedbackItems).toEqual(["abc", "cba", "dgf"]);
+    wrapper.update();
+    expect(wrapper.find("label")).toHaveLength(4);
+    expect(wrapper.find("textarea")).toHaveLength(4);
   });
 
-  it("structure test", () => {
+  it("should render loading if giver is not defined", () => {
     const wrapper = shallow(
       <Feedback sessionContext={sessionContext} match={match} />
     );
-    console.log(wrapper.dive().find("div.template-header"));
-    expect;
+    wrapper.setState({ feedback: { giver: undefined } });
+    expect(wrapper.find(Loading)).toHaveLength(1);
+  });
+  it("should render 'Feedback not found' if response status is not okay", () => {
+    const wrapper = shallow(
+      <Feedback sessionContext={sessionContext} match={match} />
+    );
+    wrapper.setState({ feedback: { giver: "someone@somewhere.com" } });
+    wrapper.setState({ responseStatus: false });
+    expect(wrapper.find("h1.feedbackNotFound")).toHaveLength(1);
   });
 });

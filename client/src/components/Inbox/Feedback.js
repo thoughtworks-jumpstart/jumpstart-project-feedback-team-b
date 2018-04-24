@@ -56,7 +56,7 @@ export class Feedback extends React.Component {
     } else if (this.state.responseStatus === false) {
       return (
         <div>
-          <h1>Feedback not found!</h1>
+          <h1 className="feedbackNotFound">Feedback not found!</h1>
         </div>
       );
     } else {
