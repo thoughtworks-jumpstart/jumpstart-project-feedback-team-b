@@ -25,8 +25,7 @@ class UpdateFeedback extends Component {
       feedbackValues: new Array(feedbackLabels.length).fill("")
     };
     this.fetchCall = this.fetchCall.bind(this);
-    this.shareHandler = this.shareHandler.bind(this);
-    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.sendHandler = this.sendHandler.bind(this);
     this.notFetchedData = true;
   }
 
@@ -90,7 +89,7 @@ class UpdateFeedback extends Component {
               className="form-control border border-primary"
               rows={1}
               name="email"
-              value={this.state.email}
+              value={this.state.receiver}
               disabled={true}
             />
             <FeedbackTemplate
@@ -105,20 +104,13 @@ class UpdateFeedback extends Component {
     );
   }
 
-  onChangeHandler(event) {
-    event.preventDefault();
-    this.setState({
-      [event.target.name]: event.target.value,
-      isChanged: true
-    });
-  }
-
   onFeedbackChangeHandler(idx, event) {
     event.preventDefault();
     let feedbackValues = this.state.feedbackValues;
     feedbackValues[idx] = event.target.value;
     this.setState({
-      feedbackValues: feedbackValues
+      feedbackValues: feedbackValues,
+      isChanged: true
     });
   }
 
@@ -126,8 +118,7 @@ class UpdateFeedback extends Component {
     event.preventDefault();
     if (
       window.confirm(
-        `Are you sure you want to send feedback to ${this.state.email}?
-        \nDo you have permission to initiate the feedback?`
+        `Are you sure you want to send feedback to ${this.state.receiver}?`
       )
     ) {
       this.setState({ isChanged: false });

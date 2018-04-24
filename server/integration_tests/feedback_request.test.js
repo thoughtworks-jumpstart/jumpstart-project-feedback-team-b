@@ -117,9 +117,6 @@ describe("Accessing Feedback Request API with login", () => {
     expect(response.statusCode).toBe(200);
     expect(mockEmailService.sendText).toHaveBeenCalledTimes(1);
     expect(mockEmailService.sendText.mock.calls[0][1]).toEqual(valid_giver);
-    expect(mockEmailService.sendText.mock.calls[0][3]).toEqual(
-      "Hi jacky, tom has requested you to provide some feedback via myFeedback"
-    );
     const message = response.body.msg;
     expect(message).toMatch(
       `Your request for feedback from jacky (jacky@example.com) was sent successfully`
