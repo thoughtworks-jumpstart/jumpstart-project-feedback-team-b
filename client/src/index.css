@@ -100,12 +100,12 @@ footer {
   border-bottom-color: #bdbdbd;
 }
 
-.navbar-default .navbar-nav > li > a.navbar-avatar {
+.navbar-inverse .navbar-nav > li > a.navbar-avatar {
   padding-top: 13px;
   padding-bottom: 10px;
 }
 
-.navbar-default .navbar-nav > li > a.navbar-avatar img {
+.navbar-inverse .navbar-nav > li > a.navbar-avatar img {
   border-radius: 50%;
   width: 30px;
   height: 30px;

@@ -85,7 +85,7 @@ class Header extends React.Component {
       </ul>
     );
     return (
-      <nav className="navbar navbar-default navbar-static-top">
+      <nav className="navbar navbar-inverse navbar-static-top">
         <div className="container">
           <div className="navbar-header">
             <button
@@ -100,7 +100,7 @@ class Header extends React.Component {
               <span className="icon-bar" />
             </button>
             <NavLink exact to="/" className="navbar-brand">
-              myFeedback
+              <em>my</em>Feedback
             </NavLink>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
