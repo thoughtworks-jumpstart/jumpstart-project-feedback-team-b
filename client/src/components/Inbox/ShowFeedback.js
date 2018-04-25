@@ -4,10 +4,13 @@ import { ProviderContext, subscribe } from "react-contextual";
 import Loading from "react-loading-animation";
 import {
   mapSessionContextToProps,
-  sessionContextPropType
+  sessionContextPropType,
+  messageContextPropType,
+  mapMessageContextToProps
 } from "../context_helper";
 import FeedbackTemplate from "../FeedbackTemplate/FeedbackTemplate";
 import { getTemplateLabels } from "../../actions/formUtils";
+import Messages from "../Messages";
 
 export class ShowFeedback extends React.Component {
   constructor() {
@@ -16,14 +19,15 @@ export class ShowFeedback extends React.Component {
     this.state = {
       feedbackValues: new Array(feedbackLabels.length).fill(""),
       feedbackLabels: feedbackLabels,
-      giver: null,
-      responseStatus: false
+      giver: "",
+      responseStatus: null
     };
     this.fetchCall = this.fetchCall.bind(this);
     this.notFetchedData = true;
   }
   static propTypes = {
-    ...sessionContextPropType
+    ...sessionContextPropType,
+    ...messageContextPropType
   };
 
   fetchCall() {
@@ -43,9 +47,17 @@ export class ShowFeedback extends React.Component {
             responseStatus: true
           });
         });
+      } else {
+        this.setState({
+          responseStatus: false
+        });
+        response
+          .json()
+          .then(json => this.props.messageContext.setErrorMessages(json.msg));
       }
     });
   }
+
   componentWillUpdate() {
     if (this.notFetchedData && this.props.sessionContext.token !== null) {
       this.notFetchedData = false;
@@ -54,12 +66,12 @@ export class ShowFeedback extends React.Component {
   }
 
   render() {
-    if (this.state.giver === null) {
+    if (this.state.responseStatus === null) {
       return <Loading />;
     } else if (this.state.responseStatus === false) {
       return (
         <div>
-          <h1 className="feedbackNotFound">Feedback not found!</h1>
+          <Messages messages={this.props.messageContext.messages} />
         </div>
       );
     } else {
@@ -94,7 +106,8 @@ export class ShowFeedback extends React.Component {
 }
 const mapContextToProps = context => {
   return {
-    ...mapSessionContextToProps(context)
+    ...mapSessionContextToProps(context),
+    ...mapMessageContextToProps(context)
   };
 };
 
