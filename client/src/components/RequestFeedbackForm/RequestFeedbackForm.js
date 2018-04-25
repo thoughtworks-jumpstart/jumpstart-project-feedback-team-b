@@ -41,13 +41,11 @@ class RequestFeedbackForm extends React.Component {
       <div className="content">
         <Messages messages={this.props.messageContext.messages} />
         <div className="template-header">
-          <h3>
-            <strong>Request Feedback</strong>
-          </h3>
+          <h3>Request Feedback</h3>
           <div className="init-save-button">
             <button
               id="submit_button"
-              className="btn qa-request-submit-btn"
+              className="btn btn-primary qa-request-submit-btn"
               data-cy="requestFeedback-submit"
               onClick={this.submitHandler}
             >
@@ -58,7 +56,9 @@ class RequestFeedbackForm extends React.Component {
         <div data-cy="qa-requestfb">
           <form>
             <div>
-              <label htmlFor="email">Add email address:</label>
+              <h4 className="text-muted" htmlFor="email">
+                Add email address:
+              </h4>
             </div>
             <textarea
               data-cy="RequestFeedbackForm_emailInput"
@@ -69,7 +69,9 @@ class RequestFeedbackForm extends React.Component {
               onChange={this.onChangeHandler.bind(this)}
             />
             <br />
-            <hr className="hr-text" data-content="Preview of feedback form" />
+            <h2>
+              <hr className="hr-text" data-content="Preview of feedback form" />
+            </h2>
             <FeedbackTemplate
               labels={this.state.feedbackLabels}
               feedbackValues={this.state.feedbackValues}

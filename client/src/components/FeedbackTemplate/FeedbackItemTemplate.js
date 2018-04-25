@@ -1,9 +1,10 @@
 import React from "react";
+import "./FeedbackItemTemplate.css";
 
 const FeedbackItemTemplate = props => (
-  <div>
+  <div className="feedbackitem">
     <div>
-      <label>{props.label}</label>
+      <h4 className="text-muted">{props.label}</h4>
     </div>
 
     <div className="feedback-form-fields">

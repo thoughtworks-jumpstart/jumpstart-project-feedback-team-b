@@ -45,9 +45,7 @@ class InitiateFeedbackForm extends React.Component {
           message="Are you sure you want to leave?"
         />
         <div className="template-header">
-          <h3>
-            <strong>Initiate Feedback</strong>
-          </h3>
+          <h3>Initiate Feedback</h3>
           <div className="init-save-button">
             <button className="btn" onClick={event => this.shareHandler(event)}>
               Share
@@ -57,7 +55,9 @@ class InitiateFeedbackForm extends React.Component {
         <div id="qa-initiateform">
           <form>
             <div>
-              <label htmlFor="email">Receiver's email address:</label>
+              <h4 className="text-muted" htmlFor="email">
+                Receiver's email address:
+              </h4>
             </div>
             <textarea
               id="InitiateFeedbackForm_emailInput"
