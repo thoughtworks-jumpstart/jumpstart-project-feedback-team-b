@@ -96,7 +96,11 @@ async function requestFeedback(req, res) {
   const giverName = giver.name;
   const receiverName = receiver.name;
   const subject = "You have a request for feedback from " + receiverName;
-  const text = `Hi ${giverName}, ${receiverName} has requested you to provide some feedback via myFeedback`;
+  const text = `Hi ${giverName}, ${receiverName} has requested you to provide some feedback via myFeedback \n
+  Click on the link below to see your feedback. \n
+  http://${getHostAndPort(
+    req
+  )}/mydashboard/pendingrequest/feedback/${savedRequestedFeedback_id} \n\n`;
   try {
     await mailer.sendText(fromAddress, toAddress, subject, text);
   } catch (error) {
