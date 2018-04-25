@@ -5,6 +5,7 @@ import { shallow } from "enzyme";
 import React from "react";
 import Loading from "react-loading-animation";
 import FeedbackTemplate from "../FeedbackTemplate/FeedbackTemplate";
+import Messages from "../Messages";
 
 describe("Fetch Feedback", async () => {
   let sessionContext = {
@@ -18,6 +19,13 @@ describe("Fetch Feedback", async () => {
     params: {
       id: 123
     }
+  };
+  let messageContext = {
+    messages: {},
+    clearMessages: () => {},
+    setSuccessMessages: () => {},
+    setErrorMessages: () => {},
+    setInfoMessages: () => {}
   };
   it("should update the state after calling fetch api to retrieve Feedback from database", async () => {
     fetchMock.get("/api/feedback/123", {
@@ -55,6 +63,7 @@ describe("Fetch Feedback", async () => {
         sessionContext={sessionContext}
         history={{}}
         cookies={cookies}
+        messageContext={messageContext}
       />
     );
     const inst = wrapper.instance();
@@ -71,17 +80,25 @@ describe("Fetch Feedback", async () => {
 
   it("should render loading if giver is not defined", () => {
     const wrapper = shallow(
-      <ShowFeedback sessionContext={sessionContext} match={match} />
+      <ShowFeedback
+        sessionContext={sessionContext}
+        match={match}
+        messageContext={messageContext}
+      />
     );
     wrapper.setState({ giver: null });
     expect(wrapper.find(Loading)).toHaveLength(1);
   });
   it("should render 'ShowFeedback not found' if response status is not okay", () => {
     const wrapper = shallow(
-      <ShowFeedback sessionContext={sessionContext} match={match} />
+      <ShowFeedback
+        sessionContext={sessionContext}
+        match={match}
+        messageContext={messageContext}
+      />
     );
     wrapper.setState({ giver: "someone@somewhere.com" });
     wrapper.setState({ responseStatus: false });
-    expect(wrapper.find("h1.feedbackNotFound")).toHaveLength(1);
+    expect(wrapper.find(Messages)).toHaveLength(1);
   });
 });
