@@ -22,6 +22,7 @@ router.post(
 );
 
 router.get("/feedback/:id", jwt.required, handleAsyncError(retrieveFeedback));
+router.get("/feedback", jwt.required, handleAsyncError(retrieveFeedback));
 
 router.put(
   "/feedback/request/:id",

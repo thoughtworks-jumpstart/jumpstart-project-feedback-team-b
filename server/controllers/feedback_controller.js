@@ -121,8 +121,32 @@ async function requestFeedback(req, res) {
     }) was sent successfully`
   });
 }
-
 async function retrieveFeedback(req, res) {
+  if (req.params.id) {
+    return retrieveFeedbackByID(req, res);
+  } else {
+    return retrieveFeedbackByEmail(req, res);
+  }
+}
+
+async function retrieveFeedbackByEmail(req, res) {
+  try {
+    const email = req.jwt.email;
+    const receiver = await Feedback.find({
+      receiver: email
+    });
+    console.log(receiver);
+    return res.status(200).send({
+      receiver
+    });
+  } catch (error) {
+    return res.status(400).send({
+      msg: "There was an error processing your request"
+    });
+  }
+}
+
+async function retrieveFeedbackByID(req, res) {
   try {
     const feedbackId = req.params.id;
     let feedback = await Feedback.findById(feedbackId);
