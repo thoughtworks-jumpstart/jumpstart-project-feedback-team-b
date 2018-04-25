@@ -29,38 +29,31 @@ export class MyDashboard extends React.Component {
   render() {
     return (
       <div className="info-body">
-        <ul className="info-body-sidebar">
-          <li>
-            <NavLink
-              className="qa-link"
-              data-cy="qa-requestfeedback-link"
-              to="/mydashboard/request"
-            >
-              Request Feedback
-            </NavLink>
-          </li>
+        <div className="info-body-sidebar list-group">
+          <NavLink
+            className="qa-link list-group-item"
+            data-cy="qa-requestfeedback-link"
+            to="/mydashboard/request"
+          >
+            Request Feedback
+          </NavLink>
+          <NavLink
+            className="qa-link list-group-item"
+            to="/mydashboard/initiate"
+          >
+            Initiate Feedback
+          </NavLink>
 
-          <li>
-            <NavLink className="qa-link" to="/mydashboard/inbox">
-              Inbox{" "}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className="qa-link" to="#">
-              Pending request{" "}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className="qa-link" to="/mydashboard/initiate">
-              Initiate Feedback{" "}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className="qa-link" to="#">
-              Pending feedback
-            </NavLink>
-          </li>
-        </ul>
+          <NavLink className="qa-link list-group-item" to="/mydashboard/inbox">
+            Inbox{" "}
+          </NavLink>
+          <NavLink className="qa-link list-group-item" to="#">
+            Pending request
+          </NavLink>
+          <NavLink className="qa-link list-group-item" to="#">
+            Pending feedback
+          </NavLink>
+        </div>
         <div className="info-body-content">
           <Switch>
             <Route

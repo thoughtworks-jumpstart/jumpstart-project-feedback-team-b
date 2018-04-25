@@ -47,7 +47,10 @@ class InitiateFeedbackForm extends React.Component {
         <div className="template-header">
           <h3>Initiate Feedback</h3>
           <div className="init-save-button">
-            <button className="btn" onClick={event => this.shareHandler(event)}>
+            <button
+              className="btn btn-primary"
+              onClick={event => this.shareHandler(event)}
+            >
               Share
             </button>
           </div>
