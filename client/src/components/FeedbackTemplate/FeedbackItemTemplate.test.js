@@ -12,8 +12,8 @@ describe("FeedbackItemTemplate", () => {
         feedbackValue={sampleFeedbackValue}
       />
     );
-    expect(wrapper.find("label")).toHaveLength(1);
-    expect(wrapper.find("label").props().children).toEqual(sampleLabel);
+    expect(wrapper.find("h4")).toHaveLength(1);
+    expect(wrapper.find("h4").props().children).toEqual(sampleLabel);
     expect(wrapper.find("textarea")).toHaveLength(1);
     expect(wrapper.find("textarea").props().value).toEqual(sampleFeedbackValue);
   });

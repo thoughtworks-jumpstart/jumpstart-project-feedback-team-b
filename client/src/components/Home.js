@@ -21,7 +21,7 @@ class Home extends React.Component {
     // return <div className="landing-page">Welcome to myFeedback!!</div>;
     return (
       <div className="container">
-        <div class="jumbotron">
+        <div className="jumbotron">
           <h1>Are you ready for some feedback?</h1>
           <p>Send feedback or request feedback to improve!</p>
           <p>
