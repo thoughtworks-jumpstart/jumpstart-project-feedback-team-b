@@ -151,12 +151,12 @@ async function updateFeedback(req, res) {
   const userId = req.jwt.userid;
   const user = await User.findById(userId);
 
-  let updateFeedback = new Feedback({
+  let updateFeedback = {
     giver: user.email,
     receiver: receiver.email,
     status: "RECEIVER_UNREAD",
     feedbackItems: req.body.feedbackItems
-  });
+  };
 
   let savedFeedback_id;
   try {
@@ -166,6 +166,7 @@ async function updateFeedback(req, res) {
     );
     savedFeedback_id = savedFeedback._id;
   } catch (error) {
+    console.log(error);
     return res.status(400).send({
       msg: "There was an error processing your request"
     });
