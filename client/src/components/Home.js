@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NavLink } from "react-router-dom";
 import { object } from "prop-types";
 import { ProviderContext, subscribe } from "react-contextual";
 import {
@@ -18,7 +18,24 @@ class Home extends React.Component {
   }
 
   render() {
-    return <div className="landing-page">Welcome to myFeedback!!</div>;
+    // return <div className="landing-page">Welcome to myFeedback!!</div>;
+    return (
+      <div className="container">
+        <div class="jumbotron">
+          <h1>Are you ready for some feedback?</h1>
+          <p>Send feedback or request feedback to improve!</p>
+          <p>
+            <NavLink
+              to="/signup"
+              className="btn btn-primary btn-lg"
+              role="button"
+            >
+              Sign up now!
+            </NavLink>
+          </p>
+        </div>
+      </div>
+    );
   }
 }
 
