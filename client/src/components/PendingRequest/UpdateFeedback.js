@@ -22,7 +22,8 @@ class UpdateFeedback extends Component {
       responseStatus: false,
       receiver: "",
       feedbackLabels: feedbackLabels,
-      feedbackValues: new Array(feedbackLabels.length).fill("")
+      feedbackValues: new Array(feedbackLabels.length).fill(""),
+      id: ""
     };
     this.fetchCall = this.fetchCall.bind(this);
     this.sendHandler = this.sendHandler.bind(this);
@@ -36,7 +37,7 @@ class UpdateFeedback extends Component {
   };
 
   fetchCall() {
-    let id = this.props.match.params.id;
+    const id = this.props.match.params.id;
     return fetch("/api/feedback/" + id, {
       method: "get",
       headers: {
@@ -48,7 +49,8 @@ class UpdateFeedback extends Component {
         response.json().then(json => {
           this.setState({
             receiver: json.feedback.receiver,
-            responseStatus: true
+            responseStatus: true,
+            id: id
           });
         });
       }
@@ -128,6 +130,38 @@ class UpdateFeedback extends Component {
       });
     }
   }
+
+  submitFeedback({ receiver, feedbackItems }) {
+    const messageContext = this.props.messageContext;
+    const sessionContext = this.props.sessionContext;
+    messageContext.clearMessages();
+    return fetch(`/api/feedback/request/${this.state.id}`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionContext.token}`
+      },
+      body: JSON.stringify({
+        receiver: receiver,
+        feedbackItems: feedbackItems
+      })
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          if (response.status === 200) {
+            messageContext.setSuccessMessages([json]);
+          } else {
+            messageContext.setInfoMessages([json]);
+          }
+        });
+      } else {
+        return response.json().then(json => {
+          const messages = Array.isArray(json) ? json : [json];
+          messageContext.setErrorMessages(messages);
+        });
+      }
+    });
+  }
 }
 
 const mapContextToProps = context => {
@@ -140,3 +174,5 @@ const mapContextToProps = context => {
 export default subscribe(ProviderContext, mapContextToProps)(
   withCookies(UpdateFeedback)
 );
+
+export { UpdateFeedback };
