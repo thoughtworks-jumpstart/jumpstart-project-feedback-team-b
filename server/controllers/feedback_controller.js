@@ -126,12 +126,8 @@ async function retrieveFeedback(req, res) {
   try {
     const feedbackId = req.params.id;
     let feedback = await Feedback.findById(feedbackId);
-
-    if (!feedback) {
-      return res.status(400).send({
-        msg: "The feedback could not be found in the system."
-      });
-    }
+    console.log(feedback);
+    console.log("success feedback");
     if (feedback.status !== "RECEIVER_READ") {
       feedback.status = "RECEIVER_READ";
       await feedback.save();
@@ -141,7 +137,7 @@ async function retrieveFeedback(req, res) {
     });
   } catch (error) {
     return res.status(400).send({
-      msg: "There was an error processing your request"
+      msg: "The feedback could not be found in the system."
     });
   }
 }

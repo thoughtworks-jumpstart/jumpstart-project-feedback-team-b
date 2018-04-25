@@ -53,7 +53,7 @@ export class ShowFeedback extends React.Component {
         });
         response
           .json()
-          .then(json => this.props.messageContext.setErrorMessages(json.msg));
+          .then(json => this.props.messageContext.setErrorMessages([json]));
       }
     });
   }
