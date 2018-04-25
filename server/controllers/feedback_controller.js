@@ -166,7 +166,6 @@ async function updateFeedback(req, res) {
     );
     savedFeedback_id = savedFeedback._id;
   } catch (error) {
-    console.log(error);
     return res.status(400).send({
       msg: "There was an error processing your request"
     });
