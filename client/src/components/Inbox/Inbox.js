@@ -1,2 +1,5 @@
 import React from "react";
-import ShowFeedback from "./ShowFeedback";
+
+const Inbox = () => <div>this is inbox</div>;
+
+export default Inbox;

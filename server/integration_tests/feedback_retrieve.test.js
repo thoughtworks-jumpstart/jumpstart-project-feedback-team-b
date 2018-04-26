@@ -71,14 +71,4 @@ describe("Retrieve feedback API with login", () => {
       expect.arrayContaining(savedFeedbackItems)
     );
   });
-
-  it("should return a unhappy path if id value is supplied incorrectly", async () => {
-    let response = await request(app)
-      .get(`/api/feedback/GSDQQD3276530`)
-      .set("Authorization", "Bearer " + jwtToken);
-    expect(response.statusCode).toBe(400);
-    expect(response.body).toEqual({
-      msg: "There was an error processing your request"
-    });
-  });
 });
