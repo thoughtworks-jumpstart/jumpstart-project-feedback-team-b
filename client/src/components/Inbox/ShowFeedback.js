@@ -22,8 +22,9 @@ export class ShowFeedback extends React.Component {
       giver: "",
       responseStatus: null
     };
-    this.fetchCall = this.fetchCall.bind(this);
     this.notFetchedData = true;
+    this.fetchCall = this.fetchCall.bind(this);
+    this.fetchDataOnce = this.fetchDataOnce.bind(this);
   }
   static propTypes = {
     ...sessionContextPropType,
@@ -46,6 +47,7 @@ export class ShowFeedback extends React.Component {
             giver: json.feedback.giver_name,
             responseStatus: true
           });
+          // console.log("show feedback show feedback ok");
         });
       } else {
         this.setState({
@@ -54,15 +56,23 @@ export class ShowFeedback extends React.Component {
         response
           .json()
           .then(json => this.props.messageContext.setErrorMessages([json]));
+        // console.log("show feedbck failed");
       }
     });
   }
-
-  componentWillUpdate() {
+  fetchDataOnce() {
     if (this.notFetchedData && this.props.sessionContext.token !== null) {
       this.notFetchedData = false;
       this.fetchCall();
     }
+  }
+  componentWillMount() {
+    // console.log("ShowFeedback Mount");
+    this.fetchDataOnce();
+  }
+  componentWillUpdate() {
+    // console.log("showfeedback update");
+    this.fetchDataOnce();
   }
 
   render() {
