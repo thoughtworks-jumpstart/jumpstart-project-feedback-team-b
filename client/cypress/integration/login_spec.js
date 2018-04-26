@@ -67,8 +67,8 @@ describe("forget password path", function() {
   it("should successfully direct to forgot password when clicked upon at log in page", function() {
     cy.visit(URL + "login");
     cy
-      .get('a[href="/forgot"]')
-      .click()
+      .get("a[data-cy=forgot-password]")
+      .click({ force: true })
       .url()
       .should("eq", URL + "forgot");
   });

@@ -71,36 +71,33 @@ class UpdateFeedback extends Component {
           when={this.state.isChanged}
           message="Are you sure you want to leave?"
         />
-        <div className="template-header">
-          <h3>
-            <strong>Pending Feedback Request</strong>
-          </h3>
-          <div className="init-save-button">
-            <button className="btn" onClick={event => this.sendHandler(event)}>
-              Send
-            </button>
-          </div>
-        </div>
-        <div id="qa-initiateform">
-          <form>
-            <div>
-              <label htmlFor="email">Receiver's email address:</label>
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <div className="template-header">
+              <h3>
+                You are writing feedback for{" "}
+                <strong>{this.state.receiver}</strong>
+              </h3>
+              <div className="init-save-button">
+                <button
+                  className="btn btn-primary"
+                  onClick={event => this.sendHandler(event)}
+                >
+                  Send
+                </button>
+              </div>
             </div>
-            <textarea
-              id="InitiateFeedbackForm_emailInput"
-              className="form-control border border-primary"
-              rows={1}
-              name="email"
-              value={this.state.receiver}
-              disabled={true}
-            />
-            <FeedbackTemplate
-              labels={this.state.feedbackLabels}
-              feedbackValues={this.state.feedbackValues}
-              onChangeHandler={this.onFeedbackChangeHandler.bind(this)}
-              disabled={false}
-            />
-          </form>
+            <div id="qa-updateform">
+              <form>
+                <FeedbackTemplate
+                  labels={this.state.feedbackLabels}
+                  feedbackValues={this.state.feedbackValues}
+                  onChangeHandler={this.onFeedbackChangeHandler.bind(this)}
+                  disabled={false}
+                />
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     );

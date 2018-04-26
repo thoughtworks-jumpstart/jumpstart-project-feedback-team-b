@@ -64,7 +64,7 @@ class Login extends React.Component {
             <form onSubmit={this.handleLogin.bind(this)}>
               <legend>Log In</legend>
               <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <h4 htmlFor="email">Email</h4>
                 <input
                   type="email"
                   name="email"
@@ -77,7 +77,7 @@ class Login extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Password</label>
+                <h4 htmlFor="password">Password</h4>
                 <input
                   type="password"
                   name="password"
@@ -89,8 +89,8 @@ class Login extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <Link to="/forgot">
-                  <strong>Forgot your password?</strong>
+                <Link to="/forgot" data-cy="forgot-password">
+                  <h5>Forgot your password?</h5>
                 </Link>
               </div>
               <button

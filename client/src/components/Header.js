@@ -50,10 +50,10 @@ class Header extends React.Component {
                   this.props.sessionContext.user.picture ||
                   this.props.sessionContext.user.gravatar
                 }
-              />{" "}
+              />
               {this.props.sessionContext.user.name ||
                 this.props.sessionContext.user.email ||
-                this.props.sessionContext.user.id}{" "}
+                this.props.sessionContext.user.id}
               <i className="caret" />
             </a>
             <ul className="dropdown-menu">

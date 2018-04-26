@@ -91,9 +91,9 @@ class Profile extends React.Component {
             >
               <legend>Profile Information</legend>
               <div className="form-group">
-                <label htmlFor="email" className="col-sm-3">
+                <h4 htmlFor="email" className="col-sm-3">
                   Email
-                </label>
+                </h4>
                 <div className="col-sm-7">
                   <input
                     type="email"
@@ -106,9 +106,9 @@ class Profile extends React.Component {
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="name" className="col-sm-3">
+                <h4 htmlFor="name" className="col-sm-3">
                   Name
-                </label>
+                </h4>
                 <div className="col-sm-7">
                   <input
                     data-cy="profile-name"
@@ -122,7 +122,7 @@ class Profile extends React.Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-3">Gravatar</label>
+                <h4 className="col-sm-3">Gravatar</h4>
                 <div className="col-sm-4">
                   <img
                     src={this.state.gravatar}
@@ -155,9 +155,9 @@ class Profile extends React.Component {
             >
               <legend>Change Password</legend>
               <div className="form-group">
-                <label htmlFor="password" className="col-sm-3">
+                <h4 htmlFor="password" className="col-sm-3">
                   New Password
-                </label>
+                </h4>
                 <div className="col-sm-7">
                   <input
                     type="password"
@@ -170,9 +170,9 @@ class Profile extends React.Component {
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="confirm" className="col-sm-3">
+                <h4 htmlFor="confirm" className="col-sm-3">
                   Confirm Password
-                </label>
+                </h4>
                 <div className="col-sm-7">
                   <input
                     type="password"

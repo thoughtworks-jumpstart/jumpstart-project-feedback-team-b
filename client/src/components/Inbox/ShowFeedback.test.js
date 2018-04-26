@@ -73,8 +73,6 @@ describe("Fetch Feedback", async () => {
     expect(inst.state.giver).toEqual("giver");
     expect(inst.state.feedbackValues).toEqual(["abc", "cba", "dgf"]);
     wrapper.update();
-    expect(wrapper.find("label")).toHaveLength(1);
-    expect(wrapper.find("textarea")).toHaveLength(1);
     expect(wrapper.find(FeedbackTemplate)).toHaveLength(1);
   });
 

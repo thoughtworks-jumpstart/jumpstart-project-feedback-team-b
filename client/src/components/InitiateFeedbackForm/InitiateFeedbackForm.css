@@ -10,6 +10,6 @@
 }
 .template-header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 1fr;
   padding: 0 0 10px;
 }

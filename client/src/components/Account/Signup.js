@@ -55,7 +55,7 @@ class Signup extends React.Component {
             <form onSubmit={this.handleSignup.bind(this)}>
               <legend>Create an account</legend>
               <div className="form-group">
-                <label htmlFor="name">Name</label>
+                <h4 htmlFor="name">Name</h4>
                 <input
                   type="text"
                   name="name"
@@ -68,7 +68,7 @@ class Signup extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <h4 htmlFor="email">Email</h4>
                 <input
                   type="email"
                   name="email"
@@ -80,7 +80,7 @@ class Signup extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Password</label>
+                <h4 htmlFor="password">Password</h4>
                 <input
                   type="password"
                   name="password"

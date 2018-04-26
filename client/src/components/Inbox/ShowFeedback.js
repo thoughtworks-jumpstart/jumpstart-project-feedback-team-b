@@ -76,29 +76,18 @@ export class ShowFeedback extends React.Component {
       );
     } else {
       return (
-        <div>
-          <div className="template-header">
-            <h3>
-              <strong>Feedback</strong>
-            </h3>
-          </div>
-          <form>
-            <div>
-              <label htmlFor="email">Giver's email address:</label>
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <div className="template-header">
+              <h3>Feedback from {this.state.giver}</h3>
             </div>
-            <textarea
-              className="form-control border border-primary"
-              rows={1}
-              name="email"
-              value={this.state.giver}
-              disabled
-            />
+
             <FeedbackTemplate
               labels={this.state.feedbackLabels}
               feedbackValues={this.state.feedbackValues}
               disabled={true}
             />
-          </form>
+          </div>
         </div>
       );
     }
