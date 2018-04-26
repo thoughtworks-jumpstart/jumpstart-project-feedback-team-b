@@ -132,11 +132,20 @@ async function retrieveFeedback(req, res) {
 async function retrieveFeedbackByEmail(req, res) {
   try {
     const email = req.jwt.email;
-    const receiver = await Feedback.find({
+    const receiverFeedback = await Feedback.find({
       receiver: email
     });
+
+    let userEmails = receiverFeedback.map(feedback => feedback.giver);
+    let userNames = await User.retrieveUsersByEmails(userEmails);
+    const feedbackWithNames = receiverFeedback.map(feedback => {
+      let data = feedback.toObject();
+      data["giver_name"] = userNames[feedback.giver];
+      return data;
+    });
+
     return res.status(200).send({
-      receiver
+      receiver: feedbackWithNames
     });
   } catch (error) {
     return res.status(400).send({
@@ -153,8 +162,13 @@ async function retrieveFeedbackByID(req, res) {
       feedback.status = "RECEIVER_READ";
       await feedback.save();
     }
+    let userEmails = [feedback.giver];
+    let userNames = await User.retrieveUsersByEmails(userEmails);
+    const feedbackWithName = feedback.toObject();
+    feedbackWithName["giver_name"] = userNames[feedback.giver];
+
     return res.status(200).send({
-      feedback
+      feedback: feedbackWithName
     });
   } catch (error) {
     return res.status(400).send({

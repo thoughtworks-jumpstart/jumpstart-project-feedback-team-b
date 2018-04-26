@@ -25,7 +25,7 @@ async function loginAsTom() {
 }
 
 async function createFeedback() {
-  const giver = "giver@giver.com";
+  const giver = fixtures.users.jacky.email;
   const receiver = fixtures.users.tom.email;
   const feedbackItems = [
     "What I did Well",
@@ -80,6 +80,9 @@ describe("Retrieve feedback API with login", () => {
     expect(response.body.feedback.feedbackItems).toEqual(
       expect.arrayContaining(savedFeedbackItems)
     );
+    expect(response.body.feedback.giver_name).toEqual(
+      fixtures.users.jacky.name
+    );
   });
 
   it("/api/feedback -> should return a list of feedbacks ", async () => {
@@ -88,7 +91,10 @@ describe("Retrieve feedback API with login", () => {
       .set("Authorization", "Bearer " + jwtToken);
     expect(response.statusCode).toBe(200);
     expect(response.body.receiver).toHaveLength(2);
-    expect(response.body.receiver[0].giver).toBe("giver@giver.com");
+    expect(response.body.receiver[0].giver).toBe(fixtures.users.jacky.email);
+    expect(response.body.receiver[0].giver_name).toBe(
+      fixtures.users.jacky.name
+    );
   });
 
   it("should return a unhappy path if id value is supplied incorrectly", async () => {
