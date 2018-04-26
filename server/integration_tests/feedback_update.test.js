@@ -1,6 +1,7 @@
 process.env.NODE_ENV = "test";
 
 const testDB = require("../test_helper/in_memory_mongodb_setup");
+const Feedback = require("../models/Feedback");
 const fixtureLoader = require("../test_helper/fixtures");
 const fixtures = require("../test_helper/fixtures").fixtures;
 
@@ -21,9 +22,7 @@ afterAll(testDB.teardown);
 
 let jwtToken;
 let valid_giver = "jacky@example.com";
-let invalid_giver = "receiver@receiver.com";
 let valid_receiver = "jacky@example.com";
-let invalid_receiver = "receiver@receiver.com";
 
 async function loginAsTom() {
   let email = fixtures.users.tom.email;
@@ -52,16 +51,39 @@ describe("Accessing Feedback API with login", () => {
     await loginAsTom();
     id = await createRequest();
   });
+  let feedbackItems = [
+    "Good points",
+    "You can do a lot better",
+    "Lots of room for improvement"
+  ];
   it("should update requested feedback - happy path", async () => {
-    let feedbackItems = [
-      "Good points",
-      "You can do a lot better",
-      "Lots of room for improvement"
-    ];
     const response = await request(app)
       .put(`/api/feedback/request/${id}`)
       .set("Authorization", "Bearer " + jwtToken)
       .send({ receiver: valid_receiver, feedbackItems: feedbackItems });
     expect(response.statusCode).toBe(200);
+  });
+
+  it("should fail to return a happy path if id supplied is invalid", async () => {
+    const response = await request(app)
+      .put(`/api/feedback/request/123456`)
+      .set("Authorization", "Bearer " + jwtToken)
+      .send({ receiver: valid_receiver, feedbackItems: feedbackItems });
+    expect(response.statusCode).toBe(400);
+  });
+
+  it("should update feedback items in db", async () => {
+    let feedback_update = {
+      receiver: valid_receiver,
+      feedbackItems: feedbackItems
+    };
+    const response = await request(app)
+      .put(`/api/feedback/request/${id}`)
+      .set("Authorization", "Bearer " + jwtToken)
+      .send(feedback_update);
+
+    let feedback = await Feedback.findById(response.body.feedbackId);
+    expect(feedback.status).toEqual("RECEIVER_UNREAD");
+    expect(Array.from(feedback.feedbackItems)).toEqual(feedbackItems);
   });
 });
