@@ -43,7 +43,7 @@ async function createFeedback() {
   }
 }
 
-describe("Retrieving feedback API without login", () => {
+describe("Retrieving feedback by ID API without login", () => {
   it("should return a 401 unauthorized code", async () => {
     let feedback = await createFeedback();
     let response = await request(app).get(`/api/feedback/${feedback._id}`);
@@ -51,7 +51,7 @@ describe("Retrieving feedback API without login", () => {
   });
 });
 
-describe("Retrieve feedback API with login", () => {
+describe("Retrieve feedback by ID API with login", () => {
   beforeAll(loginAsTom);
 
   it("should return a happy path if id value is supplied correctly", async () => {
