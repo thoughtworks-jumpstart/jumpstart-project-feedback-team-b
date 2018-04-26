@@ -46,13 +46,12 @@ export class MyDashboard extends React.Component {
               Initiate Feedback
             </NavLink>
           </div>
-
           <div className="list-group">
             <NavLink
               className="qa-link list-group-item"
               to="/mydashboard/inbox"
             >
-              Inbox
+              Feedback Received
             </NavLink>
             <NavLink className="qa-link list-group-item" to="#">
               Pending request
