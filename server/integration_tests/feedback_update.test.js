@@ -77,12 +77,12 @@ describe("Accessing Feedback API with login", () => {
       receiver: valid_receiver,
       feedbackItems: feedbackItems
     };
-    const response = await request(app)
+    await request(app)
       .put(`/api/feedback/request/${id}`)
       .set("Authorization", "Bearer " + jwtToken)
       .send(feedback_update);
 
-    let feedback = await Feedback.findById(response.body.feedbackId);
+    let feedback = await Feedback.findById(id);
     expect(feedback.status).toEqual("RECEIVER_UNREAD");
     expect(Array.from(feedback.feedbackItems)).toEqual(feedbackItems);
   });

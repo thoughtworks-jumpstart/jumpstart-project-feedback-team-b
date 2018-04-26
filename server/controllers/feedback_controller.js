@@ -209,8 +209,7 @@ async function updateFeedback(req, res) {
     });
   }
   return res.status(200).send({
-    msg: `Your feedback to ${receiverName} (${toAddress}) was sent successfully`,
-    feedbackId: savedFeedback_id
+    msg: `Your feedback to ${receiverName} (${toAddress}) was sent successfully`
   });
 }
 module.exports = {
