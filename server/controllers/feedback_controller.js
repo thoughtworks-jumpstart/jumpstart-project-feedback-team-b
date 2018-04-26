@@ -105,6 +105,7 @@ async function requestFeedback(req, res) {
     await mailer.sendText(fromAddress, toAddress, subject, text);
   } catch (error) {
     return res.status(202).send({
+      feedbackId: savedRequestedFeedback_id,
       msg: `The email to ${giver.name} (${
         giver.email
       }) to request for feedback was not sent. You might want to inform ${
@@ -114,6 +115,7 @@ async function requestFeedback(req, res) {
   }
 
   return res.status(200).send({
+    feedbackId: savedRequestedFeedback_id,
     msg: `Your request for feedback from ${giver.name} (${
       giver.email
     }) was sent successfully`
