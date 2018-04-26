@@ -11,7 +11,6 @@ const app = require("../app");
 
 beforeAll(testDB.setup);
 beforeAll(fixtureLoader.load);
-
 afterAll(testDB.teardown);
 
 let jwtToken;
@@ -27,7 +26,7 @@ async function loginAsTom() {
 
 async function createFeedback() {
   const giver = "giver@giver.com";
-  const receiver = "receiver@receiver.com";
+  const receiver = fixtures.users.tom.email;
   const feedbackItems = [
     "What I did Well",
     "What I could do Better",
@@ -43,6 +42,17 @@ async function createFeedback() {
   }
 }
 
+describe("Retrieve feeback by email", () => {
+  beforeAll(loginAsTom);
+  it("/api/feedback -> should return a list of feedbacks", async () => {
+    let response = await request(app)
+      .get("/api/feedback")
+      .set("Authorization", "Bearer " + jwtToken);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.receiver).toHaveLength(0);
+  });
+});
+
 describe("Retrieving feedback by ID API without login", () => {
   it("should return a 401 unauthorized code", async () => {
     let feedback = await createFeedback();
@@ -51,10 +61,10 @@ describe("Retrieving feedback by ID API without login", () => {
   });
 });
 
-describe("Retrieve feedback by ID API with login", () => {
+describe("Retrieve feedback API with login", () => {
   beforeAll(loginAsTom);
 
-  it("should return a happy path if id value is supplied correctly", async () => {
+  it("/api/feedback/:id -> should return a feedback items if ID value is supplied correctly", async () => {
     const savedFeedback = await createFeedback();
     const savedFeedbackID = savedFeedback._id;
     const savedFeedbackItems = savedFeedback.feedbackItems;
@@ -70,5 +80,14 @@ describe("Retrieve feedback by ID API with login", () => {
     expect(response.body.feedback.feedbackItems).toEqual(
       expect.arrayContaining(savedFeedbackItems)
     );
+  });
+
+  it("/api/feedback -> should return a list of feedbacks ", async () => {
+    let response = await request(app)
+      .get("/api/feedback")
+      .set("Authorization", "Bearer " + jwtToken);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.receiver).toHaveLength(2);
+    expect(response.body.receiver[0].giver).toBe("giver@giver.com");
   });
 });

@@ -135,7 +135,6 @@ async function retrieveFeedbackByEmail(req, res) {
     const receiver = await Feedback.find({
       receiver: email
     });
-    console.log(receiver);
     return res.status(200).send({
       receiver
     });
@@ -150,8 +149,6 @@ async function retrieveFeedbackByID(req, res) {
   try {
     const feedbackId = req.params.id;
     let feedback = await Feedback.findById(feedbackId);
-    console.log(feedback);
-    console.log("success feedback");
     if (feedback.status !== "RECEIVER_READ") {
       feedback.status = "RECEIVER_READ";
       await feedback.save();
