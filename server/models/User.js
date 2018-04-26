@@ -82,4 +82,13 @@ UserSchema.methods.toJSON = function() {
   };
 };
 
+UserSchema.statics.retrieveUsersByEmails = function(emailList) {
+  return this.find({ email: { $in: emailList } }).then(users =>
+    users.reduce((acc, user) => {
+      acc[user.email] = user.name;
+      return acc;
+    }, {})
+  );
+};
+
 module.exports = mongoose.model("User", UserSchema);

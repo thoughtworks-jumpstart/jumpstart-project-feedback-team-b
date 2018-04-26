@@ -227,3 +227,46 @@ describe("Generate user profile as JSON", () => {
     expect(userProfile.passwordResetToken).not.toBeDefined();
   });
 });
+
+describe("Retrieve users by email", () => {
+  const name1 = "bob";
+  const email1 = "bob@example.com";
+
+  const name2 = "stuart";
+  const email2 = "stuart@example.com";
+
+  let user1, user2;
+  beforeAll(async () => {
+    user1 = new User({ name: name1, email: email1 });
+    await user1.save();
+
+    user2 = new User({ name: name2, email: email2 });
+    await user2.save();
+  });
+
+  it("should retrieve users with the specified emails", async () => {
+    const emailAddresses = [email1];
+    const results = await User.retrieveUsersByEmails(emailAddresses);
+    expect(Object.keys(results)).toHaveLength(1);
+    expect(email1 in results).toBe(true);
+    expect(results[email1]).toEqual(name1);
+  });
+
+  it("should retrieve all users with the specified emails", async () => {
+    const emailAddresses = [email1, email2];
+    const results = await User.retrieveUsersByEmails(emailAddresses);
+    expect(Object.keys(results)).toHaveLength(2);
+    expect(email1 in results).toBe(true);
+    expect(results[email1]).toEqual(name1);
+    expect(email2 in results).toBe(true);
+    expect(results[email2]).toEqual(name2);
+  });
+
+  it("should not retrieve users not in the database", async () => {
+    const email3 = "dave@example.com";
+    const emailAddresses = [email3];
+    const results = await User.retrieveUsersByEmails(emailAddresses);
+    expect(Object.keys(results)).toHaveLength(0);
+    expect(email3 in results).toBe(false);
+  });
+});
