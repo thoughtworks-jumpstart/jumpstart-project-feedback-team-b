@@ -43,7 +43,7 @@ export class ShowFeedback extends React.Component {
         response.json().then(json => {
           this.setState({
             feedbackValues: json.feedback.feedbackItems,
-            giver: json.feedback.giver,
+            giver: json.feedback.giver_name,
             responseStatus: true
           });
         });
