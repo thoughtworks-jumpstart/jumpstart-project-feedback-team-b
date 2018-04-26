@@ -111,10 +111,14 @@ class InitiateFeedbackForm extends React.Component {
         \nDo you have permission to initiate the feedback?`
       )
     ) {
-      this.setState({ isChanged: false });
       this.submitFeedback({
         email: this.state.email,
         feedbackItems: this.state.feedbackValues
+      });
+      this.setState({
+        isChanged: false,
+        email: "",
+        feedbackValues: ["", "", ""]
       });
     }
   }

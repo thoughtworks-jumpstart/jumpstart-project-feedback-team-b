@@ -3,6 +3,7 @@ import { Prompt } from "react-router";
 import { instanceOf } from "prop-types";
 import { withCookies, Cookies } from "react-cookie";
 import { ProviderContext, subscribe } from "react-contextual";
+import Loading from "react-loading-animation";
 import FeedbackTemplate from "../FeedbackTemplate/FeedbackTemplate";
 import { getTemplateLabels } from "../../actions/formUtils";
 import Messages from "../Messages";
@@ -19,7 +20,7 @@ class UpdateFeedback extends Component {
     const feedbackLabels = getTemplateLabels();
     this.state = {
       isChanged: false,
-      responseStatus: false,
+      responseStatus: null,
       receiver: "",
       feedbackLabels: feedbackLabels,
       feedbackValues: new Array(feedbackLabels.length).fill(""),
@@ -53,6 +54,13 @@ class UpdateFeedback extends Component {
             id: id
           });
         });
+      } else {
+        this.setState({
+          responseStatus: false
+        });
+        response
+          .json()
+          .then(json => this.props.messageContext.setErrorMessages([json]));
       }
     });
   }
@@ -64,43 +72,53 @@ class UpdateFeedback extends Component {
   }
 
   render() {
-    return (
-      <div className="content">
-        <Messages messages={this.props.messageContext.messages} />
-        <Prompt
-          when={this.state.isChanged}
-          message="Are you sure you want to leave?"
-        />
-        <div className="panel panel-default">
-          <div className="panel-body">
-            <div className="template-header">
-              <h3>
-                You are writing feedback for{" "}
-                <strong>{this.state.receiver}</strong>
-              </h3>
-              <div className="init-save-button">
-                <button
-                  className="btn btn-primary"
-                  onClick={event => this.sendHandler(event)}
-                >
-                  Send
-                </button>
+    if (this.state.responseStatus === null) {
+      return <Loading />;
+    } else if (this.state.responseStatus === false) {
+      return (
+        <div>
+          <Messages messages={this.props.messageContext.messages} />
+        </div>
+      );
+    } else {
+      return (
+        <div className="content">
+          <Messages messages={this.props.messageContext.messages} />
+          <Prompt
+            when={this.state.isChanged}
+            message="Are you sure you want to leave?"
+          />
+          <div className="panel panel-default">
+            <div className="panel-body">
+              <div className="template-header">
+                <h3>
+                  You are writing feedback for{" "}
+                  <strong>{this.state.receiver}</strong>
+                </h3>
+                <div className="init-save-button">
+                  <button
+                    className="btn btn-primary"
+                    onClick={event => this.sendHandler(event)}
+                  >
+                    Send
+                  </button>
+                </div>
               </div>
-            </div>
-            <div id="qa-updateform">
-              <form>
-                <FeedbackTemplate
-                  labels={this.state.feedbackLabels}
-                  feedbackValues={this.state.feedbackValues}
-                  onChangeHandler={this.onFeedbackChangeHandler.bind(this)}
-                  disabled={false}
-                />
-              </form>
+              <div id="qa-updateform">
+                <form>
+                  <FeedbackTemplate
+                    labels={this.state.feedbackLabels}
+                    feedbackValues={this.state.feedbackValues}
+                    onChangeHandler={this.onFeedbackChangeHandler.bind(this)}
+                    disabled={false}
+                  />
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 
   onFeedbackChangeHandler(idx, event) {
@@ -120,10 +138,13 @@ class UpdateFeedback extends Component {
         `Are you sure you want to send feedback to ${this.state.receiver}?`
       )
     ) {
-      this.setState({ isChanged: false });
       this.submitFeedback({
         receiver: this.state.receiver,
         feedbackItems: this.state.feedbackValues
+      });
+      this.setState({
+        isChanged: false,
+        feedbackValues: ["", "", ""]
       });
     }
   }
@@ -171,5 +192,3 @@ const mapContextToProps = context => {
 export default subscribe(ProviderContext, mapContextToProps)(
   withCookies(UpdateFeedback)
 );
-
-export { UpdateFeedback };

@@ -115,6 +115,10 @@ class RequestFeedbackForm extends React.Component {
     this.submitRequest({
       email: this.state.email
     });
+    this.setState({
+      isChanged: false,
+      email: ""
+    });
   }
 
   submitRequest({ email }) {
