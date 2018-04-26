@@ -44,39 +44,43 @@ class InitiateFeedbackForm extends React.Component {
           when={this.state.isChanged}
           message="Are you sure you want to leave?"
         />
-        <div className="template-header">
-          <h3>Initiate Feedback</h3>
-          <div className="init-save-button">
-            <button
-              className="btn btn-primary"
-              onClick={event => this.shareHandler(event)}
-            >
-              Share
-            </button>
-          </div>
-        </div>
-        <div id="qa-initiateform">
-          <form>
-            <div>
-              <h4 className="text-muted" htmlFor="email">
-                Receiver's email address:
-              </h4>
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <div className="template-header">
+              <h3>Initiate Feedback</h3>
+              <div className="init-save-button">
+                <button
+                  className="btn btn-primary"
+                  onClick={event => this.shareHandler(event)}
+                >
+                  Share
+                </button>
+              </div>
             </div>
-            <textarea
-              id="InitiateFeedbackForm_emailInput"
-              className="form-control border border-primary"
-              rows={1}
-              name="email"
-              value={this.state.email}
-              onChange={event => this.onChangeHandler(event)}
-            />
-            <FeedbackTemplate
-              labels={this.state.feedbackLabels}
-              feedbackValues={this.state.feedbackValues}
-              onChangeHandler={this.onFeedbackChangeHandler.bind(this)}
-              disabled={false}
-            />
-          </form>
+            <div id="qa-initiateform">
+              <form>
+                <div>
+                  <h4 className="text-muted" htmlFor="email">
+                    Receiver's email address:
+                  </h4>
+                </div>
+                <textarea
+                  id="InitiateFeedbackForm_emailInput"
+                  className="form-control border border-primary"
+                  rows={1}
+                  name="email"
+                  value={this.state.email}
+                  onChange={event => this.onChangeHandler(event)}
+                />
+                <FeedbackTemplate
+                  labels={this.state.feedbackLabels}
+                  feedbackValues={this.state.feedbackValues}
+                  onChangeHandler={this.onFeedbackChangeHandler.bind(this)}
+                  disabled={false}
+                />
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     );

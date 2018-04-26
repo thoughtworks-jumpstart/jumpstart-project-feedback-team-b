@@ -59,22 +59,6 @@ footer {
   border-width: 0 0 0 3px;
 }
 
-.alert-info {
-  border-color: #31708f;
-}
-
-.alert-success {
-  color: #fff;
-  background-color: #29b35b;
-  border-color: #1d8141;
-}
-
-.alert-danger {
-  color: #b61b17;
-  background-color: #ffcdd2;
-  border-color: #b61b17;
-}
-
 /* Navbar
 /* ------------------------- */
 

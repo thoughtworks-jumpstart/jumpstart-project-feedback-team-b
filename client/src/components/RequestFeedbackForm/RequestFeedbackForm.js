@@ -40,45 +40,50 @@ class RequestFeedbackForm extends React.Component {
     return (
       <div className="content">
         <Messages messages={this.props.messageContext.messages} />
-        <div className="template-header">
-          <h3>Request Feedback</h3>
-          <div className="init-save-button">
-            <button
-              id="submit_button"
-              className="btn btn-primary qa-request-submit-btn"
-              data-cy="requestFeedback-submit"
-              onClick={this.submitHandler}
-            >
-              Send
-            </button>
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <div className="template-header">
+              <h3>Request Feedback</h3>
+              <div className="init-save-button">
+                <button
+                  id="submit_button"
+                  className="btn btn-primary qa-request-submit-btn"
+                  data-cy="requestFeedback-submit"
+                  onClick={this.submitHandler}
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+            <div data-cy="qa-requestfb">
+              <form>
+                <div>
+                  <h4 className="text-muted" htmlFor="email">
+                    Add email address:
+                  </h4>
+                </div>
+                <textarea
+                  data-cy="RequestFeedbackForm_emailInput"
+                  className="form-control border border-primary"
+                  rows={1}
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.onChangeHandler.bind(this)}
+                />
+              </form>
+            </div>
           </div>
         </div>
-        <div data-cy="qa-requestfb">
-          <form>
-            <div>
-              <h4 className="text-muted" htmlFor="email">
-                Add email address:
-              </h4>
-            </div>
-            <textarea
-              data-cy="RequestFeedbackForm_emailInput"
-              className="form-control border border-primary"
-              rows={1}
-              name="email"
-              value={this.state.email}
-              onChange={this.onChangeHandler.bind(this)}
-            />
-            <br />
-            <h2>
-              <hr className="hr-text" data-content="Preview of feedback form" />
-            </h2>
-            <FeedbackTemplate
-              labels={this.state.feedbackLabels}
-              feedbackValues={this.state.feedbackValues}
-              // onChangeHandler={this.onFeedbackChangeHandler.bind(this)}
-              disabled={true}
-            />
-          </form>
+        <h2>
+          <hr className="hr-text" data-content="Preview of feedback form" />
+        </h2>
+        <div className="panel-body" data-cy="qa-preview">
+          <FeedbackTemplate
+            labels={this.state.feedbackLabels}
+            feedbackValues={this.state.feedbackValues}
+            // onChangeHandler={this.onFeedbackChangeHandler.bind(this)}
+            disabled={true}
+          />
         </div>
         <Prompt
           when={this.state.isChanged}

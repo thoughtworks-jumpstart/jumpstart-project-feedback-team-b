@@ -30,31 +30,39 @@ export class MyDashboard extends React.Component {
   render() {
     return (
       <div className="info-body">
-        <div className="info-body-sidebar list-group">
-          <NavLink
-            className="qa-link list-group-item"
-            data-cy="qa-requestfeedback-link"
-            to="/mydashboard/request"
-          >
-            Request Feedback
-          </NavLink>
-          <NavLink
-            className="qa-link list-group-item"
-            to="/mydashboard/initiate"
-          >
-            Initiate Feedback
-          </NavLink>
+        <div className="info-body-sidebar">
+          <div className="info-body-sidebar-button-group" role="group">
+            <NavLink
+              className="qa-link btn btn-primary"
+              data-cy="qa-requestfeedback-link"
+              to="/mydashboard/request"
+            >
+              Request Feedback
+            </NavLink>
+            <NavLink
+              className="qa-link btn btn-primary"
+              to="/mydashboard/initiate"
+            >
+              Initiate Feedback
+            </NavLink>
+          </div>
 
-          <NavLink className="qa-link list-group-item" to="/mydashboard/inbox">
-            Inbox{" "}
-          </NavLink>
-          <NavLink className="qa-link list-group-item" to="#">
-            Pending request
-          </NavLink>
-          <NavLink className="qa-link list-group-item" to="#">
-            Pending feedback
-          </NavLink>
+          <div className="list-group">
+            <NavLink
+              className="qa-link list-group-item"
+              to="/mydashboard/inbox"
+            >
+              Inbox
+            </NavLink>
+            <NavLink className="qa-link list-group-item" to="#">
+              Pending request
+            </NavLink>
+            <NavLink className="qa-link list-group-item" to="#">
+              Pending feedback
+            </NavLink>
+          </div>
         </div>
+
         <div className="info-body-content">
           <Switch>
             <Route path="/mydashboard/inbox" exact component={Inbox} />

@@ -56,17 +56,8 @@ describe("mydashboard renders different feedback components", function() {
       .get("[data-cy=qa-requestfb]")
       .find("form")
       .contains("Add email address");
-    cy
-      .get("[data-cy=qa-requestfb]")
-      .find("form")
-      .contains("You are doing great at...");
-    cy
-      .get("[data-cy=qa-requestfb]")
-      .find("form")
-      .contains("You could work on/improve...");
-    cy
-      .get("[data-cy=qa-requestfb]")
-      .find("form")
-      .contains("Suggestions...");
+    cy.get("[data-cy=qa-preview]").contains("You are doing great at...");
+    cy.get("[data-cy=qa-preview]").contains("You could work on/improve...");
+    cy.get("[data-cy=qa-preview]").contains("Suggestions...");
   });
 });
