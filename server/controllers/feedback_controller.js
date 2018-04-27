@@ -141,8 +141,6 @@ async function retrieveFeedbackByEmail(req, res) {
       status: { $in: status }
     });
 
-    console.log(retrievedFeedback);
-
     let userEmails;
     if (role === "receiver") {
       userEmails = Array.from(
@@ -163,7 +161,6 @@ async function retrieveFeedbackByEmail(req, res) {
       }
       return data;
     });
-    console.log(feedbackWithNames);
 
     return res.status(200).send({
       receiver: feedbackWithNames
