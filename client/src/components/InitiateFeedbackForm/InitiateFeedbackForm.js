@@ -22,7 +22,8 @@ class InitiateFeedbackForm extends React.Component {
       isChanged: false,
       email: "",
       feedbackLabels: feedbackLabels,
-      feedbackValues: new Array(feedbackLabels.length).fill("")
+      feedbackValues: new Array(feedbackLabels.length).fill(""),
+      isFeedbackSaved: false
     };
     this.shareHandler = this.shareHandler.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -114,11 +115,14 @@ class InitiateFeedbackForm extends React.Component {
       this.submitFeedback({
         email: this.state.email,
         feedbackItems: this.state.feedbackValues
-      });
-      this.setState({
-        isChanged: false,
-        email: "",
-        feedbackValues: ["", "", ""]
+      }).then(feedback => {
+        if (this.state.isFeedbackSaved) {
+          this.setState({
+            isChanged: false,
+            email: "",
+            feedbackValues: ["", "", ""]
+          });
+        }
       });
     }
   }
@@ -139,6 +143,7 @@ class InitiateFeedbackForm extends React.Component {
       })
     }).then(response => {
       if (response.ok) {
+        this.setState({ isFeedbackSaved: true });
         return response.json().then(json => {
           if (response.status === 200) {
             messageContext.setSuccessMessages([json]);
