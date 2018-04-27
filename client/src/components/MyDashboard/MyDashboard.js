@@ -115,11 +115,6 @@ export class MyDashboard extends React.Component {
 
         <div className="info-body-content">
           <Switch>
-            <Route
-              exact
-              path="/mydashboard/pendingfeedback"
-              component={PendingFeedback}
-            />
             <Route path="/mydashboard/inbox" exact component={Inbox} />
             <Route
               path="/mydashboard/inbox/feedback/:id"
