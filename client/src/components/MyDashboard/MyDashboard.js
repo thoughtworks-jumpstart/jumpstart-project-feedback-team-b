@@ -34,7 +34,7 @@ export class MyDashboard extends React.Component {
 
   componentWillUpdate() {
     if (this.props.sessionContext.token !== null) {
-      this.fetchCall();
+      this.fetchCall("receiver", "receiver");
     }
   }
   fetchCall(role, status) {
