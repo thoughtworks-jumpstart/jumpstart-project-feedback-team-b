@@ -3,8 +3,10 @@ import { NavLink, Switch, Route } from "react-router-dom";
 import "./MyDashboard.css";
 import InitiateFeedbackForm from "../InitiateFeedbackForm/InitiateFeedbackForm";
 import {
-  mapMessageContextToProps,
-  messageContextPropType
+  mapSessionContextToProps,
+  sessionContextPropType,
+  messageContextPropType,
+  mapMessageContextToProps
 } from "../context_helper";
 import { ProviderContext, subscribe } from "react-contextual";
 
@@ -16,15 +18,54 @@ export class MyDashboard extends React.Component {
   constructor() {
     super();
     this.state = {
-      location: "/mydashboard"
+      location: "/mydashboard",
+      unread_feedback: 0
     };
+    this.fetchCall = this.fetchCall.bind(this);
   }
   static propTypes = {
-    ...messageContextPropType
+    ...messageContextPropType,
+    ...sessionContextPropType
   };
 
   componentWillUnmount() {
     this.props.messageContext.clearMessages();
+  }
+
+  componentWillUpdate() {
+    if (this.props.sessionContext.token !== null) {
+      this.fetchCall();
+    }
+  }
+  fetchCall(role, status) {
+    return fetch(`/api/feedback?role=${role}&status=${status}`, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.props.sessionContext.token}`
+      }
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          const unreadFeedback = json.receiver.filter(
+            feedback => feedback.status === "RECEIVER_UNREAD"
+          ).length;
+
+          if (this.state.unread_feedback !== unreadFeedback) {
+            this.setState({
+              unread_feedback: unreadFeedback
+            });
+          }
+        });
+      } else {
+        this.setState({
+          unread_feedback: 0
+        });
+        response
+          .json()
+          .then(json => this.props.messageContext.setErrorMessages([json]));
+      }
+    });
   }
 
   render() {
@@ -52,6 +93,11 @@ export class MyDashboard extends React.Component {
               to="/mydashboard/inbox"
             >
               Feedback Received
+              {this.state.unread_feedback > 0 ? (
+                <span className="badge">{this.state.unread_feedback}</span>
+              ) : (
+                ""
+              )}
             </NavLink>
             <NavLink className="qa-link list-group-item" to="#">
               Pending request
@@ -95,6 +141,7 @@ export class MyDashboard extends React.Component {
 
 const mapContextToProps = context => {
   return {
+    ...mapSessionContextToProps(context),
     ...mapMessageContextToProps(context)
   };
 };
