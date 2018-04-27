@@ -82,7 +82,7 @@ class PendingRequest extends Component {
         <div className="panel panel-default">
           <div className="panel-body">
             <div className="template-header">
-              <h3>Pending Request</h3>
+              <h3>Incoming Request</h3>
             </div>
             <table className="table table-hover">
               <thead>
