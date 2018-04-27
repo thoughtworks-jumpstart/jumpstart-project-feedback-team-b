@@ -14,6 +14,7 @@ import RequestFeedbackForm from "../RequestFeedbackForm/RequestFeedbackForm";
 import ShowFeedback from "../Inbox/ShowFeedback";
 import UpdateFeedback from "../PendingRequest/UpdateFeedback";
 import Inbox from "../Inbox/Inbox";
+import PendingRequest from "../PendingRequest/PendingRequest";
 export class MyDashboard extends React.Component {
   constructor() {
     super();
@@ -99,11 +100,14 @@ export class MyDashboard extends React.Component {
                 ""
               )}
             </NavLink>
-            <NavLink className="qa-link list-group-item" to="#">
-              Pending request
+            <NavLink
+              className="qa-link list-group-item"
+              to="/mydashboard/pendingrequest"
+            >
+              Pending Request
             </NavLink>
             <NavLink className="qa-link list-group-item" to="#">
-              Pending feedback
+              Pending Feedback
             </NavLink>
           </div>
         </div>
@@ -126,6 +130,11 @@ export class MyDashboard extends React.Component {
               exact
               path="/mydashboard/request"
               component={RequestFeedbackForm}
+            />
+            <Route
+              exact
+              path="/mydashboard/pendingrequest"
+              component={PendingRequest}
             />
             <Route
               exact

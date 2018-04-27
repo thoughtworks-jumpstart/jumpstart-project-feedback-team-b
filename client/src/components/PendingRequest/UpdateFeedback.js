@@ -64,11 +64,17 @@ export class UpdateFeedback extends Component {
       }
     });
   }
-  componentWillUpdate() {
+  fetchDataOnce() {
     if (this.notFetchedData && this.props.sessionContext.token !== null) {
       this.notFetchedData = false;
       this.fetchCall();
     }
+  }
+  componentWillMount() {
+    this.fetchDataOnce();
+  }
+  componentWillUpdate() {
+    this.fetchDataOnce();
   }
 
   render() {
