@@ -14,7 +14,7 @@ import {
   sessionContextPropType
 } from "../context_helper";
 
-class UpdateFeedback extends Component {
+export class UpdateFeedback extends Component {
   constructor() {
     super();
     const feedbackLabels = getTemplateLabels();
