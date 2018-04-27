@@ -22,7 +22,8 @@ class RequestFeedbackForm extends React.Component {
       isChanged: false,
       email: "",
       feedbackLabels: feedbackLabels,
-      feedbackValues: new Array(feedbackLabels.length).fill("")
+      feedbackValues: new Array(feedbackLabels.length).fill(""),
+      isFeedbackSaved: false
     };
     this.submitHandler = this.submitHandler.bind(this);
     this.submitRequest = this.submitRequest.bind(this);
@@ -114,10 +115,13 @@ class RequestFeedbackForm extends React.Component {
     event.preventDefault();
     this.submitRequest({
       email: this.state.email
-    });
-    this.setState({
-      isChanged: false,
-      email: ""
+    }).then(feedback => {
+      if (this.state.isFeedbackSaved) {
+        this.setState({
+          isChanged: false,
+          email: ""
+        });
+      }
     });
   }
 
@@ -135,6 +139,7 @@ class RequestFeedbackForm extends React.Component {
         giver: email
       })
     }).then(response => {
+      this.setState({ isFeedbackSaved: true });
       if (response.ok) {
         return response.json().then(json => {
           if (response.status === 200) {

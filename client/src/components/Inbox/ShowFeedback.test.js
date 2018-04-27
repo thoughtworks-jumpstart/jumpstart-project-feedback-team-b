@@ -34,6 +34,7 @@ describe("Fetch Feedback", async () => {
         feedback: {
           receiver: "receiver",
           giver: "giver",
+          giver_name: "",
           status: "RECEIVER_UNREAD",
           feedbackItems: ["abc", "cba", "dgf"],
           feedbackTemplate: {
@@ -70,7 +71,7 @@ describe("Fetch Feedback", async () => {
     await inst.fetchCall();
 
     expect(inst.state.feedbackValues).toHaveLength(3);
-    expect(inst.state.giver).toEqual("giver");
+    expect(inst.state.giver).toEqual("");
     expect(inst.state.feedbackValues).toEqual(["abc", "cba", "dgf"]);
     wrapper.update();
     expect(wrapper.find(FeedbackTemplate)).toHaveLength(1);
