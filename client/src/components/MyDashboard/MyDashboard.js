@@ -15,6 +15,7 @@ import ShowFeedback from "../Inbox/ShowFeedback";
 import UpdateFeedback from "../PendingRequest/UpdateFeedback";
 import Inbox from "../Inbox/Inbox";
 import PendingRequest from "../PendingRequest/PendingRequest";
+import PendingFeedback from "../PendingFeedback/PendingFeedback";
 export class MyDashboard extends React.Component {
   constructor() {
     super();
@@ -104,16 +105,21 @@ export class MyDashboard extends React.Component {
               className="qa-link list-group-item"
               to="/mydashboard/pendingrequest"
             >
-              Pending Request
+              Pending Received Requests
             </NavLink>
             <NavLink className="qa-link list-group-item" to="#">
-              Pending Feedback
+              Pending Sent Requests
             </NavLink>
           </div>
         </div>
 
         <div className="info-body-content">
           <Switch>
+            <Route
+              exact
+              path="/mydashboard/pendingfeedback"
+              component={PendingFeedback}
+            />
             <Route path="/mydashboard/inbox" exact component={Inbox} />
             <Route
               path="/mydashboard/inbox/feedback/:id"
