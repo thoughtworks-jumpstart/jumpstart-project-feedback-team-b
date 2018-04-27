@@ -110,7 +110,7 @@ class Inbox extends Component {
                       }
                     >
                       <td>{idx + 1}</td>
-                      <td>{element.giver}</td>
+                      <td>{element.giver_name}</td>
                       <td>{Moment(element.updatedAt).format("D MMM YYYY")}</td>
                       <td>
                         <NavLink
