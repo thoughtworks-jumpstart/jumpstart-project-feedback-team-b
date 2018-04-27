@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Route } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ProviderContext, subscribe } from "react-contextual";
 import {
   mapSessionContextToProps,
@@ -109,11 +109,9 @@ class Inbox extends Component {
                           : ""
                       }
                     >
-                      <td className="h4">{idx + 1}</td>
-                      <td className="h4">{element.giver}</td>
-                      <td className="h4">
-                        {Moment(element.updatedAt).format("D MMM YYYY")}
-                      </td>
+                      <td>{idx + 1}</td>
+                      <td>{element.giver}</td>
+                      <td>{Moment(element.updatedAt).format("D MMM YYYY")}</td>
                       <td>
                         <NavLink
                           to={`/mydashboard/inbox/feedback/${element._id}`}
