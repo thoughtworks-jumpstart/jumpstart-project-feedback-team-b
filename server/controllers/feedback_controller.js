@@ -175,11 +175,23 @@ async function retrieveFeedbackByEmail(req, res) {
 async function retrieveFeedbackByID(req, res) {
   try {
     const feedbackId = req.params.id;
+    const email = req.jwt.email;
     let feedback = await Feedback.findById(feedbackId);
-    if (feedback.status !== "RECEIVER_READ") {
+    if (feedback.giver != email && feedback.receiver != email) {
+      return res.status(400).send({
+        msg: "You are not authorized to see this feedback"
+      });
+    }
+
+    if (feedback.status === "GIVER_UNREAD") {
+      feedback.status = "GIVER_READ";
+      await feedback.save();
+    }
+    if (feedback.status === "RECEIVER_UNREAD") {
       feedback.status = "RECEIVER_READ";
       await feedback.save();
     }
+
     let userEmails = [feedback.giver];
     let userNames = await User.retrieveUsersByEmails(userEmails);
     const feedbackWithName = feedback.toObject();
