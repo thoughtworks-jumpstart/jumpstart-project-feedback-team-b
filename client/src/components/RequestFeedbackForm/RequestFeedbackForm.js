@@ -139,8 +139,8 @@ class RequestFeedbackForm extends React.Component {
         giver: email
       })
     }).then(response => {
-      this.setState({ isFeedbackSaved: true });
       if (response.ok) {
+        this.setState({ isFeedbackSaved: true });
         return response.json().then(json => {
           if (response.status === 200) {
             messageContext.setSuccessMessages([json]);
