@@ -122,6 +122,7 @@ async function requestFeedback(req, res) {
   });
 }
 async function retrieveFeedback(req, res) {
+  // ?role=receiver&status=receiver
   if (req.params.id) {
     return retrieveFeedbackByID(req, res);
   } else {
@@ -132,17 +133,37 @@ async function retrieveFeedback(req, res) {
 async function retrieveFeedbackByEmail(req, res) {
   try {
     const email = req.jwt.email;
-    const receiverFeedback = await Feedback.find({
-      receiver: email
+    const role = req.query.role;
+    let status = req.query.status;
+    status = [`${status.toUpperCase()}_UNREAD`, `${status.toUpperCase()}_READ`];
+    const retrievedFeedback = await Feedback.find({
+      [role]: email,
+      status: { $in: status }
     });
 
-    let userEmails = receiverFeedback.map(feedback => feedback.giver);
+    console.log(retrievedFeedback);
+
+    let userEmails;
+    if (role === "receiver") {
+      userEmails = Array.from(
+        new Set(retrievedFeedback.map(feedback => feedback.giver))
+      );
+    } else {
+      userEmails = Array.from(
+        new Set(retrievedFeedback.map(feedback => feedback.receiver))
+      );
+    }
     let userNames = await User.retrieveUsersByEmails(userEmails);
-    const feedbackWithNames = receiverFeedback.map(feedback => {
+    const feedbackWithNames = retrievedFeedback.map(feedback => {
       let data = feedback.toObject();
-      data["giver_name"] = userNames[feedback.giver];
+      if (role === "receiver") {
+        data["giver_name"] = userNames[feedback.giver];
+      } else {
+        data["receiver_name"] = userNames[feedback.receiver];
+      }
       return data;
     });
+    console.log(feedbackWithNames);
 
     return res.status(200).send({
       receiver: feedbackWithNames

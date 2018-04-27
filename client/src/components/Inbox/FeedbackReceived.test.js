@@ -52,7 +52,7 @@ describe("Feedback Received", () => {
 
   it("should render <table/> when responseStatus is true", async () => {
     const myEmail = "rec@rec.com";
-    FetchMock.get("/api/feedback", {
+    FetchMock.get("/api/feedback?role=receiver&status=receiver", {
       status: 200,
       body: {
         receiver: [

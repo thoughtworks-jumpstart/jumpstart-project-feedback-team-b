@@ -32,8 +32,9 @@ async function createFeedback() {
     "What I could do Better",
     "Suggestions for Improvement"
   ];
+  const status = "RECEIVER_UNREAD";
 
-  let feedback = new Feedback({ giver, receiver, feedbackItems });
+  let feedback = new Feedback({ giver, receiver, feedbackItems, status });
   try {
     await feedback.save();
     return feedback;
@@ -46,7 +47,7 @@ describe("Retrieve feeback by email", () => {
   beforeAll(loginAsTom);
   it("/api/feedback -> should return a list of feedbacks", async () => {
     let response = await request(app)
-      .get("/api/feedback")
+      .get("/api/feedback?role=receiver&status=receiver")
       .set("Authorization", "Bearer " + jwtToken);
     expect(response.statusCode).toBe(200);
     expect(response.body.receiver).toHaveLength(0);
@@ -87,7 +88,7 @@ describe("Retrieve feedback API with login", () => {
 
   it("/api/feedback -> should return a list of feedbacks ", async () => {
     let response = await request(app)
-      .get("/api/feedback")
+      .get("/api/feedback?role=receiver&status=receiver")
       .set("Authorization", "Bearer " + jwtToken);
     expect(response.statusCode).toBe(200);
     expect(response.body.receiver).toHaveLength(2);

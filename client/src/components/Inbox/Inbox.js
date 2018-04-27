@@ -32,7 +32,7 @@ class Inbox extends Component {
     this.fetchDataOnce = this.fetchDataOnce.bind(this);
   }
   fetchCall() {
-    return fetch("/api/feedback", {
+    return fetch("/api/feedback?role=receiver&status=receiver", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
