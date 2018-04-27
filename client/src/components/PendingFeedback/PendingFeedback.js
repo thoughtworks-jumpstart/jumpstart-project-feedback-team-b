@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
 import { ProviderContext, subscribe } from "react-contextual";
 import {
   mapSessionContextToProps,
@@ -107,17 +106,7 @@ class PendingRequest extends Component {
                       <td>{idx + 1}</td>
                       <td>{element.giver_name}</td>
                       <td>{Moment(element.updatedAt).format("D MMM YYYY")}</td>
-                      <td>
-                        {/* <NavLink
-                          to={`/mydashboard/pendingrequest/feedback/${
-                            element._id
-                          }`}
-                          className="btn btn-primary"
-                          role="button"
-                        >
-                          Send Request Again
-                        </NavLink> */}
-                      </td>
+                      <td />
                     </tr>
                   );
                 })}
